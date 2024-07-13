@@ -1,4 +1,4 @@
-name: Destroyer
+name: Build
 
 on:
   push:
