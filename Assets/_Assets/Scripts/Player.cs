@@ -19,10 +19,11 @@ public class Player : MonoBehaviour, IHittable {
     public class OnStateChangeEventArgs : EventArgs {
         public State playerState;
     }
-
+    public event EventHandler OnHealthChange;
+    
     [Header("Health Settings")]
     [SerializeField] private float maxHealth = 100f;
-    [SerializeField] private float health;
+     private float health;
 
 
     [Header("Player Settings")]
@@ -50,6 +51,7 @@ public class Player : MonoBehaviour, IHittable {
             Destroy(gameObject);
         }
         playerState = State.Idle;
+        health= maxHealth;
     }
 
     // Update is called once per frame
@@ -59,6 +61,7 @@ public class Player : MonoBehaviour, IHittable {
                 if (Input.touchCount > 0) {
                     touchOrigin = Input.GetTouch(0).position;
                     touchOriginWorldSpace = Camera.main.ScreenToWorldPoint(touchOrigin);
+                    SetAimVector();
                     playerState = State.Aiming;
                     OnStateChange?.Invoke(this, new OnStateChangeEventArgs { playerState = playerState });
                 }
@@ -120,10 +123,9 @@ public class Player : MonoBehaviour, IHittable {
         return launchOrigin.transform.position;
     }
 
-    public void Hit(BaseProjectile projectile) {
-        if (!projectile.GetTargets().Contains(HittableType.Player))
-            return;
+    public void Hit(BaseProjectile projectile) {        
         health -= projectile.GetDamage();
+        OnHealthChange?.Invoke(this, EventArgs.Empty);
         if (health <= 0) {
             playerState = State.Dead;
             OnStateChange?.Invoke(this, new OnStateChangeEventArgs { playerState = playerState });
@@ -132,5 +134,9 @@ public class Player : MonoBehaviour, IHittable {
 
     public HittableType GetHittableType() {
         return HittableType.Player;
+    }
+
+    public float GetHealthNormalized() {
+        return health / maxHealth;
     }
 }

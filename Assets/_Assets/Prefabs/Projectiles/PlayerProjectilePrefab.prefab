@@ -94,7 +94,7 @@ PrefabInstance:
     - target: {fileID: 1760680805616307606, guid: 378339d96ec84654db807ef6679c114e,
         type: 3}
       propertyPath: m_Name
-      value: PlayerProjectile
+      value: PlayerProjectilePrefab
       objectReference: {fileID: 0}
     - target: {fileID: 7289098375458152603, guid: 378339d96ec84654db807ef6679c114e,
         type: 3}
@@ -184,5 +184,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targets: 010000000300000004000000
-  owner: 0
   damage: 10
+  decayTime: 10
+  projectileType: 2
