@@ -38,6 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -380,6 +381,7 @@ GameObject:
   - component: {fileID: 378899500}
   - component: {fileID: 378899499}
   - component: {fileID: 378899498}
+  - component: {fileID: 378899502}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Untagged
@@ -469,12 +471,32 @@ Transform:
   m_GameObject: {fileID: 378899497}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -4.5}
+  m_LocalPosition: {x: 0, y: 0.5, z: -4.5}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &378899502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378899497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92debcc5b377cb046bf2964fb542bed6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Force: 0
+  velocity: 0
+  acceleration: 0
+  ElasticConstant: 0.001
+  displacedX: 0
+  mass: 0
+  currentBullet: {fileID: 378899497}
+  ForceVector: {x: 0, y: 0, z: 0}
 --- !u!1 &724441769
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,12 +836,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    m_Quality: 3
-    m_FrameInfluence: 0.1
-    m_JitterScale: 1
-    m_MipBias: 0
-    m_VarianceClampScale: 0.9
-    m_ContrastAdaptiveSharpening: 0
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0
 --- !u!1 &1203940854
 GameObject:
   m_ObjectHideFlags: 0
@@ -947,7 +969,15 @@ MonoBehaviour:
   radius: 0.4
   posx: 0
   posy: 0
-  reticle: {fileID: 2000681796}
+  reticle: {fileID: 0}
+  launchOrigin: {fileID: 0}
+  projectilePrefab: {fileID: 0}
+  touchSensibility: 1
+  launchVectorMax: 0
+  launchVectorMin: 0
+  launchSpeed: 0
+  maxLaunchAngle: 0
+  minLaunchAngle: 0
 --- !u!1 &1315945716
 GameObject:
   m_ObjectHideFlags: 0
@@ -1599,12 +1629,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    m_Quality: 3
-    m_FrameInfluence: 0.1
-    m_JitterScale: 1
-    m_MipBias: 0
-    m_VarianceClampScale: 0.9
-    m_ContrastAdaptiveSharpening: 0
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0
 --- !u!81 &1617369240
 AudioListener:
   m_ObjectHideFlags: 0
