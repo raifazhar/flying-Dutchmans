@@ -29,16 +29,23 @@ public class Player : MonoBehaviour, IHittable {
     [Header("Player Settings")]
     [SerializeField] private Transform launchOrigin;
     [SerializeField] private GameObject projectilePrefab;
-    [SerializeField] private float touchSensitivity = 1f;
+    [SerializeField] private float touchSensitivityHorizontal = 1f;
+    [SerializeField] private float touchSensitivityVertical = 1f;
     [SerializeField] private float launchVectorMax;
     [SerializeField] private float launchVectorMin;
     [SerializeField] private float launchSpeed;
     private float cameraZDistance=1;
+    [SerializeField]private Vector3 startingVector;
     private Vector3 touchOrigin;
     private Vector3 touchOriginWorldSpace;
     private Vector3 touchPoint;
     private Vector3 touchPointWorldSpace;
     private Vector3 launchVector;
+
+    [SerializeField] private float launchCooldown = 1f;
+    private float launchTimer=0f;
+
+
     private State playerState;
     // Start is called before the first frame update
 
@@ -72,6 +79,7 @@ public class Player : MonoBehaviour, IHittable {
                 if (Input.touchCount == 0) {
                     LaunchProjectile();
                     playerState = State.Launching;
+                    launchTimer = launchCooldown;
                     OnStateChange?.Invoke(this, new OnStateChangeEventArgs { playerState = playerState });
                 }
                 else {
@@ -79,8 +87,11 @@ public class Player : MonoBehaviour, IHittable {
                 }
                 break;
             case State.Launching:
-                playerState = State.Idle;
-                OnStateChange?.Invoke(this, new OnStateChangeEventArgs { playerState = playerState });
+                launchTimer -= Time.fixedDeltaTime;
+                if (launchTimer < 0) {
+                    playerState = State.Idle;
+                    OnStateChange?.Invoke(this, new OnStateChangeEventArgs { playerState = playerState });
+                }
                 break;
             case State.Dead:
                 break;
@@ -97,13 +108,22 @@ public class Player : MonoBehaviour, IHittable {
         touchPoint.z = cameraZDistance;
         touchPointWorldSpace = Camera.main.ScreenToWorldPoint(touchPoint);
         Vector3 screenVector = touchPointWorldSpace - touchOriginWorldSpace;
+        //Set the launchVector to the startingVector then add the relevant screenVector components to it
+        launchVector=startingVector;
         //These decide the actual height and z axis tilt of the launchVector
-        launchVector.y = screenVector.magnitude;
-        launchVector.z = -screenVector.z; //We do -screenVector.z so the x axis is inverted, basically player has to pull in opposite direction of where they wanna shoot
-        launchVector *= touchSensitivity;
+        if (screenVector.y < 0)
+            launchVector.y += screenVector.magnitude;
+        else
+            launchVector.y += -screenVector.magnitude;
+        launchVector.z += -screenVector.z; //We do -screenVector.z so the x axis is inverted, basically player has to pull in opposite direction of where they wanna shoot
+        //Touch Sensitivity field is used to change the sensitivity of the launchVector as per user touch
+        launchVector.y *= touchSensitivityVertical;
+        launchVector.z *= touchSensitivityHorizontal;
         //This decides the x distance, basically the length of the launchVector
         launchVector.x = 1;
         //Clamp the launchVector so it doesn't go too far or too short
+        //We use launchVector.sqrMagnitude and check against the square of the max and min values to avoid using square root
+        //This is because square root is a costly operation
         if (launchVector.sqrMagnitude > launchVectorMax * launchVectorMax) {
             launchVector = launchVector.normalized * launchVectorMax;
         }
