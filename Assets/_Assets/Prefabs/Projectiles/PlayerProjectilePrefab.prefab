@@ -185,5 +185,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targets: 010000000300000004000000
   damage: 10
-  decayTime: 10
+  decayTime: 5
   projectileType: 2

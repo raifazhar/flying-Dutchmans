@@ -29,16 +29,15 @@ public class Player : MonoBehaviour, IHittable {
     [Header("Player Settings")]
     [SerializeField] private Transform launchOrigin;
     [SerializeField] private GameObject projectilePrefab;
-    [SerializeField] private float touchSensibility = 1f;
+    [SerializeField] private float touchSensitivity = 1f;
     [SerializeField] private float launchVectorMax;
     [SerializeField] private float launchVectorMin;
     [SerializeField] private float launchSpeed;
-    [SerializeField] private float maxLaunchAngle;
-    [SerializeField] private float minLaunchAngle;
-    private Vector2 touchOrigin;
-    private Vector2 touchOriginWorldSpace;
-    private Vector2 touchPoint;
-    private Vector2 touchPointWorldSpace;
+    private float cameraZDistance=1;
+    private Vector3 touchOrigin;
+    private Vector3 touchOriginWorldSpace;
+    private Vector3 touchPoint;
+    private Vector3 touchPointWorldSpace;
     private Vector3 launchVector;
     private State playerState;
     // Start is called before the first frame update
@@ -54,15 +53,18 @@ public class Player : MonoBehaviour, IHittable {
         health= maxHealth;
     }
 
-    // Update is called once per frame
-    void Update() {
+    void FixedUpdate() {
         switch (playerState) {
             case State.Idle:
                 if (Input.touchCount > 0) {
+                    //IF player has started touch in idle state then store the initial touchOrigin and get its world space coordinates as well
                     touchOrigin = Input.GetTouch(0).position;
+                    touchOrigin.z = cameraZDistance;
                     touchOriginWorldSpace = Camera.main.ScreenToWorldPoint(touchOrigin);
                     SetAimVector();
                     playerState = State.Aiming;
+                    //OnStateChange is invoked everytime state changes, this is for any visual stuff that needs to be done
+                    //We seperate the logic from the visuals this way
                     OnStateChange?.Invoke(this, new OnStateChangeEventArgs { playerState = playerState });
                 }
                 break;
@@ -89,25 +91,26 @@ public class Player : MonoBehaviour, IHittable {
 
 
     private void SetAimVector() {
+        //The launchVector decides the direction the projectile is launched in when player releases the touch
+        //Get the current touchPoint of the finger
         touchPoint = Input.GetTouch(0).position;
+        touchPoint.z = cameraZDistance;
         touchPointWorldSpace = Camera.main.ScreenToWorldPoint(touchPoint);
-        launchVector = touchPointWorldSpace - touchOriginWorldSpace;
-        launchVector *= touchSensibility;
-        launchVector *= -1;
+        Vector3 screenVector = touchPointWorldSpace - touchOriginWorldSpace;
+        //These decide the actual height and z axis tilt of the launchVector
+        launchVector.y = screenVector.magnitude;
+        launchVector.z = -screenVector.z; //We do -screenVector.z so the x axis is inverted, basically player has to pull in opposite direction of where they wanna shoot
+        launchVector *= touchSensitivity;
+        //This decides the x distance, basically the length of the launchVector
+        launchVector.x = 1;
+        //Clamp the launchVector so it doesn't go too far or too short
         if (launchVector.sqrMagnitude > launchVectorMax * launchVectorMax) {
             launchVector = launchVector.normalized * launchVectorMax;
         }
         else if (launchVector.sqrMagnitude < launchVectorMin * launchVectorMin) {
             launchVector = launchVector.normalized * launchVectorMin;
         }
-        float angle = Vector2.SignedAngle(Vector2.right, launchVector);
-
-        if (angle > maxLaunchAngle) {
-            launchVector = Quaternion.Euler(0, 0, maxLaunchAngle) * Vector3.right * launchVector.magnitude;
-        }
-        else if (angle < minLaunchAngle) {
-            launchVector = Quaternion.Euler(0, 0, minLaunchAngle) * Vector3.right * launchVector.magnitude;
-        }
+        //Multiply the launchVector by launchSpeed to get the actual speed of the projectile
         launchVector *= launchSpeed;
     }
     private void LaunchProjectile() {
@@ -139,4 +142,14 @@ public class Player : MonoBehaviour, IHittable {
     public float GetHealthNormalized() {
         return health / maxHealth;
     }
+
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(launchOrigin.position, launchVector);
+        Gizmos.DrawSphere(touchOriginWorldSpace, 0.1f);
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(touchPointWorldSpace, 0.1f);
+    }
+
+
 }
