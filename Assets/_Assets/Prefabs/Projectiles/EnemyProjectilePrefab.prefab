@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3845361045464456378}
   - component: {fileID: 3480137410387733919}
   - component: {fileID: 2129371502836498014}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,6 +95,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnemyProjectilePrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760680805616307606, guid: 378339d96ec84654db807ef6679c114e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7289098375458152603, guid: 378339d96ec84654db807ef6679c114e,
         type: 3}

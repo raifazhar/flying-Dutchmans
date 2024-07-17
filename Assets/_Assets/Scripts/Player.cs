@@ -143,13 +143,7 @@ public class Player : MonoBehaviour, IHittable {
         return health / maxHealth;
     }
 
-    private void OnDrawGizmos() {
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(launchOrigin.position, launchVector);
-        Gizmos.DrawSphere(touchOriginWorldSpace, 0.1f);
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(touchPointWorldSpace, 0.1f);
-    }
+   
 
 
 }

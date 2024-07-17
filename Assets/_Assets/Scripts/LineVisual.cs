@@ -1,20 +1,27 @@
+using Cinemachine.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LineVisual : MonoBehaviour
-{
-    private bool isAiming=false;
+public class LineVisual : MonoBehaviour {
+    private bool isAiming = false;
     private LineRenderer lineRenderer;
-    [SerializeField] private int resolution=20;
-    [SerializeField] private float timeStep=0.1f;
+    [SerializeField] private Transform landingPointPrefab;
+    private Transform landingPointObject;
+    [SerializeField] private int resolution = 20;
+    [SerializeField] private float timeStep = 0.1f;
+    [SerializeField] private float rayDistance = 1f;
+    [SerializeField] private float rayTimeStep = 1f;
+    [SerializeField] private int rayCount = 10;
+    [SerializeField] private LayerMask landingPointCollisionLayers;
     Vector3[] points;
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         lineRenderer = GetComponent<LineRenderer>();
+        landingPointObject = Instantiate(landingPointPrefab);
         lineRenderer.enabled = false;
-        points=new Vector3[resolution];
+        landingPointObject.gameObject.SetActive(false);
+        points = new Vector3[resolution];
         lineRenderer.positionCount = resolution;
         Player.Instance.OnStateChange += Player_OnStateChange;
     }
@@ -22,24 +29,27 @@ public class LineVisual : MonoBehaviour
     private void Player_OnStateChange(object sender, Player.OnStateChangeEventArgs e) {
         if (e.playerState == Player.State.Aiming) {
             isAiming = true;
-            CalculatePoints();
+            RenderLineRenderer();
+            RenderLandingPoint();
             lineRenderer.enabled = true;
         }
         else {
             isAiming = false;
             lineRenderer.enabled = false;
+            landingPointObject.gameObject.SetActive(false);
         }
     }
 
     private void Update() {
         if (isAiming) {
-            CalculatePoints();
+            RenderLineRenderer();
+            RenderLandingPoint();
         }
     }
 
-    private void CalculatePoints() {
+    private void RenderLineRenderer() {
         Vector3 launchVector = Player.Instance.GetLaunchVector();
-        Vector3 launchOrigin= Player.Instance.GetLaunchOrigin();
+        Vector3 launchOrigin = Player.Instance.GetLaunchOrigin();
 
         float gravity = Physics.gravity.y;
 
@@ -52,6 +62,35 @@ public class LineVisual : MonoBehaviour
             points[i] = new Vector3(x, y, z);
         }
         lineRenderer.SetPositions(points);
+    }
+
+    private void RenderLandingPoint() {
+        Vector3 launchVector = Player.Instance.GetLaunchVector();
+        Vector3 launchOrigin = Player.Instance.GetLaunchOrigin();
+        //Do a series of raycasts approximating projectile motion
+        //If we hit anything then render the landing point at the hit point
+        float gravity = Physics.gravity.y;
+        Vector3 oldOrigin = launchOrigin;
+        Vector3 origin = Vector3.zero;
+        for (int i = 0; i < rayCount; i++) {
+
+            float t = i * rayTimeStep;
+            origin.x = launchOrigin.x + launchVector.x * t;
+            origin.y = launchOrigin.y + launchVector.y * t + 0.5f * gravity * t * t;
+            origin.z = launchOrigin.z + launchVector.z * t;
+            Vector3 direction = origin - oldOrigin;
+            direction.Normalize();
+            RaycastHit hit;
+            if (Physics.SphereCast(oldOrigin, 1f, direction, out hit, rayDistance, landingPointCollisionLayers)) {
+                if (!landingPointObject.gameObject.activeSelf)
+                    landingPointObject.gameObject.SetActive(true);
+                landingPointObject.position = hit.point;
+                //Rotate the landing point so that the y axis is aligned with the normal of the hit point
+                landingPointObject.rotation = Quaternion.LookRotation(hit.normal) * Quaternion.Euler(90, 0, 0);
+                break;
+            }
+            oldOrigin = origin;
+        }
     }
 
 
