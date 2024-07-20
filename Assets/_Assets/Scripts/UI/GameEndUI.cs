@@ -21,7 +21,7 @@ public class GameEndUI : MonoBehaviour {
             winUI.SetActive(true);
         }
         else {
-            winUI.SetActive(false);
+            loseUI.SetActive(true);
         }
     }
 }

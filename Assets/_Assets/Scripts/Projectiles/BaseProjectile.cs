@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
+
 public abstract class BaseProjectile : MonoBehaviour, IHittable {
 
     [SerializeField] protected HittableType[] targets;
