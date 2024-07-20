@@ -38,10 +38,9 @@ public abstract class BaseProjectile : MonoBehaviour, IHittable {
         if (hittable != null) {
             if (CanHit(hittable.GetHittableType())) {
                 hittable.Hit(this);
-                //Projectile should always get destroyed after collision with anything it can hit
-                Destroy(gameObject);
             }
         }
+        Destroy(gameObject);
     }
 
     protected virtual void Start() {

@@ -85,8 +85,6 @@ public class LineVisual : MonoBehaviour {
                 if (!landingPointObject.gameObject.activeSelf)
                     landingPointObject.gameObject.SetActive(true);
                 landingPointObject.position = hit.point;
-                //Rotate the landing point so that the y axis is aligned with the normal of the hit point
-                landingPointObject.rotation = Quaternion.LookRotation(hit.normal) * Quaternion.Euler(90, 0, 0);
                 break;
             }
             oldOrigin = origin;

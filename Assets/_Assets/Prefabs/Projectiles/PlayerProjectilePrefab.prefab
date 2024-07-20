@@ -219,7 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 581a4ca87a87f4c448e6154a2c0c061d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targets: 010000000300000004000000
+  targets: 030000000400000001000000
   damage: 10
   decayTime: 5
   projectileType: 2
