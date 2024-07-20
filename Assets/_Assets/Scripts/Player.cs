@@ -139,13 +139,9 @@ public class Player : MonoBehaviour, IHittable {
 
 
 
-    public Vector3 GetLaunchVector() {
-        return launchVector;
-    }
-    public Vector3 GetLaunchOrigin() {
-        return launchOrigin.transform.position;
-    }
+   
 
+    #region Interface
     public void Hit(BaseProjectile projectile) {        
         health -= projectile.GetDamage();
         OnHealthChange?.Invoke(this, EventArgs.Empty);
@@ -158,12 +154,23 @@ public class Player : MonoBehaviour, IHittable {
     public HittableType GetHittableType() {
         return HittableType.Player;
     }
+    #endregion
 
+    #region Getters
     public float GetHealthNormalized() {
         return health / maxHealth;
     }
 
-   
+    public Vector3 GetLaunchVector() {
+        return launchVector;
+    }
+    public Vector3 GetLaunchOrigin() {
+        return launchOrigin.transform.position;
+    }
 
+    public float GetLaunchTimerNormalized() {
+        return launchTimer / launchCooldown;
+    }
+    #endregion
 
 }
