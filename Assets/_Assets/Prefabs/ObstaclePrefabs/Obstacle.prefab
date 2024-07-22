@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallingSpeed: 0.1
-  launchSpeed: 0.1
+  launchSpeed: 1
+  upwardsAngle: 10
   obstacleProjectile: {fileID: 6237573955011112708, guid: 25dfd1dc1ec282547893cb0a6234b7ae,
     type: 3}

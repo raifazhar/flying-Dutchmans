@@ -103,6 +103,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5599256132711233372, guid: 378339d96ec84654db807ef6679c114e,
         type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5599256132711233372, guid: 378339d96ec84654db807ef6679c114e,
+        type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
       value: 64
       objectReference: {fileID: 0}
@@ -220,6 +225,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targets: 030000000400000001000000
-  damage: 10
+  damage: 0
   decayTime: 5
   projectileType: 2

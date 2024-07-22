@@ -96,8 +96,10 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 102fa66a92e7ed84791a9e187959d26a,
+    type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 26cc32886b9ba9c4493622d95e665632,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -132,12 +134,13 @@ GameObject:
   m_Component:
   - component: {fileID: 12118407}
   - component: {fileID: 12118408}
+  - component: {fileID: 12118409}
   m_Layer: 0
   m_Name: ObstacleSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &12118407
 Transform:
@@ -148,7 +151,7 @@ Transform:
   m_GameObject: {fileID: 12118406}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 7.25, z: 0}
+  m_LocalPosition: {x: 1.05, y: 7.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -169,12 +172,28 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: -9.25, y: 1, z: 6.22}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &12118409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 12118406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf2a5b978167f0245a63b0d270caa6a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstaclePrefabs:
+  - {fileID: 9130215283722170576, guid: a030eea1c871f1544bce8035eeabebd5, type: 3}
+  spawnInterval: 5
+  boxCollider: {fileID: 12118408}
 --- !u!1 &89241461
 GameObject:
   m_ObjectHideFlags: 0
@@ -2373,9 +2392,9 @@ MonoBehaviour:
   launchPoint: {fileID: 1355217469}
   enemyProjectile: {fileID: 6784864521282570351, guid: 77d9fc3f3426d4947b5cf94246daceda,
     type: 3}
-  shootInterval: 2
+  shootInterval: 5
   launchVector: {x: -1, y: 1, z: 0}
-  launchSpeed: 9.5
+  launchSpeed: 9
 --- !u!65 &1318320826
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2881,12 +2900,12 @@ MonoBehaviour:
   launchOrigin: {fileID: 626517277}
   projectilePrefab: {fileID: 4635234919210959314, guid: 9008717387286c64485a9d1f57e12e13,
     type: 3}
-  touchSensitivityHorizontal: 2
+  touchSensitivityHorizontal: 1
   touchSensitivityVertical: 2
   launchVectorMax: 2
   launchVectorMin: 0
   launchSpeed: 10
-  startingVector: {x: 0.5, y: 0.5, z: 0}
+  startingVector: {x: 0.6, y: 0.6, z: 0}
   launchCooldown: 1
 --- !u!1 &1767328155
 GameObject:

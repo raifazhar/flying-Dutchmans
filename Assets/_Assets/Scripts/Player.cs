@@ -20,10 +20,10 @@ public class Player : MonoBehaviour, IHittable {
         public State playerState;
     }
     public event EventHandler OnHealthChange;
-    
+
     [Header("Health Settings")]
     [SerializeField] private float maxHealth = 100f;
-     private float health;
+    private float health;
 
 
     [Header("Player Settings")]
@@ -34,8 +34,8 @@ public class Player : MonoBehaviour, IHittable {
     [SerializeField] private float launchVectorMax;
     [SerializeField] private float launchVectorMin;
     [SerializeField] private float launchSpeed;
-    private float cameraZDistance=1;
-    [SerializeField]private Vector3 startingVector;
+    private float cameraZDistance = 1;
+    [SerializeField] private Vector3 startingVector;
     private Vector3 touchOrigin;
     private Vector3 touchOriginWorldSpace;
     private Vector3 touchPoint;
@@ -43,7 +43,7 @@ public class Player : MonoBehaviour, IHittable {
     private Vector3 launchVector;
 
     [SerializeField] private float launchCooldown = 1f;
-    private float launchTimer=0f;
+    private float launchTimer = 0f;
 
 
     private State playerState;
@@ -57,7 +57,7 @@ public class Player : MonoBehaviour, IHittable {
             Destroy(gameObject);
         }
         playerState = State.Idle;
-        health= maxHealth;
+        health = maxHealth;
     }
 
     void FixedUpdate() {
@@ -108,17 +108,14 @@ public class Player : MonoBehaviour, IHittable {
         touchPoint.z = cameraZDistance;
         touchPointWorldSpace = Camera.main.ScreenToWorldPoint(touchPoint);
         Vector3 screenVector = touchPointWorldSpace - touchOriginWorldSpace;
-        //Set the launchVector to the startingVector then add the relevant screenVector components to it
-        launchVector=startingVector;
-        //These decide the actual height and z axis tilt of the launchVector
-        if (screenVector.y < 0)
-            launchVector.y += screenVector.magnitude;
-        else
-            launchVector.y += -screenVector.magnitude;
-        launchVector.z += -screenVector.z; //We do -screenVector.z so the x axis is inverted, basically player has to pull in opposite direction of where they wanna shoot
         //Touch Sensitivity field is used to change the sensitivity of the launchVector as per user touch
-        launchVector.y *= touchSensitivityVertical;
-        launchVector.z *= touchSensitivityHorizontal;
+        screenVector.y *= touchSensitivityVertical;
+        screenVector.z *= touchSensitivityHorizontal;
+        //Set the launchVector to the startingVector then add the relevant screenVector components to it
+        launchVector = startingVector;
+        //These decide the actual height and z axis tilt of the launchVector
+        launchVector.y -= screenVector.y;
+        launchVector.z -= screenVector.z; //We do -screenVector.z so the x axis is inverted, basically player has to pull in opposite direction of where they wanna shoot
         //This decides the x distance, basically the length of the launchVector
         launchVector.x = 1;
         //Clamp the launchVector so it doesn't go too far or too short
@@ -139,10 +136,10 @@ public class Player : MonoBehaviour, IHittable {
 
 
 
-   
+
 
     #region Interface
-    public void Hit(BaseProjectile projectile) {        
+    public void Hit(BaseProjectile projectile) {
         health -= projectile.GetDamage();
         OnHealthChange?.Invoke(this, EventArgs.Empty);
         if (health <= 0) {
