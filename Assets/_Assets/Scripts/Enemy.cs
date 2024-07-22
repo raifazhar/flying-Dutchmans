@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IHittable {
@@ -18,9 +19,11 @@ public class Enemy : MonoBehaviour, IHittable {
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private Transform launchPoint;
     [SerializeField] private GameObject enemyProjectile;
+    [Header("AI")]
     [SerializeField] private float shootInterval = 2f;
-    [SerializeField] private Vector3 launchVector;
-    [SerializeField] private float launchSpeed = 10f;
+    [SerializeField] private float heightThreshold = 2f;
+    [SerializeField] private float launchVelocity = 2f;
+    private Vector3 launchVector;
     private float shootTimer;
     private int health;
 
@@ -43,7 +46,7 @@ public class Enemy : MonoBehaviour, IHittable {
     }
 
     private void GameManager_OnGameEnd(object sender, GameManager.OnGameEndEventArgs e) {
-        enemyState=State.GameOver;
+        enemyState = State.GameOver;
     }
 
     public void Update() {
@@ -62,11 +65,76 @@ public class Enemy : MonoBehaviour, IHittable {
             return;
         }
         shootTimer = shootInterval;
-        //Launch the projectile such that it follows a projectile motion trajectory towards player
+        SetLaunchVector();
         GameObject projectile = Instantiate(enemyProjectile, launchPoint.position, launchPoint.rotation);
-        projectile.GetComponent<Rigidbody>().velocity = launchVector * launchSpeed;
+        projectile.GetComponent<Rigidbody>().velocity = launchVector;
 
     }
+
+    private void SetLaunchVector() {
+        launchVector = Vector3.zero;
+        List<Transform> activeObstacles = ObstacleSpawner.Instance.GetActiveObstacles();
+        //Remove all obstacles below height threshold
+        for (int i = 0; i < activeObstacles.Count; i++) {
+            if (activeObstacles[i].position.y < heightThreshold) {
+                activeObstacles.RemoveAt(i);
+            }
+        }
+        //Find highest damage obstacle
+        Transform highestDamageObstacle = null;
+        int highestDamage = 0;
+        for (int i = 0; i < activeObstacles.Count; i++) {
+            if (activeObstacles[i].GetComponent<Obstacle>().GetDamage() >= highestDamage) {
+                highestDamage = activeObstacles[i].GetComponent<Obstacle>().GetDamage();
+                highestDamageObstacle = activeObstacles[i];
+            }
+        }
+
+        Vector3 toTarget = Vector3.zero;
+        if (highestDamageObstacle != null) {
+            Vector3 targetPosition = highestDamageObstacle.position;
+            targetPosition.y -= highestDamageObstacle.GetComponent<Obstacle>().GetFallSpeed() * 2f;
+            toTarget = targetPosition - transform.position;
+
+        }
+        else {
+            toTarget = Player.Instance.transform.position - transform.position;
+        }
+
+        // Set up the terms we need to solve the quadratic equations.
+        float gSquared = Physics.gravity.sqrMagnitude;
+
+
+        float b = launchVelocity * launchVelocity + Vector3.Dot(toTarget, Physics.gravity);
+        float discriminant = b * b - gSquared * toTarget.sqrMagnitude;
+        while (discriminant < 0) {
+            launchVelocity++;
+            b = launchVelocity * launchVelocity + Vector3.Dot(toTarget, Physics.gravity);
+            discriminant = b * b - gSquared * toTarget.sqrMagnitude;
+        }
+
+        float discRoot = Mathf.Sqrt(discriminant);
+
+        // Highest shot with the given max speed:
+        float T_max = Mathf.Sqrt((b + discRoot) * 2f / gSquared);
+
+        // Most direct shot with the given max speed:
+        float T_min = Mathf.Sqrt((b - discRoot) * 2f / gSquared);
+
+        // Lowest-speed arc available:
+        float T_lowEnergy = Mathf.Sqrt(Mathf.Sqrt(toTarget.sqrMagnitude * 4f / gSquared));
+
+        float T = T_min;
+
+        // Convert from time-to-hit to a launch velocity:
+        launchVector = toTarget / T - Physics.gravity * T / 2f;
+
+    }
+
+
+
+
+
     public HittableType GetHittableType() {
         return HittableType.Enemy;
     }
@@ -76,7 +144,7 @@ public class Enemy : MonoBehaviour, IHittable {
         OnHealthChanged?.Invoke(this, EventArgs.Empty);
         if (health <= 0) {
             enemyState = State.Dead;
-            OnStateChange?.Invoke(this, new OnStateChangeEventArgs {enemyState=enemyState });
+            OnStateChange?.Invoke(this, new OnStateChangeEventArgs { enemyState = enemyState });
         }
     }
 

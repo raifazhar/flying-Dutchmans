@@ -10,6 +10,7 @@ public class ObstacleSpawner : MonoBehaviour {
     private float spawnTimer = 0f;
     [SerializeField] private BoxCollider boxCollider;
     private Bounds bounds;
+    private List<Transform> activeObstacles;
 
     private void Awake() {
         if (Instance == null) {
@@ -22,6 +23,7 @@ public class ObstacleSpawner : MonoBehaviour {
     void Start() {
         bounds = boxCollider.bounds;
         spawnTimer = spawnInterval;
+        activeObstacles = new List<Transform>();
     }
 
     // Update is called once per frame
@@ -46,7 +48,7 @@ public class ObstacleSpawner : MonoBehaviour {
             sum += spawnChance[i];
             if (randomValue <= sum) {
                 chosenObstaclePrefab = obstaclePrefabs[i];
-                Instantiate(chosenObstaclePrefab, spawnPosition, Quaternion.identity);
+                activeObstacles.Add(Instantiate(chosenObstaclePrefab, spawnPosition, Quaternion.identity));
                 break;
             }
         }
@@ -56,5 +58,11 @@ public class ObstacleSpawner : MonoBehaviour {
     public void SetObstacles(Transform[] obstaclePrefabs, float[] spawnChance) {
         this.obstaclePrefabs = obstaclePrefabs;
         this.spawnChance = spawnChance;
+    }
+    public List<Transform> GetActiveObstacles() {
+        return activeObstacles;
+    }
+    public void RemoveObstacle(Transform obstacle) {
+        activeObstacles.Remove(obstacle);
     }
 }

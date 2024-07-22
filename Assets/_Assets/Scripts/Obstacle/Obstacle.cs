@@ -22,9 +22,8 @@ public class Obstacle : MonoBehaviour, IHittable {
             launchVector = Player.Instance.transform.position - transform.position;
         }
         launchVector.y += upwardsAngle;
-        Debug.DrawLine(transform.position, transform.position + launchVector, Color.red, 5f);
         LaunchProjectile();
-        Destroy(gameObject);
+        DestroyObstacle();
     }
 
     private void LaunchProjectile() {
@@ -38,9 +37,19 @@ public class Obstacle : MonoBehaviour, IHittable {
     private void FixedUpdate() {
         transform.position -= new Vector3(0, fallingSpeed * Time.deltaTime, 0);
         if (transform.position.y < -10) {
-            Destroy(gameObject);
+            DestroyObstacle();
         }
     }
 
+    public int GetDamage() {
+        return obstacleProjectile.GetComponent<BaseProjectile>().GetDamage();
+    }
+    public float GetFallSpeed() {
+        return fallingSpeed;
+    }
+    private void DestroyObstacle() {
+        ObstacleSpawner.Instance.RemoveObstacle(this.transform);
+        Destroy(gameObject);
+    }
 
 }
