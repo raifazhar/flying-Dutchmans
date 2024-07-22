@@ -41,6 +41,7 @@ public class Player : MonoBehaviour, IHittable {
     private Vector3 touchPoint;
     private Vector3 touchPointWorldSpace;
     private Vector3 launchVector;
+    private Vector3 screenVector;
 
     [SerializeField] private float launchCooldown = 1f;
     private float launchTimer = 0f;
@@ -85,6 +86,7 @@ public class Player : MonoBehaviour, IHittable {
                     //OnStateChange is invoked everytime state changes, this is for any visual stuff that needs to be done
                     //We seperate the logic from the visuals this way
                     OnStateChange?.Invoke(this, new OnStateChangeEventArgs { playerState = playerState });
+                    Time.timeScale = 0.5f;
                 }
                 break;
             case State.Aiming:
@@ -92,6 +94,7 @@ public class Player : MonoBehaviour, IHittable {
                     LaunchProjectile();
                     playerState = State.Launching;
                     launchTimer = launchCooldown;
+                    Time.timeScale = 1f;
                     OnStateChange?.Invoke(this, new OnStateChangeEventArgs { playerState = playerState });
                 }
                 else {
@@ -119,7 +122,7 @@ public class Player : MonoBehaviour, IHittable {
         touchPoint = Input.GetTouch(0).position;
         touchPoint.z = cameraZDistance;
         touchPointWorldSpace = Camera.main.ScreenToWorldPoint(touchPoint);
-        Vector3 screenVector = touchPointWorldSpace - touchOriginWorldSpace;
+        screenVector = touchPointWorldSpace - touchOriginWorldSpace;
         //Touch Sensitivity field is used to change the sensitivity of the launchVector as per user touch
         screenVector.y *= touchSensitivityVertical;
         screenVector.z *= touchSensitivityHorizontal;
@@ -144,16 +147,15 @@ public class Player : MonoBehaviour, IHittable {
     }
     private void LaunchProjectile() {
         Instantiate(projectilePrefab, launchOrigin.position, Quaternion.identity).GetComponent<Rigidbody>().velocity = launchVector;
+        launchVector = Vector3.zero;
+        screenVector = Vector3.zero;
     }
-
-
-
-
 
     #region Interface
     public void Hit(BaseProjectile projectile) {
         health -= projectile.GetDamage();
         OnHealthChange?.Invoke(this, EventArgs.Empty);
+        CameraController.Instance.AddTrauma(0.5f);
         if (health <= 0) {
             playerState = State.Dead;
             OnStateChange?.Invoke(this, new OnStateChangeEventArgs { playerState = playerState });
@@ -176,10 +178,15 @@ public class Player : MonoBehaviour, IHittable {
     public Vector3 GetLaunchOrigin() {
         return launchOrigin.transform.position;
     }
+    public Vector3 GetScreenVector() {
+        return screenVector;
+    }
 
     public float GetLaunchTimerNormalized() {
         return launchTimer / launchCooldown;
     }
+
+
     #endregion
 
 }
