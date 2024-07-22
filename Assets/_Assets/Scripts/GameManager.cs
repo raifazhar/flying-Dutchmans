@@ -32,11 +32,9 @@ public class GameManager : MonoBehaviour {
 
     }
     private void Start() {
-        Vector3 playerPos = Player.Instance.transform.position;
-        //Set enemy to be correct distance from player
-        Enemy.Instance.transform.position = new Vector3(playerPos.x + levelDetails.enemyDistance, Enemy.Instance.transform.position.y, Enemy.Instance.transform.position.z);
         Player.Instance.OnStateChange += Player_OnStateChange;
         Enemy.Instance.OnStateChange += Enemy_OnStateChange;
+        ObstacleSpawner.Instance.SetObstacles(levelDetails.ObstacleList.obstaclePrefabs, levelDetails.spawnChance);
     }
 
     private void Enemy_OnStateChange(object sender, Enemy.OnStateChangeEventArgs e) {

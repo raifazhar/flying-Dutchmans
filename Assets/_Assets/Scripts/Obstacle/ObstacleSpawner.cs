@@ -3,11 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ObstacleSpawner : MonoBehaviour {
-    [SerializeField] private Transform[] obstaclePrefabs;
+    public static ObstacleSpawner Instance { get; private set; }
     [SerializeField] private float spawnInterval = 2f;
+    private Transform[] obstaclePrefabs;
+    private float[] spawnChance;
     private float spawnTimer = 0f;
     [SerializeField] private BoxCollider boxCollider;
     private Bounds bounds;
+
+    private void Awake() {
+        if (Instance == null) {
+            Instance = this;
+        }
+        else {
+            Destroy(gameObject);
+        }
+    }
     void Start() {
         bounds = boxCollider.bounds;
         spawnTimer = spawnInterval;
@@ -23,12 +34,27 @@ public class ObstacleSpawner : MonoBehaviour {
     }
 
     private void SpawnObstacle() {
-        Transform obstaclePrefab = obstaclePrefabs[Random.Range(0, obstaclePrefabs.Length)];
         Vector3 spawnPosition = new Vector3(
             Random.Range(bounds.min.x, bounds.max.x),
             Random.Range(bounds.min.y, bounds.max.y),
             Random.Range(bounds.min.z, bounds.max.z)
         );
-        Instantiate(obstaclePrefab, spawnPosition, Quaternion.identity);
+        Transform chosenObstaclePrefab;
+        float randomValue = Random.value;
+        float sum = 0;
+        for (int i = 0; i < spawnChance.Length; i++) {
+            sum += spawnChance[i];
+            if (randomValue <= sum) {
+                chosenObstaclePrefab = obstaclePrefabs[i];
+                Instantiate(chosenObstaclePrefab, spawnPosition, Quaternion.identity);
+                break;
+            }
+        }
+
+    }
+
+    public void SetObstacles(Transform[] obstaclePrefabs, float[] spawnChance) {
+        this.obstaclePrefabs = obstaclePrefabs;
+        this.spawnChance = spawnChance;
     }
 }

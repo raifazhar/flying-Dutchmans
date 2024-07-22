@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class LevelSO : ScriptableObject {
     public int LevelID;
-    public float enemyDistance;
     public Transform Environment;
+    public ObstacleListSO ObstacleList;
+    public float[] spawnChance;
 }
