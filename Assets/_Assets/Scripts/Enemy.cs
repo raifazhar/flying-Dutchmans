@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour, IHittable {
     }
     public static Enemy Instance { get; private set; }
     public event EventHandler OnHealthChanged;
+    public Action<State> onstatechangehad;
     public event EventHandler<OnStateChangeEventArgs> OnStateChange;
     public class OnStateChangeEventArgs : EventArgs {
         public State enemyState;
@@ -107,10 +108,11 @@ public class Enemy : MonoBehaviour, IHittable {
 
         float b = launchVelocity * launchVelocity + Vector3.Dot(toTarget, Physics.gravity);
         float discriminant = b * b - gSquared * toTarget.sqrMagnitude;
-        while (discriminant < 0) {
-            launchVelocity++;
-            b = launchVelocity * launchVelocity + Vector3.Dot(toTarget, Physics.gravity);
-            discriminant = b * b - gSquared * toTarget.sqrMagnitude;
+        if (discriminant < 0)
+        {
+            Debug.Log("calling this");
+            b = (float)Math.Sqrt(gSquared * toTarget.sqrMagnitude);
+            discriminant = 0;
         }
 
         float discRoot = Mathf.Sqrt(discriminant);
