@@ -3,21 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour,IHittable
-{
+public class Enemy : MonoBehaviour, IHittable {
     public enum State {
-    Idle,
-    Shooting,
-    Dead,
+        Shooting,
+        Dead,
+        GameOver,
     }
     public static Enemy Instance { get; private set; }
     public event EventHandler OnHealthChanged;
+    public event EventHandler<OnStateChangeEventArgs> OnStateChange;
+    public class OnStateChangeEventArgs : EventArgs {
+        public State enemyState;
+    }
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private Transform launchPoint;
     [SerializeField] private GameObject enemyProjectile;
     [SerializeField] private float shootInterval = 2f;
-    [SerializeField]private Vector3 launchVector;
-    [SerializeField]private float launchSpeed =10f;
+    [SerializeField] private Vector3 launchVector;
+    [SerializeField] private float launchSpeed = 10f;
     private float shootTimer;
     private int health;
 
@@ -32,13 +35,19 @@ public class Enemy : MonoBehaviour,IHittable
             Destroy(gameObject);
         }
         health = maxHealth;
-        enemyState= State.Shooting;
+        enemyState = State.Shooting;
+    }
+
+    private void Start() {
+        GameManager.Instance.OnGameEnd += GameManager_OnGameEnd;
+    }
+
+    private void GameManager_OnGameEnd(object sender, GameManager.OnGameEndEventArgs e) {
+        enemyState=State.GameOver;
     }
 
     public void Update() {
         switch (enemyState) {
-            case State.Idle:
-                break;
             case State.Shooting:
                 Shoot();
                 break;
@@ -63,15 +72,16 @@ public class Enemy : MonoBehaviour,IHittable
     }
 
     public void Hit(BaseProjectile projectile) {
-        health-=projectile.GetDamage();
+        health -= projectile.GetDamage();
         OnHealthChanged?.Invoke(this, EventArgs.Empty);
         if (health <= 0) {
-         enemyState = State.Dead;
+            enemyState = State.Dead;
+            OnStateChange?.Invoke(this, new OnStateChangeEventArgs {enemyState=enemyState });
         }
     }
 
     public float GetHealthNormalized() {
         return (float)health / maxHealth;
     }
-    
+
 }
