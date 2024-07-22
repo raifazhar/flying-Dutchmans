@@ -47,6 +47,8 @@ public class Player : MonoBehaviour, IHittable {
 
 
     private State playerState;
+
+    private bool gameOver = false;
     // Start is called before the first frame update
 
     private void Awake() {
@@ -60,9 +62,19 @@ public class Player : MonoBehaviour, IHittable {
         health = maxHealth;
     }
 
+    private void Start() {
+        GameManager.Instance.OnGameEnd += GameManager_OnGameEnd;
+    }
+
+    private void GameManager_OnGameEnd(object sender, GameManager.OnGameEndEventArgs e) {
+        gameOver = true;
+    }
+
     void FixedUpdate() {
         switch (playerState) {
             case State.Idle:
+                if (gameOver)
+                    playerState = State.Dead;
                 if (Input.touchCount > 0) {
                     //IF player has started touch in idle state then store the initial touchOrigin and get its world space coordinates as well
                     touchOrigin = Input.GetTouch(0).position;

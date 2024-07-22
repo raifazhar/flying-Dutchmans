@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelSO : MonoBehaviour
-{
+[CreateAssetMenu()]
+public class LevelSO : ScriptableObject {
     public int LevelID;
     public float enemyDistance;
     public Transform Environment;
