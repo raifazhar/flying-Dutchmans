@@ -69,6 +69,7 @@ public class Enemy : MonoBehaviour, IHittable {
         SetLaunchVector();
         GameObject projectile = Instantiate(enemyProjectile, launchPoint.position, launchPoint.rotation);
         projectile.GetComponent<Rigidbody>().velocity = launchVector;
+        projectile.GetComponent<Rigidbody>().angularVelocity = launchVector;
 
     }
 
@@ -108,9 +109,7 @@ public class Enemy : MonoBehaviour, IHittable {
 
         float b = launchVelocity * launchVelocity + Vector3.Dot(toTarget, Physics.gravity);
         float discriminant = b * b - gSquared * toTarget.sqrMagnitude;
-        if (discriminant < 0)
-        {
-            Debug.Log("calling this");
+        if (discriminant < 0) {
             b = (float)Math.Sqrt(gSquared * toTarget.sqrMagnitude);
             discriminant = 0;
         }

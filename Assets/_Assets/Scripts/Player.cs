@@ -146,7 +146,9 @@ public class Player : MonoBehaviour, IHittable {
         launchVector *= launchSpeed;
     }
     private void LaunchProjectile() {
-        Instantiate(projectilePrefab, launchOrigin.position, Quaternion.identity).GetComponent<Rigidbody>().velocity = launchVector;
+        GameObject launchedProjectile = Instantiate(projectilePrefab, launchOrigin.position, Quaternion.identity);
+        launchedProjectile.GetComponent<Rigidbody>().velocity = launchVector;
+        launchedProjectile.GetComponent<Rigidbody>().angularVelocity = launchVector;
         launchVector = Vector3.zero;
         screenVector = Vector3.zero;
     }

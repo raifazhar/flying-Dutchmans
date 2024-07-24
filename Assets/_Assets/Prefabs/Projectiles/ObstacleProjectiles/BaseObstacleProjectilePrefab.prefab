@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 1760680805616307606, guid: 378339d96ec84654db807ef6679c114e,
         type: 3}
       propertyPath: m_Name
-      value: ObstacleProjectilePrefab
+      value: BaseObstacleProjectilePrefab
       objectReference: {fileID: 0}
     - target: {fileID: 1760680805616307606, guid: 378339d96ec84654db807ef6679c114e,
         type: 3}

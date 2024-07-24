@@ -30,6 +30,7 @@ public class Obstacle : MonoBehaviour, IHittable {
         Transform projectile = Instantiate(obstacleProjectile, transform.position, Quaternion.identity);
         projectile.GetComponent<ObstacleProjectile>().SetProjectileType(HittableType.Obstacle);
         projectile.GetComponent<Rigidbody>().velocity = launchVector * launchSpeed;
+        projectile.GetComponent<Rigidbody>().angularVelocity = launchVector * launchSpeed;
     }
     private void Start() {
         launchVector = Vector3.zero;
