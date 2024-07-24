@@ -144,6 +144,9 @@ MonoBehaviour:
   targets: 030000000400000001000000
   damage: 0
   decayTime: 5
+  hitVFX: {fileID: 1398378603891710113, guid: 7f9fa8112d0362240a890ea6c1d9ed36, type: 3}
+  waterCollisionFX: {fileID: 3991222090404552506, guid: 4ef7044fa1c5b904fbed8e5d1141305c,
+    type: 3}
   projectileType: 2
 --- !u!1001 &8470110829491683244
 PrefabInstance:

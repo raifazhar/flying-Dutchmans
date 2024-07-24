@@ -7,10 +7,10 @@ public enum HittableType {
     Enemy,
     PlayerProjectile,
     EnemyProjectile,
-    Obstacle
+    Obstacle,
+    Ocean
 }
-public interface IHittable
-{
+public interface IHittable {
     void Hit(BaseProjectile projectile);
 
     HittableType GetHittableType();

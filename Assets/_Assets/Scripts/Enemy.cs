@@ -66,14 +66,14 @@ public class Enemy : MonoBehaviour, IHittable {
             return;
         }
         shootTimer = shootInterval;
-        SetLaunchVector();
-        GameObject projectile = Instantiate(enemyProjectile, launchPoint.position, launchPoint.rotation);
-        projectile.GetComponent<Rigidbody>().velocity = launchVector;
-        projectile.GetComponent<Rigidbody>().angularVelocity = launchVector;
-
+        if (MakeShootingDecision()) {
+            GameObject projectile = Instantiate(enemyProjectile, launchPoint.position, launchPoint.rotation);
+            projectile.GetComponent<Rigidbody>().velocity = launchVector;
+            projectile.GetComponent<Rigidbody>().angularVelocity = launchVector;
+        }
     }
 
-    private void SetLaunchVector() {
+    private bool MakeShootingDecision() {
         launchVector = Vector3.zero;
         List<Transform> activeObstacles = ObstacleSpawner.Instance.GetActiveObstacles();
         //Remove all obstacles below height threshold
@@ -97,39 +97,35 @@ public class Enemy : MonoBehaviour, IHittable {
             Vector3 targetPosition = highestDamageObstacle.position;
             targetPosition.y -= highestDamageObstacle.GetComponent<Obstacle>().GetFallSpeed() * 2f;
             toTarget = targetPosition - transform.position;
+            // Set up the terms we need to solve the quadratic equations.
+            float gSquared = Physics.gravity.sqrMagnitude;
 
+
+            float b = launchVelocity * launchVelocity + Vector3.Dot(toTarget, Physics.gravity);
+            float discriminant = b * b - gSquared * toTarget.sqrMagnitude;
+            if (discriminant < 0) {
+                b = (float)Math.Sqrt(gSquared * toTarget.sqrMagnitude);
+                discriminant = 0;
+            }
+
+            float discRoot = Mathf.Sqrt(discriminant);
+
+            // Highest shot with the given max speed:
+            float T_max = Mathf.Sqrt((b + discRoot) * 2f / gSquared);
+
+            // Most direct shot with the given max speed:
+            float T_min = Mathf.Sqrt((b - discRoot) * 2f / gSquared);
+
+            // Lowest-speed arc available:
+            float T_lowEnergy = Mathf.Sqrt(Mathf.Sqrt(toTarget.sqrMagnitude * 4f / gSquared));
+
+            float T = T_min;
+
+            // Convert from time-to-hit to a launch velocity:
+            launchVector = toTarget / T - Physics.gravity * T / 2f;
+            return true;
         }
-        else {
-            toTarget = Player.Instance.transform.position - transform.position;
-        }
-
-        // Set up the terms we need to solve the quadratic equations.
-        float gSquared = Physics.gravity.sqrMagnitude;
-
-
-        float b = launchVelocity * launchVelocity + Vector3.Dot(toTarget, Physics.gravity);
-        float discriminant = b * b - gSquared * toTarget.sqrMagnitude;
-        if (discriminant < 0) {
-            b = (float)Math.Sqrt(gSquared * toTarget.sqrMagnitude);
-            discriminant = 0;
-        }
-
-        float discRoot = Mathf.Sqrt(discriminant);
-
-        // Highest shot with the given max speed:
-        float T_max = Mathf.Sqrt((b + discRoot) * 2f / gSquared);
-
-        // Most direct shot with the given max speed:
-        float T_min = Mathf.Sqrt((b - discRoot) * 2f / gSquared);
-
-        // Lowest-speed arc available:
-        float T_lowEnergy = Mathf.Sqrt(Mathf.Sqrt(toTarget.sqrMagnitude * 4f / gSquared));
-
-        float T = T_min;
-
-        // Convert from time-to-hit to a launch velocity:
-        launchVector = toTarget / T - Physics.gravity * T / 2f;
-
+        return false;
     }
 
 

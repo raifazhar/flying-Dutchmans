@@ -9,6 +9,8 @@ public abstract class BaseProjectile : MonoBehaviour, IHittable {
     [SerializeField] protected HittableType[] targets;
     [SerializeField] protected int damage;
     [SerializeField] protected int decayTime;
+    [SerializeField] protected Transform hitVFX;
+    [SerializeField] protected Transform waterCollisionFX;
     private float decayTimer;
     [SerializeField] protected HittableType projectileType;
 
@@ -39,6 +41,10 @@ public abstract class BaseProjectile : MonoBehaviour, IHittable {
         if (hittable != null) {
             if (CanHit(hittable.GetHittableType())) {
                 hittable.Hit(this);
+                Instantiate(hitVFX, collision.GetContact(0).point, Quaternion.identity);
+            }
+            else if (hittable.GetHittableType() == HittableType.Ocean) {
+                Instantiate(waterCollisionFX, collision.GetContact(0).point, waterCollisionFX.rotation);
             }
         }
         Destroy(gameObject);
