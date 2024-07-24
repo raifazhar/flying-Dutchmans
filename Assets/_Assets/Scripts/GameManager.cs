@@ -23,13 +23,15 @@ public class GameManager : MonoBehaviour {
         public GameEndState endState;
     }
     [SerializeField] private LevelSO levelDetails;
+    private int targetFrameRate = 60;
     private GameState gameState;
 
 
     private void Awake() {
         Instance = this;
         gameState = GameState.Playing;
-
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = targetFrameRate;
     }
     private void Start() {
         Player.Instance.OnStateChange += Player_OnStateChange;
