@@ -49,7 +49,7 @@ public class Obstacle : MonoBehaviour, IHittable {
         return fallingSpeed;
     }
     private void DestroyObstacle() {
-        ObstacleSpawner.Instance.RemoveObstacle(this.transform);
+        ObstacleSpawner.Instance.RemoveObstacleFromList(this.transform);
         Destroy(gameObject);
     }
 

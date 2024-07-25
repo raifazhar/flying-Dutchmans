@@ -10,10 +10,12 @@ public class Player : MonoBehaviour, IHittable {
 
     public static Player Instance { get; private set; }
     public enum State {
+        None,
         Idle,
         Aiming,
         Launching,
         Dead,
+        GameOver,
     }
     public event EventHandler<OnStateChangeEventArgs> OnStateChange;
     public class OnStateChangeEventArgs : EventArgs {
@@ -22,8 +24,8 @@ public class Player : MonoBehaviour, IHittable {
     public event EventHandler OnHealthChange;
 
     [Header("Health Settings")]
-    [SerializeField] private float maxHealth = 100f;
-    private float health;
+    [SerializeField] private int maxHealth = 100;
+    private int health;
 
 
     [Header("Player Settings")]
@@ -59,7 +61,7 @@ public class Player : MonoBehaviour, IHittable {
         else {
             Destroy(gameObject);
         }
-        playerState = State.Idle;
+        playerState = State.None;
         health = maxHealth;
     }
 
@@ -68,14 +70,18 @@ public class Player : MonoBehaviour, IHittable {
     }
 
     private void GameManager_OnGameEnd(object sender, GameManager.OnGameEndEventArgs e) {
-        gameOver = true;
+        playerState = State.GameOver;
     }
 
+    public void Initialize() {
+        health = maxHealth;
+        playerState = State.Idle;
+    }
     void FixedUpdate() {
         switch (playerState) {
+            case State.None:
+                break;
             case State.Idle:
-                if (gameOver)
-                    playerState = State.Dead;
                 if (Input.touchCount > 0) {
                     //IF player has started touch in idle state then store the initial touchOrigin and get its world space coordinates as well
                     touchOrigin = Input.GetTouch(0).position;
@@ -109,6 +115,8 @@ public class Player : MonoBehaviour, IHittable {
                 }
                 break;
             case State.Dead:
+                break;
+            case State.GameOver:
                 break;
             default:
                 break;
@@ -158,6 +166,7 @@ public class Player : MonoBehaviour, IHittable {
         health -= projectile.GetDamage();
         OnHealthChange?.Invoke(this, EventArgs.Empty);
         CameraController.Instance.AddTrauma(0.5f);
+        GameManager.Instance.RemoveScore(projectile.GetDamage() / 2);
         if (health <= 0) {
             playerState = State.Dead;
             OnStateChange?.Invoke(this, new OnStateChangeEventArgs { playerState = playerState });
@@ -171,7 +180,7 @@ public class Player : MonoBehaviour, IHittable {
 
     #region Getters
     public float GetHealthNormalized() {
-        return health / maxHealth;
+        return (float)health / (float)maxHealth;
     }
 
     public Vector3 GetLaunchVector() {
@@ -188,6 +197,9 @@ public class Player : MonoBehaviour, IHittable {
         return launchTimer / launchCooldown;
     }
 
+    public void SetMaxHealth(int newMaxHealth) {
+        maxHealth = newMaxHealth;
+    }
 
     #endregion
 

@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IHittable {
     public enum State {
+        None,
         Shooting,
         Dead,
         GameOver,
@@ -39,7 +40,7 @@ public class Enemy : MonoBehaviour, IHittable {
             Destroy(gameObject);
         }
         health = maxHealth;
-        enemyState = State.Shooting;
+        enemyState = State.None;
     }
 
     private void Start() {
@@ -50,12 +51,15 @@ public class Enemy : MonoBehaviour, IHittable {
         enemyState = State.GameOver;
     }
 
+    public void Initialize() {
+        health = maxHealth;
+        enemyState = State.Shooting;
+    }
+
     public void Update() {
         switch (enemyState) {
             case State.Shooting:
                 Shoot();
-                break;
-            case State.Dead:
                 break;
         }
     }
@@ -128,10 +132,6 @@ public class Enemy : MonoBehaviour, IHittable {
         return false;
     }
 
-
-
-
-
     public HittableType GetHittableType() {
         return HittableType.Enemy;
     }
@@ -139,6 +139,7 @@ public class Enemy : MonoBehaviour, IHittable {
     public void Hit(BaseProjectile projectile) {
         health -= projectile.GetDamage();
         OnHealthChanged?.Invoke(this, EventArgs.Empty);
+        GameManager.Instance.AddScore(projectile.GetDamage(), projectile.gameObject.transform.position);
         if (health <= 0) {
             enemyState = State.Dead;
             OnStateChange?.Invoke(this, new OnStateChangeEventArgs { enemyState = enemyState });
@@ -147,6 +148,10 @@ public class Enemy : MonoBehaviour, IHittable {
 
     public float GetHealthNormalized() {
         return (float)health / maxHealth;
+    }
+
+    public void SetMaxHealth(int newMaxHealth) {
+        maxHealth = newMaxHealth;
     }
 
 }

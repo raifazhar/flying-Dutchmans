@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Level5
   m_EditorClassIdentifier: 
   LevelID: 5
-  enemyDistance: 18.5
-  Environment: {fileID: 0}
   ObstacleList: {fileID: 11400000, guid: ca1a901fdb351494c92e763152f69dd9, type: 2}
   spawnChance:
   - 0.2
   - 0.4
   - 0.4
+  playerHealth: 450
+  enemyHealth: 450

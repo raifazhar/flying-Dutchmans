@@ -12,6 +12,8 @@ public class ObstacleSpawner : MonoBehaviour {
     private Bounds bounds;
     private List<Transform> activeObstacles;
 
+    private bool active = false;
+
     private void Awake() {
         if (Instance == null) {
             Instance = this;
@@ -24,16 +26,26 @@ public class ObstacleSpawner : MonoBehaviour {
         bounds = boxCollider.bounds;
         spawnTimer = spawnInterval;
         activeObstacles = new List<Transform>();
+        GameManager.Instance.OnGameEnd += GameManager_OnGameEnd;
+    }
+
+    private void GameManager_OnGameEnd(object sender, GameManager.OnGameEndEventArgs e) {
+        active = false;
     }
 
     // Update is called once per frame
     void Update() {
+        if (!active) {
+            return;
+        }
         spawnTimer += Time.deltaTime;
         if (spawnTimer >= spawnInterval) {
             spawnTimer = 0f;
             SpawnObstacle();
         }
     }
+
+
 
     private void SpawnObstacle() {
         Vector3 spawnPosition = new Vector3(
@@ -62,7 +74,11 @@ public class ObstacleSpawner : MonoBehaviour {
     public List<Transform> GetActiveObstacles() {
         return activeObstacles;
     }
-    public void RemoveObstacle(Transform obstacle) {
+    public void RemoveObstacleFromList(Transform obstacle) {
         activeObstacles.Remove(obstacle);
+    }
+
+    public void Initialize() {
+        active = true;
     }
 }
