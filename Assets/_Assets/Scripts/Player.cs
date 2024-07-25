@@ -51,8 +51,6 @@ public class Player : MonoBehaviour, IHittable {
 
     private State playerState;
 
-    private bool gameOver = false;
-    // Start is called before the first frame update
 
     private void Awake() {
         if (Instance == null) {

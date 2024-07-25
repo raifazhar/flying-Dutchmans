@@ -87,7 +87,9 @@ public class GameManager : MonoBehaviour {
         SelectedLevel.SetSelectedLevel(SelectedLevel.selectedLevel + 1);
         SceneManager.LoadScene(Scenes.GameScene);
     }
-
+    public void BackToMenu() {
+        SceneManager.LoadScene(Scenes.MainMenu);
+    }
     public int GetScore() {
         return score;
     }
