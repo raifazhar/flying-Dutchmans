@@ -4433,13 +4433,15 @@ GameObject:
   - component: {fileID: 1474749915}
   - component: {fileID: 1474749914}
   - component: {fileID: 1474749913}
+  - component: {fileID: 1474749916}
+  - component: {fileID: 1474749917}
   m_Layer: 8
   m_Name: forcefield_vfx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!73398921 &1474749913
 VFXRenderer:
   serializedVersion: 1
@@ -4448,7 +4450,7 @@ VFXRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1474749912}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -4497,7 +4499,10 @@ VisualEffect:
   m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
-      m_Array: []
+      m_Array:
+      - m_Value: 0
+        m_Name: opacity
+        m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:
@@ -4527,12 +4532,81 @@ Transform:
   m_GameObject: {fileID: 1474749912}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 17, y: 2.7, z: -0.15}
-  m_LocalScale: {x: 5.29, y: 6, z: 1}
+  m_LocalPosition: {x: 13.1, y: 7.8, z: -0.1}
+  m_LocalScale: {x: 4.4407434, y: 12.660635, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!65 &1474749916
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474749912}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 447
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.49, y: 2, z: 3.0607455}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1474749917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474749912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98cfcba828303d4db2fe03f271493a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitvfx: {fileID: 1398378603891710113, guid: 7f9fa8112d0362240a890ea6c1d9ed36, type: 3}
+  vfx: {fileID: 1474749914}
+  vfxCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.34719765
+      value: 0.40967494
+      inSlope: 0.68910575
+      outSlope: 0.68910575
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.10641714
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.88443273
+      outSlope: -0.88443273
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.2723297
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  flashduration: 1
 --- !u!1 &1506688693
 GameObject:
   m_ObjectHideFlags: 0
