@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour {
     private int score = 0;
     [SerializeField] private LevelListSO levelsSO;
     private int levelIndex = 0;
-    private int targetFrameRate = 60;
+    private readonly int targetFrameRate = 60;
 
 
     private GameState gameState;
@@ -39,12 +39,11 @@ public class GameManager : MonoBehaviour {
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = targetFrameRate;
         Screen.orientation = ScreenOrientation.Portrait;
-        InitializeLevel();
     }
     private void Start() {
+        InitializeLevel();
         Player.Instance.OnStateChange += Player_OnStateChange;
         Enemy.Instance.OnStateChange += Enemy_OnStateChange;
-        ObstacleSpawner.Instance.SetObstacles(levelsSO.levels[levelIndex].ObstacleList.obstaclePrefabs, levelsSO.levels[levelIndex].spawnChance);
     }
 
     private void Enemy_OnStateChange(object sender, Enemy.OnStateChangeEventArgs e) {
@@ -71,7 +70,11 @@ public class GameManager : MonoBehaviour {
             Player.Instance.SetMaxHealth(levelsSO.levels[levelIndex].playerHealth);
             Player.Instance.Initialize();
             Enemy.Instance.SetMaxHealth(levelsSO.levels[levelIndex].enemyHealth);
+            Enemy.Instance.SetMissChance(levelsSO.levels[levelIndex].enemyMissChance);
+            Enemy.Instance.SetShootInterval(levelsSO.levels[levelIndex].enemyShootInterval);
             Enemy.Instance.Initialize();
+            ObstacleSpawner.Instance.SetInvertedChance(levelsSO.levels[levelIndex].invertedChance);
+            ObstacleSpawner.Instance.SetObstacles(levelsSO.levels[levelIndex].ObstacleList.obstaclePrefabs, levelsSO.levels[levelIndex].spawnChance);
             ObstacleSpawner.Instance.Initialize();
         }
     }

@@ -37,7 +37,7 @@ public class Player : MonoBehaviour, IHittable {
     [SerializeField] private float launchVectorMin;
     [SerializeField] private float launchSpeed;
     [SerializeField, Range(0, 1)] private float slowDownFactor = 0.5f;
-    private float cameraZDistance = 1;
+    private readonly float cameraZDistance = 1;
     [SerializeField] private Vector3 startingVector;
     private Vector3 touchOrigin;
     private Vector3 touchOriginWorldSpace;

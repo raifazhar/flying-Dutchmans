@@ -8,8 +8,10 @@ public class ObstacleSpawner : MonoBehaviour {
     private Transform[] obstaclePrefabs;
     private float[] spawnChance;
     private float spawnTimer = 0f;
+    private float invertedChance = 0f;
     [SerializeField] private BoxCollider boxCollider;
     private Bounds bounds;
+
     private List<Transform> activeObstacles;
 
     private bool active = false;
@@ -48,7 +50,7 @@ public class ObstacleSpawner : MonoBehaviour {
 
 
     private void SpawnObstacle() {
-        Vector3 spawnPosition = new Vector3(
+        Vector3 spawnPosition = new(
             Random.Range(bounds.min.x, bounds.max.x),
             Random.Range(bounds.min.y, bounds.max.y),
             Random.Range(bounds.min.z, bounds.max.z)
@@ -60,7 +62,13 @@ public class ObstacleSpawner : MonoBehaviour {
             sum += spawnChance[i];
             if (randomValue <= sum) {
                 chosenObstaclePrefab = obstaclePrefabs[i];
-                activeObstacles.Add(Instantiate(chosenObstaclePrefab, spawnPosition, Quaternion.identity));
+                Transform generatedObstacle = Instantiate(chosenObstaclePrefab, spawnPosition, Quaternion.identity);
+                if (Random.Range(0f, 1f) <= invertedChance) {
+                    generatedObstacle.GetComponent<Obstacle>().SetInverted(true);
+                }
+                else {
+                    activeObstacles.Add(generatedObstacle);
+                }
                 break;
             }
         }
@@ -78,7 +86,11 @@ public class ObstacleSpawner : MonoBehaviour {
         activeObstacles.Remove(obstacle);
     }
 
+    public void SetInvertedChance(float newInvertedChance) {
+        invertedChance = newInvertedChance;
+    }
     public void Initialize() {
         active = true;
+
     }
 }

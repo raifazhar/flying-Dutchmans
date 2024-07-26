@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -25,8 +26,8 @@ public class Enemy : MonoBehaviour, IHittable {
     [Header("AI")]
     [SerializeField] private float shootInterval = 2f;
     [SerializeField] private float heightThreshold = 2f;
-    [SerializeField] private float adjustmentValue = 0.1f;
     [SerializeField] private float launchVelocity = 2f;
+    private float missChance = 0f;
     private Vector3 launchVector;
     private Vector3 targetPosition;
     private float shootTimer;
@@ -98,45 +99,70 @@ public class Enemy : MonoBehaviour, IHittable {
             }
         }
 
-        Vector3 toTarget = Vector3.zero;
         if (highestDamageObstacle != null) {
-            //Reduce the target position by the fall speed of the obstacle and the distance between the launch point and the target
-            targetPosition = highestDamageObstacle.position;
-            float distance = Vector3.Distance(launchPoint.position, targetPosition);
-            distance *= adjustmentValue;
-            targetPosition.y -= highestDamageObstacle.GetComponent<Obstacle>().GetFallSpeed() * distance * 2f;
-            toTarget = targetPosition - transform.position;
-            // Set up the terms we need to solve the quadratic equations.
-            float gSquared = Physics.gravity.sqrMagnitude;
-
-
-            float b = launchVelocity * launchVelocity + Vector3.Dot(toTarget, Physics.gravity);
-            float discriminant = b * b - gSquared * toTarget.sqrMagnitude;
-            if (discriminant < 0) {
-                b = (float)Math.Sqrt(gSquared * toTarget.sqrMagnitude);
-                discriminant = 0;
+            //Get the position of the target
+            Vector3 currentTargetPosition = highestDamageObstacle.position;
+            //Calculate the time it will take for the projectile to reach the current target Position
+            float fallSpeed = highestDamageObstacle.GetComponent<Obstacle>().GetFallSpeed();
+            Vector3 preliminaryLaunchVector = CalculateLaunchVector(launchPoint.position, currentTargetPosition, launchVelocity);
+            float timeToTarget = Vector3.Distance(currentTargetPosition, launchPoint.position) / preliminaryLaunchVector.magnitude;
+            //Compensate for the fall of the obstacle
+            targetPosition = currentTargetPosition;
+            targetPosition.y -= fallSpeed * timeToTarget;
+            //Randomly make enemy miss target by offseting the target position on the x/z by a random amount (minimum 1)
+            if (UnityEngine.Random.Range(0f, 1f) <= missChance) {
+                float x = UnityEngine.Random.Range(1f, 5f);
+                float z = UnityEngine.Random.Range(1f, 5f);
+                if (UnityEngine.Random.Range(0f, 1f) < 0.5f) {
+                    targetPosition.x += x;
+                }
+                else {
+                    targetPosition.x -= x;
+                }
+                if (UnityEngine.Random.Range(0f, 1f) < 0.5f) {
+                    targetPosition.z += z;
+                }
+                else {
+                    targetPosition.z -= z;
+                }
             }
-
-            float discRoot = Mathf.Sqrt(discriminant);
-
-            // Highest shot with the given max speed:
-            float T_max = Mathf.Sqrt((b + discRoot) * 2f / gSquared);
-
-            // Most direct shot with the given max speed:
-            float T_min = Mathf.Sqrt((b - discRoot) * 2f / gSquared);
-
-            // Lowest-speed arc available:
-            float T_lowEnergy = Mathf.Sqrt(Mathf.Sqrt(toTarget.sqrMagnitude * 4f / gSquared));
-
-            float T = T_min;
-
-            // Convert from time-to-hit to a launch velocity:
-            launchVector = toTarget / T - Physics.gravity * T / 2f;
+            //Calculate the launch vector
+            launchVector = CalculateLaunchVector(launchPoint.position, targetPosition, launchVelocity);
             return true;
         }
         return false;
     }
 
+
+    private Vector3 CalculateLaunchVector(Vector3 startPos, Vector3 targetPos, float launchSpeed) {
+        Vector3 toTarget = targetPos - startPos;
+        // Set up the terms we need to solve the quadratic equations.
+        float gSquared = Physics.gravity.sqrMagnitude;
+
+
+        float b = launchSpeed * launchSpeed + Vector3.Dot(toTarget, Physics.gravity);
+        float discriminant = b * b - gSquared * toTarget.sqrMagnitude;
+        if (discriminant < 0) {
+            b = (float)Math.Sqrt(gSquared * toTarget.sqrMagnitude);
+            discriminant = 0;
+        }
+
+        float discRoot = Mathf.Sqrt(discriminant);
+
+        // Highest shot with the given max speed:
+        //float T_max = Mathf.Sqrt((b + discRoot) * 2f / gSquared);
+
+        // Most direct shot with the given max speed:
+        float T_min = Mathf.Sqrt((b - discRoot) * 2f / gSquared);
+
+        // Lowest-speed arc available:
+        //float T_lowEnergy = Mathf.Sqrt(Mathf.Sqrt(toTarget.sqrMagnitude * 4f / gSquared));
+
+        float T = T_min;
+
+        // Convert from time-to-hit to a launch velocity:
+        return (toTarget / T - Physics.gravity * T / 2f);
+    }
     public HittableType GetHittableType() {
         return HittableType.Enemy;
     }
@@ -158,6 +184,11 @@ public class Enemy : MonoBehaviour, IHittable {
     public void SetMaxHealth(int newMaxHealth) {
         maxHealth = newMaxHealth;
     }
-
+    public void SetMissChance(float newMissChance) {
+        missChance = newMissChance;
+    }
+    public void SetShootInterval(float newShootInterval) {
+        shootInterval = newShootInterval;
+    }
 
 }

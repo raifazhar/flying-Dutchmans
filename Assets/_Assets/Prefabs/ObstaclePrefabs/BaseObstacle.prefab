@@ -297,6 +297,9 @@ MonoBehaviour:
   launchSpeed: 1
   upwardsAngle: 10
   obstacleProjectile: {fileID: 0}
+  isInverted: 0
+  invertedColor: {r: 1, g: 0.4009434, b: 0.4009434, a: 0}
+  meshRenderer: {fileID: 473496262118919781}
 --- !u!1 &8654723346574517276
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,6 +568,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d80e058b94689141b330acdc885c194, type: 3}
+--- !u!23 &473496262118919781 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 3d80e058b94689141b330acdc885c194,
+    type: 3}
+  m_PrefabInstance: {fileID: 1248526199545680609}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1646380724721104138 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3d80e058b94689141b330acdc885c194,

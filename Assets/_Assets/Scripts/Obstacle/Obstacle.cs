@@ -7,7 +7,12 @@ public class Obstacle : MonoBehaviour, IHittable {
     [SerializeField] private float launchSpeed = 10f;
     [SerializeField] private float upwardsAngle = 10f;
     [SerializeField] private Transform obstacleProjectile;
+    [SerializeField] private bool isInverted = false;
+    [SerializeField] private Color invertedColor;
+    [SerializeField] private MeshRenderer meshRenderer;
+
     private Vector3 launchVector;
+
 
     public HittableType GetHittableType() {
         return HittableType.Obstacle;
@@ -15,12 +20,24 @@ public class Obstacle : MonoBehaviour, IHittable {
 
     public void Hit(BaseProjectile projectile) {
         Vector3 targetPosition = Vector3.zero;
-        if (projectile.GetHittableType() == HittableType.PlayerProjectile) {
-            launchVector = Enemy.Instance.transform.position - transform.position;
+        if (!isInverted) {
+            if (projectile.GetHittableType() == HittableType.PlayerProjectile) {
+                targetPosition = Enemy.Instance.transform.position;
+            }
+            else if (projectile.GetHittableType() == HittableType.EnemyProjectile) {
+                targetPosition = Player.Instance.transform.position;
+            }
         }
-        else if (projectile.GetHittableType() == HittableType.EnemyProjectile) {
-            launchVector = Player.Instance.transform.position - transform.position;
+        else {
+            if (projectile.GetHittableType() == HittableType.PlayerProjectile) {
+                targetPosition = Player.Instance.transform.position;
+            }
+            else if (projectile.GetHittableType() == HittableType.EnemyProjectile) {
+                targetPosition = Enemy.Instance.transform.position;
+            }
+
         }
+        launchVector = targetPosition - transform.position;
         launchVector.y += upwardsAngle;
         LaunchProjectile();
         DestroyObstacle();
@@ -34,6 +51,9 @@ public class Obstacle : MonoBehaviour, IHittable {
     }
     private void Start() {
         launchVector = Vector3.zero;
+        if (isInverted) {
+            meshRenderer.material.color = invertedColor;
+        }
     }
     private void FixedUpdate() {
         transform.position -= new Vector3(0, fallingSpeed * Time.deltaTime, 0);
@@ -47,6 +67,9 @@ public class Obstacle : MonoBehaviour, IHittable {
     }
     public float GetFallSpeed() {
         return fallingSpeed;
+    }
+    public void SetInverted(bool i) {
+        isInverted = i;
     }
     private void DestroyObstacle() {
         ObstacleSpawner.Instance.RemoveObstacleFromList(this.transform);
