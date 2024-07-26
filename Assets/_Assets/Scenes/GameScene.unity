@@ -1504,7 +1504,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: e84987e730a165e45949a8efd22c0075, type: 2}
+  sharedProfile: {fileID: 11400000, guid: e0380f09cfa2edd4ab3babefd764e331, type: 2}
 --- !u!4 &374244439
 Transform:
   m_ObjectHideFlags: 0
@@ -4573,7 +4573,7 @@ VFXRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1474749912}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -4693,8 +4693,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98cfcba828303d4db2fe03f271493a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitvfx: {fileID: 1398378603891710113, guid: 7f9fa8112d0362240a890ea6c1d9ed36, type: 3}
-  vfx: {fileID: 1474749914}
+  hitVFX: {fileID: 1398378603891710113, guid: 7f9fa8112d0362240a890ea6c1d9ed36, type: 3}
+  VFX: {fileID: 1474749914}
   vfxCurve:
     serializedVersion: 2
     m_Curve:
@@ -4728,7 +4728,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  flashduration: 1
+  flashDuration: 0.5
 --- !u!1 &1506688693
 GameObject:
   m_ObjectHideFlags: 0
