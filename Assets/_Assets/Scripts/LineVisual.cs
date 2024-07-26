@@ -61,6 +61,7 @@ public class LineVisual : MonoBehaviour {
             float z = launchOrigin.z + launchVector.z * t;
             points[i] = new Vector3(x, y, z);
         }
+
         lineRenderer.SetPositions(points);
     }
 

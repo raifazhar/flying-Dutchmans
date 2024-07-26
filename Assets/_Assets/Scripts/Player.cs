@@ -36,6 +36,7 @@ public class Player : MonoBehaviour, IHittable {
     [SerializeField] private float launchVectorMax;
     [SerializeField] private float launchVectorMin;
     [SerializeField] private float launchSpeed;
+    [SerializeField, Range(0, 1)] private float slowDownFactor = 0.5f;
     private float cameraZDistance = 1;
     [SerializeField] private Vector3 startingVector;
     private Vector3 touchOrigin;
@@ -90,7 +91,8 @@ public class Player : MonoBehaviour, IHittable {
                     //OnStateChange is invoked everytime state changes, this is for any visual stuff that needs to be done
                     //We seperate the logic from the visuals this way
                     OnStateChange?.Invoke(this, new OnStateChangeEventArgs { playerState = playerState });
-                    Time.timeScale = 0.5f;
+                    Time.timeScale = slowDownFactor;
+                    Time.fixedDeltaTime = Time.timeScale * 0.02f;
                 }
                 break;
             case State.Aiming:
@@ -98,8 +100,9 @@ public class Player : MonoBehaviour, IHittable {
                     LaunchProjectile();
                     playerState = State.Launching;
                     launchTimer = launchCooldown;
-                    Time.timeScale = 1f;
                     OnStateChange?.Invoke(this, new OnStateChangeEventArgs { playerState = playerState });
+                    Time.timeScale = 1f;
+                    Time.fixedDeltaTime = 0.02f;
                 }
                 else {
                     SetAimVector();
