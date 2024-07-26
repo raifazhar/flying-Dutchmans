@@ -4693,7 +4693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98cfcba828303d4db2fe03f271493a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitVFX: {fileID: 1398378603891710113, guid: 7f9fa8112d0362240a890ea6c1d9ed36, type: 3}
+  hitVFX: {fileID: 7995640984379031977, guid: 55ee18a35c74f4741ba9fa644db617c2, type: 3}
   VFX: {fileID: 1474749914}
   vfxCurve:
     serializedVersion: 2
