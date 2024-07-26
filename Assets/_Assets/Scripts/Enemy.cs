@@ -159,8 +159,5 @@ public class Enemy : MonoBehaviour, IHittable {
         maxHealth = newMaxHealth;
     }
 
-    private void OnDrawGizmos() {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(targetPosition, 0.5f);
-    }
+
 }

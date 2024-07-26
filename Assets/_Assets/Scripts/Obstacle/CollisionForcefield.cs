@@ -4,21 +4,21 @@ using UnityEngine;
 using UnityEngine.VFX;
 
 public class CollisionForcefield : MonoBehaviour {
-    [SerializeField] private Transform hitvfx;
-    [SerializeField] private VisualEffect vfx;
+    [SerializeField] private Transform hitVFX;
+    [SerializeField] private VisualEffect VFX;
     [SerializeField] private AnimationCurve vfxCurve;
-    [SerializeField] private float flashduration;
+    [SerializeField] private float flashDuration;
 
-    private float flashtimer = 0f;
+    private float flashTimer = 0f;
     private void OnCollisionEnter(Collision collision) {
-        Instantiate(hitvfx, collision.GetContact(0).point, Quaternion.identity);
-        flashtimer = 0f;
+        Instantiate(hitVFX, collision.GetContact(0).point, Quaternion.identity);
+        flashTimer = 0f;
     }
     private void Update() {
-        if (flashtimer < flashduration) {
-            flashtimer += Time.deltaTime;
-            float lerp = flashtimer / flashduration;
-            vfx.SetFloat("opacity", vfxCurve.Evaluate(lerp));
+        if (flashTimer < flashDuration) {
+            flashTimer += Time.deltaTime;
+            float lerp = flashTimer / flashDuration;
+            VFX.SetFloat("opacity", vfxCurve.Evaluate(lerp));
         }
     }
 

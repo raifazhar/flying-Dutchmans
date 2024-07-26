@@ -104,6 +104,9 @@ Material:
     - _NormalStrength: 0.18
     - _OcclusionStrength: 1
     - _Parallax: 0.005
+    - _PerlinScale: 1.98
+    - _PerlinSpeed: 0.33
+    - _PerlinStrength: 2
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
