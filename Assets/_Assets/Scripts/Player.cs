@@ -24,7 +24,7 @@ public class Player : MonoBehaviour, IHittable {
     public event EventHandler OnHealthChange;
 
     [Header("Health Settings")]
-    [SerializeField] private int maxHealth = 100;
+    private int maxHealth = 100;
     private int health;
 
 

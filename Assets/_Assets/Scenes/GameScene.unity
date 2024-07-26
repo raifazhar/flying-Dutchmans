@@ -3716,12 +3716,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372fbe4508ab7242bb6073645b8d7e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
   launchPoint: {fileID: 1355217469}
   enemyProjectile: {fileID: 6784864521282570351, guid: 77d9fc3f3426d4947b5cf94246daceda,
     type: 3}
-  shootInterval: 1000
+  shootInterval: 2
   heightThreshold: 2
+  adjustmentValue: 0.05
   launchVelocity: 2
 --- !u!65 &1318320826
 BoxCollider:
@@ -5570,7 +5570,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a808fe0be529844381bc2b59cfac9e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
   launchOrigin: {fileID: 1471449197}
   projectilePrefab: {fileID: 4635234919210959314, guid: 9008717387286c64485a9d1f57e12e13,
     type: 3}

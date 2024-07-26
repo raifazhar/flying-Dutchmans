@@ -18,16 +18,18 @@ public class Enemy : MonoBehaviour, IHittable {
     public class OnStateChangeEventArgs : EventArgs {
         public State enemyState;
     }
-    [SerializeField] private int maxHealth = 100;
+    private int maxHealth = 100;
+    private int health;
     [SerializeField] private Transform launchPoint;
     [SerializeField] private GameObject enemyProjectile;
     [Header("AI")]
     [SerializeField] private float shootInterval = 2f;
     [SerializeField] private float heightThreshold = 2f;
+    [SerializeField] private float adjustmentValue = 0.1f;
     [SerializeField] private float launchVelocity = 2f;
     private Vector3 launchVector;
+    private Vector3 targetPosition;
     private float shootTimer;
-    private int health;
 
     private State enemyState;
 
@@ -98,8 +100,11 @@ public class Enemy : MonoBehaviour, IHittable {
 
         Vector3 toTarget = Vector3.zero;
         if (highestDamageObstacle != null) {
-            Vector3 targetPosition = highestDamageObstacle.position;
-            targetPosition.y -= highestDamageObstacle.GetComponent<Obstacle>().GetFallSpeed() * 2f;
+            //Reduce the target position by the fall speed of the obstacle and the distance between the launch point and the target
+            targetPosition = highestDamageObstacle.position;
+            float distance = Vector3.Distance(launchPoint.position, targetPosition);
+            distance *= adjustmentValue;
+            targetPosition.y -= highestDamageObstacle.GetComponent<Obstacle>().GetFallSpeed() * distance * 2f;
             toTarget = targetPosition - transform.position;
             // Set up the terms we need to solve the quadratic equations.
             float gSquared = Physics.gravity.sqrMagnitude;
@@ -154,4 +159,8 @@ public class Enemy : MonoBehaviour, IHittable {
         maxHealth = newMaxHealth;
     }
 
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(targetPosition, 0.5f);
+    }
 }
