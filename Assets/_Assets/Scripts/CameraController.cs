@@ -28,6 +28,7 @@ public class CameraController : MonoBehaviour {
     private float shakeOffsetY;
     private Vector3 playerOffset;
     private Vector3 offsetVector;
+    private bool isPaused = false;
 
     private void Awake() {
         if (Instance != null) {
@@ -38,9 +39,17 @@ public class CameraController : MonoBehaviour {
         }
     }
 
+    private void Start() {
+        GameManager.Instance.OnTogglePause += GameManager_OnTogglePause;
+    }
+
+    private void GameManager_OnTogglePause(object sender, GameManager.OnTogglePauseEventArgs e) {
+        isPaused = e.isPaused;
+    }
 
     // Update is called once per frame
     private void LateUpdate() {
+        if (isPaused) return;
         HandleCameraShake();
         HandleCameraMove();
     }
@@ -59,9 +68,9 @@ public class CameraController : MonoBehaviour {
         trauma = Mathf.Clamp(trauma, 0, 1);
     }
     private void CameraShakeRotation() {
-        yaw = maxYaw * shake * Mathf.Lerp(-1, 1, Mathf.PerlinNoise(noiseSeed, Time.realtimeSinceStartup * noiseFrequency));
-        pitch = maxPitch * shake * Mathf.Lerp(-1, 1, Mathf.PerlinNoise(noiseSeed + 1, Time.realtimeSinceStartup * noiseFrequency));
-        roll = maxRoll * shake * Mathf.Lerp(-1, 1, Mathf.PerlinNoise(noiseSeed + 2, Time.realtimeSinceStartup * noiseFrequency));
+        yaw = maxYaw * shake * Mathf.Lerp(-1, 1, Mathf.PerlinNoise(noiseSeed, Time.time * noiseFrequency));
+        pitch = maxPitch * shake * Mathf.Lerp(-1, 1, Mathf.PerlinNoise(noiseSeed + 1, Time.time * noiseFrequency));
+        roll = maxRoll * shake * Mathf.Lerp(-1, 1, Mathf.PerlinNoise(noiseSeed + 2, Time.time * noiseFrequency));
         Vector3 shakeRotationVector = new Vector3(pitch, yaw, roll);
         shakeRotationVector *= shakeMagnitude;
         Quaternion shakeRotation = Quaternion.Euler(shakeRotationVector);
@@ -69,8 +78,8 @@ public class CameraController : MonoBehaviour {
         shakeEmpty.localRotation = Quaternion.Lerp(shakeEmpty.localRotation, shakeRotation, Time.fixedDeltaTime * shakeSnapSpeed);
     }
     private void CameraShakeLocation() {
-        shakeOffsetX = Mathf.Lerp(-1, 1, Mathf.PerlinNoise(noiseSeed + 3, Time.realtimeSinceStartup * noiseFrequency));
-        shakeOffsetY = Mathf.Lerp(-1, 1, Mathf.PerlinNoise(noiseSeed + 4, Time.realtimeSinceStartup * noiseFrequency));
+        shakeOffsetX = Mathf.Lerp(-1, 1, Mathf.PerlinNoise(noiseSeed + 3, Time.time * noiseFrequency));
+        shakeOffsetY = Mathf.Lerp(-1, 1, Mathf.PerlinNoise(noiseSeed + 4, Time.time * noiseFrequency));
         offsetVector = new Vector3(shakeOffsetX, shakeOffsetY, shakeEmpty.localPosition.z);
         offsetVector = offsetVector.normalized;
         offsetVector *= shake;

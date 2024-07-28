@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour, IHittable {
 
@@ -81,7 +82,7 @@ public class Player : MonoBehaviour, IHittable {
             case State.None:
                 break;
             case State.Idle:
-                if (Input.touchCount > 0) {
+                if (Input.touchCount > 0 && !IsTouchOverUI()) {
                     //IF player has started touch in idle state then store the initial touchOrigin and get its world space coordinates as well
                     touchOrigin = Input.GetTouch(0).position;
                     touchOrigin.z = cameraZDistance;
@@ -160,6 +161,14 @@ public class Player : MonoBehaviour, IHittable {
         launchedProjectile.GetComponent<Rigidbody>().angularVelocity = launchVector;
         launchVector = Vector3.zero;
         screenVector = Vector3.zero;
+    }
+
+    private bool IsTouchOverUI() {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
     }
 
     #region Interface

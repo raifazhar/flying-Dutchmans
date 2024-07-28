@@ -10,6 +10,11 @@ public class GameManager : MonoBehaviour {
     public static GameManager Instance { get; private set; }
 
     public event EventHandler<OnGameEndEventArgs> OnGameEnd;
+    public event EventHandler<OnTogglePauseEventArgs> OnTogglePause;
+
+    public class OnTogglePauseEventArgs : EventArgs {
+        public bool isPaused;
+    }
 
 
     public enum GameState {
@@ -28,7 +33,7 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private LevelListSO levelsSO;
     private int levelIndex = 0;
     private readonly int targetFrameRate = 60;
-
+    private bool isPaused = false;
 
     private GameState gameState;
 
@@ -62,7 +67,6 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-
     private void InitializeLevel() {
         if (gameState == GameState.Starting) {
             gameState = GameState.Playing;
@@ -79,6 +83,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    #region LevelNavigation
     public void RetryLevel() {
         SelectedLevel.SetSelectedLevel(SelectedLevel.selectedLevel);
         SceneManager.LoadScene(Scenes.GameScene);
@@ -93,6 +98,9 @@ public class GameManager : MonoBehaviour {
     public void BackToMenu() {
         SceneManager.LoadScene(Scenes.MainMenu);
     }
+    #endregion
+
+    #region Score
     public int GetScore() {
         return score;
     }
@@ -114,4 +122,17 @@ public class GameManager : MonoBehaviour {
     public void RemoveScore(int amount, Vector3 position) {
         RemoveScore(amount);
     }
+    #endregion
+
+    public void TogglePauseGame() {
+        isPaused = !isPaused;
+        Time.timeScale = isPaused ? 0f : 1f;
+        OnTogglePause?.Invoke(this, new OnTogglePauseEventArgs { isPaused = isPaused });
+    }
+
+    public void QuitGame() {
+        Application.Quit();
+    }
+
+
 }
