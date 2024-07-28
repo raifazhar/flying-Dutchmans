@@ -18,8 +18,8 @@ MonoBehaviour:
   - 0.2
   - 0.4
   - 0.4
-  playerHealth: 450
-  enemyHealth: 450
+  playerHealth: 200
+  enemyHealth: 200
   enemyMissChance: 0.2
   enemyShootInterval: 1.5
   invertedChance: 0.3
