@@ -85,10 +85,12 @@ public class GameManager : MonoBehaviour {
             Enemy.Instance.SetMissChance(level.enemyMissChance);
             Enemy.Instance.SetShootInterval(level.enemyShootInterval);
             Enemy.Instance.Initialize();
-            ObstacleSpawner.Instance.SetInvertedChance(level.invertedChance);
-            ObstacleSpawner.Instance.SetSpawnInterval(level.obstacleSpawnInterval);
-            ObstacleSpawner.Instance.SetObstacles(level.ObstacleList.obstaclePrefabs, level.spawnChance);
-            ObstacleSpawner.Instance.Initialize();
+            if (!isTutorial) {
+                ObstacleSpawner.Instance.SetInvertedChance(level.invertedChance);
+                ObstacleSpawner.Instance.SetSpawnInterval(level.obstacleSpawnInterval);
+                ObstacleSpawner.Instance.SetObstacles(level.ObstacleList.obstaclePrefabs, level.spawnChance);
+                ObstacleSpawner.Instance.Initialize();
+            }
         }
     }
 

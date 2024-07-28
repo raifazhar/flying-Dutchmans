@@ -21,6 +21,7 @@ public class TutorialManager : MonoBehaviour {
     private Player player;
     private Stage stage;
     [SerializeField] private Canvas canvas;
+    [SerializeField] private Arrow arrow;
     [SerializeField] private Vector2 origin1;
     [SerializeField] private Vector2 end1;
     [SerializeField] private Vector2 origin2;
@@ -45,7 +46,9 @@ public class TutorialManager : MonoBehaviour {
         end2 = end3 = end1;
         Vector2 originPosition = ScreenToCanvasPoint(origin1, canvasScaler);
         Vector2 endPosition = ScreenToCanvasPoint(end1, canvasScaler);
-
+        arrow.SetStartPos(originPosition);
+        arrow.SetEndPos(endPosition);
+        arrow.ResetLerp();
 
 
         // Set the localPosition of the RectTransforms
