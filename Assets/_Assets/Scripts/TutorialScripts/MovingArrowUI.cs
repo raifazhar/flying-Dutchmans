@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Arrow : MonoBehaviour {
+public class MovingArrowUI : MonoBehaviour {
     [SerializeField] private Vector2 arrowOffset;
     [SerializeField] private Vector2 arrowSize;
     [SerializeField] private Vector2 startPos;
