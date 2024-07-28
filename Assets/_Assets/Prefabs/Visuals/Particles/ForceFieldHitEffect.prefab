@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 438559656770136322}
   - component: {fileID: 8464528232483366491}
   m_Layer: 0
-  m_Name: Forcefield_hit
+  m_Name: ForceFieldHitEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

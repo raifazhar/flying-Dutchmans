@@ -26,7 +26,7 @@ public class Player : MonoBehaviour, IHittable {
     [Header("Health Settings")]
     private int maxHealth = 100;
     private int health;
-
+    [SerializeField] private float cameraShakeOnHit = 0.5f;
 
     [Header("Player Settings")]
     [SerializeField] private Transform launchOrigin;
@@ -166,7 +166,7 @@ public class Player : MonoBehaviour, IHittable {
     public void Hit(BaseProjectile projectile) {
         health -= projectile.GetDamage();
         OnHealthChange?.Invoke(this, EventArgs.Empty);
-        CameraController.Instance.AddTrauma(0.5f);
+        CameraController.Instance.AddTrauma(cameraShakeOnHit);
         GameManager.Instance.RemoveScore(projectile.GetDamage() / 2);
         if (health <= 0) {
             playerState = State.Dead;

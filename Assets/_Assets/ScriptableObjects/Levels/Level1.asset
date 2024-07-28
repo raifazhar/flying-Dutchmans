@@ -16,8 +16,8 @@ MonoBehaviour:
   ObstacleList: {fileID: 11400000, guid: 534e0a3e6ddd6f94d9f3569f24c6c3fb, type: 2}
   spawnChance:
   - 1
-  playerHealth: 100
+  playerHealth: 10000
   enemyHealth: 100
-  enemyMissChance: 0
+  enemyMissChance: 0.6
   enemyShootInterval: 4
   invertedChance: 0

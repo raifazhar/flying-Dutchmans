@@ -27,40 +27,13 @@ MonoBehaviour:
     - model: {fileID: 8926484042661614555}
       id: 0
       isStickyNote: 0
-    - model: {fileID: 8926484042661614606}
-      id: 0
-      isStickyNote: 0
     - model: {fileID: 8926484042661614610}
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661614558}
       id: 0
       isStickyNote: 0
-    - model: {fileID: 8926484042661614623}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614642}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614580}
-      id: 0
-      isStickyNote: 0
     - model: {fileID: 8926484042661614585}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614589}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614674}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614669}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614591}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614663}
       id: 0
       isStickyNote: 0
   - title: FLASH
@@ -74,31 +47,13 @@ MonoBehaviour:
     - model: {fileID: 8926484042661614693}
       id: 0
       isStickyNote: 0
-    - model: {fileID: 8926484042661614720}
-      id: 0
-      isStickyNote: 0
     - model: {fileID: 8926484042661614724}
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661614688}
       id: 0
       isStickyNote: 0
-    - model: {fileID: 8926484042661614738}
-      id: 0
-      isStickyNote: 0
     - model: {fileID: 8926484042661614726}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614729}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614742}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614745}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614748}
       id: 0
       isStickyNote: 0
   - title: FIRE
@@ -112,43 +67,16 @@ MonoBehaviour:
     - model: {fileID: 8926484042661614759}
       id: 0
       isStickyNote: 0
-    - model: {fileID: 8926484042661614786}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614816}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614835}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614812}
-      id: 0
-      isStickyNote: 0
     - model: {fileID: 8926484042661614790}
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661614754}
       id: 0
       isStickyNote: 0
-    - model: {fileID: 8926484042661614803}
-      id: 0
-      isStickyNote: 0
     - model: {fileID: 8926484042661614807}
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661614792}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614795}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614844}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614797}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614849}
       id: 0
       isStickyNote: 0
   - title: SMOKE
@@ -162,40 +90,13 @@ MonoBehaviour:
     - model: {fileID: 8926484042661614855}
       id: 0
       isStickyNote: 0
-    - model: {fileID: 8926484042661614870}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614874}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614893}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614902}
-      id: 0
-      isStickyNote: 0
     - model: {fileID: 8926484042661614906}
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661614908}
       id: 0
       isStickyNote: 0
-    - model: {fileID: 8926484042661614910}
-      id: 0
-      isStickyNote: 0
     - model: {fileID: 8926484042661614914}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614917}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614919}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614923}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614926}
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661614932}
@@ -205,10 +106,10 @@ MonoBehaviour:
   categories: []
   uiBounds:
     serializedVersion: 2
-    x: 651
+    x: 652
     y: -386
-    width: 3161
-    height: 2233
+    width: 3159
+    height: 2220
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -219,7 +120,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d4c867f6b72b714dbb5fd1780afe208, type: 3}
-  m_Name: Forcefield_hit
+  m_Name: ForceFieldHit
   m_EditorClassIdentifier: 
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
@@ -259,7 +160,7 @@ VisualEffectResource:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Forcefield_hit
+  m_Name: ForceFieldHit
   m_Graph: {fileID: 114350483966674976}
   m_Infos:
     m_RendererSettings:
@@ -2523,7 +2424,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"x":9.058601379394532,"y":1.7495594024658204,"z":0.19940167665481568}'
+      m_SerializableObject: '{"x":0.2371360957622528,"y":9.058601379394532,"z":3.262437582015991}'
     m_Space: 2147483647
   m_Property:
     name: Color
@@ -4355,7 +4256,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"x":9.058601379394532,"y":1.7495594024658204,"z":0.19940167665481568}'
+      m_SerializableObject: '{"x":0.2371360957622528,"y":9.058601379394532,"z":3.324650287628174}'
     m_Space: 2147483647
   m_Property:
     name: Color
@@ -7029,7 +6930,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"x":9.058601379394532,"y":1.7495594024658204,"z":0.19940167665481568}'
+      m_SerializableObject: '{"x":0.2371360957622528,"y":9.058601379394532,"z":3.324650287628174}'
     m_Space: 2147483647
   m_Property:
     name: Color

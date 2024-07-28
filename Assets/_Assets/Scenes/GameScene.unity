@@ -151,7 +151,7 @@ Transform:
   m_GameObject: {fileID: 12118406}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.8, y: 9, z: -4.5}
+  m_LocalPosition: {x: 5.8, y: 9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3681,6 +3681,7 @@ Transform:
   - {fileID: 1355217469}
   - {fileID: 1692264656}
   - {fileID: 1247352641}
+  - {fileID: 1474749915}
   m_Father: {fileID: 1786814223}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1318320824
@@ -3721,7 +3722,6 @@ MonoBehaviour:
     type: 3}
   shootInterval: 2
   heightThreshold: 2
-  adjustmentValue: 0.05
   launchVelocity: 2
 --- !u!65 &1318320826
 BoxCollider:
@@ -4653,12 +4653,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1474749912}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 13.1, y: 7.8, z: -0.1}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -6.1499996, y: 7.8, z: -0.1}
   m_LocalScale: {x: 4.4407434, y: 12.660635, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1318320823}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!65 &1474749916
 BoxCollider:
@@ -5184,14 +5184,14 @@ MonoBehaviour:
   shakeEmpty: {fileID: 1857032889}
   maxYaw: 5
   maxPitch: 5
-  maxRoll: 5
-  maxOffsetX: 2
-  maxOffsetY: 2
+  maxRoll: 10
+  maxOffsetX: 0.1
+  maxOffsetY: 0.1
   noiseSeed: 10
-  traumaDecreaseFactor: 2
+  traumaDecreaseFactor: 0.4
   noiseFrequency: 10
   shakeSnapSpeed: 5
-  shakeMagnitude: 1
+  shakeMagnitude: 100
 --- !u!1001 &1692264655
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5575,6 +5575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a808fe0be529844381bc2b59cfac9e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraShakeOnHit: 0.2
   launchOrigin: {fileID: 1471449197}
   projectilePrefab: {fileID: 4635234919210959314, guid: 9008717387286c64485a9d1f57e12e13,
     type: 3}
@@ -7114,4 +7115,3 @@ SceneRoots:
   - {fileID: 1707398390}
   - {fileID: 1180566174}
   - {fileID: 1786814223}
-  - {fileID: 1474749915}
