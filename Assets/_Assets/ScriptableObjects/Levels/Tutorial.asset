@@ -18,7 +18,7 @@ MonoBehaviour:
   spawnChance:
   - 1
   playerHealth: 100000
-  enemyHealth: 40
+  enemyHealth: 20
   enemyMissChance: 1
   enemyShootInterval: 10000000
   invertedChance: 0
