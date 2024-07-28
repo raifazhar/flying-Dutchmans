@@ -109,10 +109,10 @@ public class Enemy : MonoBehaviour, IHittable {
             //Compensate for the fall of the obstacle
             targetPosition = currentTargetPosition;
             targetPosition.y -= fallSpeed * timeToTarget;
-            //Randomly make enemy miss target by offseting the target position on the x/z by a random amount (minimum 1)
+            //Randomly make enemy miss target by offseting the target position on the x/z by a random amount (minimum 3)
             if (UnityEngine.Random.Range(0f, 1f) <= missChance) {
-                float x = UnityEngine.Random.Range(1f, 5f);
-                float z = UnityEngine.Random.Range(1f, 5f);
+                float x = UnityEngine.Random.Range(3f, 5f);
+                float z = UnityEngine.Random.Range(3f, 5f);
                 if (UnityEngine.Random.Range(0f, 1f) < 0.5f) {
                     targetPosition.x += x;
                 }

@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad963ee9b97243140998ee26df6858bc, type: 3}
-  m_Name: Level3
+  m_Name: Tutorial
   m_EditorClassIdentifier: 
-  LevelID: 3
-  ObstacleList: {fileID: 11400000, guid: 0ced5c8f0af2b4c43a0ffd51888fa831, type: 2}
-  obstacleSpawnInterval: 2
+  LevelID: 1
+  ObstacleList: {fileID: 11400000, guid: 534e0a3e6ddd6f94d9f3569f24c6c3fb, type: 2}
+  obstacleSpawnInterval: 10
   spawnChance:
-  - 0.2
-  - 0.8
-  playerHealth: 100
-  enemyHealth: 100
-  enemyMissChance: 0.4
-  enemyShootInterval: 3
-  invertedChance: 0.2
+  - 1
+  playerHealth: 100000
+  enemyHealth: 40
+  enemyMissChance: 1
+  enemyShootInterval: 100
+  invertedChance: 0
