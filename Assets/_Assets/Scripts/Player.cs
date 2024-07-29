@@ -187,6 +187,8 @@ public class Player : MonoBehaviour, IHittable {
 
     #region Interface
     public void Hit(BaseProjectile projectile) {
+        if (playerState == State.GameOver)
+            return;
         health -= projectile.GetDamage();
         OnHealthChange?.Invoke(this, EventArgs.Empty);
         CameraController.Instance.AddTrauma(cameraShakeOnHit);
@@ -231,6 +233,7 @@ public class Player : MonoBehaviour, IHittable {
         health += amount;
         if (health > maxHealth)
             health = maxHealth;
+        OnHealthChange?.Invoke(this, EventArgs.Empty);
     }
 
 }

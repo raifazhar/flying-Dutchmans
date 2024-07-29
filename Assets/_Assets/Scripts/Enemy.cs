@@ -27,6 +27,8 @@ public class Enemy : MonoBehaviour, IHittable {
     [SerializeField] private float shootInterval = 2f;
     [SerializeField] private float heightThreshold = 2f;
     [SerializeField] private float launchVelocity = 2f;
+    [SerializeField] private BoxCollider targetCollider;
+    private Bounds targetColliderBounds;
     private float missChance = 0f;
     private Vector3 launchVector;
     private Vector3 targetPosition;
@@ -44,6 +46,8 @@ public class Enemy : MonoBehaviour, IHittable {
         }
         health = maxHealth;
         enemyState = State.None;
+        targetColliderBounds = targetCollider.bounds;
+        targetCollider.enabled = false;
     }
 
     private void Start() {
@@ -168,6 +172,8 @@ public class Enemy : MonoBehaviour, IHittable {
     }
 
     public void Hit(BaseProjectile projectile) {
+        if (enemyState == State.GameOver)
+            return;
         health -= projectile.GetDamage();
         OnHealthChanged?.Invoke(this, EventArgs.Empty);
         GameManager.Instance.AddScore(projectile.GetDamage(), projectile.gameObject.transform.position);
@@ -195,5 +201,10 @@ public class Enemy : MonoBehaviour, IHittable {
         health += amount;
         if (health > maxHealth)
             health = maxHealth;
+        OnHealthChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    public Bounds GetBounds() {
+        return targetColliderBounds;
     }
 }
