@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -47,10 +48,12 @@ public class Player : MonoBehaviour, IHittable {
     private Vector3 launchVector;
     private Vector3 screenVector;
 
+
     [SerializeField] private float launchCooldown = 1f;
     private float launchTimer = 0f;
 
 
+    [SerializeField] private bool isTutorial;
     private State playerState;
 
 
@@ -78,36 +81,18 @@ public class Player : MonoBehaviour, IHittable {
         playerState = State.Idle;
     }
     void FixedUpdate() {
+        if (isTutorial)
+            return;
         switch (playerState) {
             case State.None:
                 break;
             case State.Idle:
                 if (Input.touchCount > 0 && !IsTouchOverUI()) {
-                    //IF player has started touch in idle state then store the initial touchOrigin and get its world space coordinates as well
-                    touchOrigin = Input.GetTouch(0).position;
-                    touchOrigin.z = cameraZDistance;
-                    touchOriginWorldSpace = Camera.main.ScreenToWorldPoint(touchOrigin);
-                    SetAimVector();
-                    playerState = State.Aiming;
-                    //OnStateChange is invoked everytime state changes, this is for any visual stuff that needs to be done
-                    //We seperate the logic from the visuals this way
-                    OnStateChange?.Invoke(this, new OnStateChangeEventArgs { playerState = playerState });
-                    Time.timeScale = slowDownFactor;
-                    Time.fixedDeltaTime = Time.timeScale * 0.02f;
+                    StartAiming(Input.GetTouch(0).position);
                 }
                 break;
             case State.Aiming:
-                if (Input.touchCount == 0) {
-                    LaunchProjectile();
-                    playerState = State.Launching;
-                    launchTimer = launchCooldown;
-                    OnStateChange?.Invoke(this, new OnStateChangeEventArgs { playerState = playerState });
-                    Time.timeScale = 1f;
-                    Time.fixedDeltaTime = 0.02f;
-                }
-                else {
-                    SetAimVector();
-                }
+                AimingState();
                 break;
             case State.Launching:
                 launchTimer -= Time.fixedDeltaTime;
@@ -125,11 +110,32 @@ public class Player : MonoBehaviour, IHittable {
         }
     }
 
+    private void AimingState() {
+        if (Input.touchCount == 0) {
+            StartLaunching();
+        }
+        else {
+            SetAimVector(Input.GetTouch(0).position);
+        }
+    }
+    public void StartAiming(Vector2 pos) {
+        //IF player has started touch in idle state then store the initial touchOrigin and get its world space coordinates as well
+        touchOrigin = pos;
+        touchOrigin.z = cameraZDistance;
+        touchOriginWorldSpace = Camera.main.ScreenToWorldPoint(touchOrigin);
+        SetAimVector(pos);
+        playerState = State.Aiming;
+        //OnStateChange is invoked everytime state changes, this is for any visual stuff that needs to be done
+        //We seperate the logic from the visuals this way
+        OnStateChange?.Invoke(this, new OnStateChangeEventArgs { playerState = playerState });
+        Time.timeScale = slowDownFactor;
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
+    }
 
-    private void SetAimVector() {
+    public void SetAimVector(Vector2 pos) {
         //The launchVector decides the direction the projectile is launched in when player releases the touch
         //Get the current touchPoint of the finger
-        touchPoint = Input.GetTouch(0).position;
+        touchPoint = pos;
         touchPoint.z = cameraZDistance;
         touchPointWorldSpace = Camera.main.ScreenToWorldPoint(touchPoint);
         screenVector = touchPointWorldSpace - touchOriginWorldSpace;
@@ -155,6 +161,15 @@ public class Player : MonoBehaviour, IHittable {
         //Multiply the launchVector by launchSpeed to get the actual speed of the projectile
         launchVector *= launchSpeed;
     }
+    public void StartLaunching() {
+        LaunchProjectile();
+        playerState = State.Launching;
+        launchTimer = launchCooldown;
+        OnStateChange?.Invoke(this, new OnStateChangeEventArgs { playerState = playerState });
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
+
+    }
     private void LaunchProjectile() {
         GameObject launchedProjectile = Instantiate(projectilePrefab, launchOrigin.position, Quaternion.identity);
         launchedProjectile.GetComponent<Rigidbody>().velocity = launchVector;
@@ -162,7 +177,6 @@ public class Player : MonoBehaviour, IHittable {
         launchVector = Vector3.zero;
         screenVector = Vector3.zero;
     }
-
     private bool IsTouchOverUI() {
         PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
         eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);

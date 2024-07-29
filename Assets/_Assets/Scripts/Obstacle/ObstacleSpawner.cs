@@ -82,6 +82,9 @@ public class ObstacleSpawner : MonoBehaviour {
     public List<Transform> GetActiveObstacles() {
         return activeObstacles;
     }
+    public void SetSpawnInterval(float newSpawnInterval) {
+        spawnInterval = newSpawnInterval;
+    }
     public void RemoveObstacleFromList(Transform obstacle) {
         activeObstacles.Remove(obstacle);
     }

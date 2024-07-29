@@ -38,6 +38,9 @@ public class GameManager : MonoBehaviour {
     private GameState gameState;
 
 
+    [SerializeField] private bool isTutorial;
+    [SerializeField] private LevelSO tutorialLevel;
+
     private void Awake() {
         Instance = this;
         gameState = GameState.Starting;
@@ -46,7 +49,13 @@ public class GameManager : MonoBehaviour {
         Screen.orientation = ScreenOrientation.Portrait;
     }
     private void Start() {
-        InitializeLevel();
+        if (!isTutorial) {
+            levelIndex = SelectedLevel.selectedLevel;
+            InitializeLevel(levelsSO.levels[levelIndex]);
+        }
+        else {
+            InitializeLevel(tutorialLevel);
+        }
         Player.Instance.OnStateChange += Player_OnStateChange;
         Enemy.Instance.OnStateChange += Enemy_OnStateChange;
     }
@@ -67,19 +76,21 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    private void InitializeLevel() {
+    private void InitializeLevel(LevelSO level) {
         if (gameState == GameState.Starting) {
             gameState = GameState.Playing;
-            levelIndex = SelectedLevel.selectedLevel;
-            Player.Instance.SetMaxHealth(levelsSO.levels[levelIndex].playerHealth);
+            Player.Instance.SetMaxHealth(level.playerHealth);
             Player.Instance.Initialize();
-            Enemy.Instance.SetMaxHealth(levelsSO.levels[levelIndex].enemyHealth);
-            Enemy.Instance.SetMissChance(levelsSO.levels[levelIndex].enemyMissChance);
-            Enemy.Instance.SetShootInterval(levelsSO.levels[levelIndex].enemyShootInterval);
+            Enemy.Instance.SetMaxHealth(level.enemyHealth);
+            Enemy.Instance.SetMissChance(level.enemyMissChance);
+            Enemy.Instance.SetShootInterval(level.enemyShootInterval);
             Enemy.Instance.Initialize();
-            ObstacleSpawner.Instance.SetInvertedChance(levelsSO.levels[levelIndex].invertedChance);
-            ObstacleSpawner.Instance.SetObstacles(levelsSO.levels[levelIndex].ObstacleList.obstaclePrefabs, levelsSO.levels[levelIndex].spawnChance);
-            ObstacleSpawner.Instance.Initialize();
+            if (!isTutorial) {
+                ObstacleSpawner.Instance.SetInvertedChance(level.invertedChance);
+                ObstacleSpawner.Instance.SetSpawnInterval(level.obstacleSpawnInterval);
+                ObstacleSpawner.Instance.SetObstacles(level.ObstacleList.obstaclePrefabs, level.spawnChance);
+                ObstacleSpawner.Instance.Initialize();
+            }
         }
     }
 

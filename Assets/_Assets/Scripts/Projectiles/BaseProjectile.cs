@@ -8,10 +8,8 @@ public abstract class BaseProjectile : MonoBehaviour, IHittable {
 
     [SerializeField] protected HittableType[] targets;
     [SerializeField] protected int damage;
-    [SerializeField] protected int decayTime;
     [SerializeField] protected Transform hitVFX;
     [SerializeField] protected Transform waterCollisionFX;
-    private float decayTimer;
     [SerializeField] protected HittableType projectileType;
 
     public virtual int GetDamage() {
@@ -50,14 +48,7 @@ public abstract class BaseProjectile : MonoBehaviour, IHittable {
         Destroy(gameObject);
     }
 
-    protected virtual void Start() {
-        decayTimer = decayTime;
-    }
-    protected virtual void Update() {
-        decayTimer -= Time.deltaTime;
-        if (decayTimer <= 0) {
-            Destroy(gameObject);
-        }
-    }
+
+
 
 }

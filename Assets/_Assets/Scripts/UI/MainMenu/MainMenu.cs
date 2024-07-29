@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
 
@@ -11,10 +12,14 @@ public class MainMenu : MonoBehaviour {
 
 
 
-
     public void OnPlayClick() {
-        menu.gameObject.SetActive(false);
-        levelSelect.gameObject.SetActive(true);
+        if (PlayerPrefs.GetInt(PlayerPrefVariables.TutorialDone) == 0) {
+            SceneManager.LoadScene("TutorialScene");
+        }
+        else {
+            menu.gameObject.SetActive(false);
+            levelSelect.gameObject.SetActive(true);
+        }
     }
 
     public void OnOptionsClick() {

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelID: 2
   ObstacleList: {fileID: 11400000, guid: 0ced5c8f0af2b4c43a0ffd51888fa831, type: 2}
+  obstacleSpawnInterval: 2
   spawnChance:
   - 0.5
   - 0.5

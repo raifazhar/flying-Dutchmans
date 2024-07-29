@@ -68,6 +68,10 @@ public class Obstacle : MonoBehaviour, IHittable {
     public float GetFallSpeed() {
         return fallingSpeed;
     }
+
+    public void SetFallSpeed(float speed) {
+        fallingSpeed = speed;
+    }
     public void SetInverted(bool i) {
         isInverted = i;
     }
