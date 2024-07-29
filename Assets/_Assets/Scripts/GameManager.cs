@@ -107,17 +107,20 @@ public class GameManager : MonoBehaviour {
 
     #region LevelNavigation
     public void RetryLevel() {
+        Time.timeScale = 1f;
         SelectedLevel.SetSelectedLevel(SelectedLevel.selectedLevel);
         SceneManager.LoadScene(Scenes.GameScene);
     }
 
     public void NextLevel() {
+        Time.timeScale = 1f;
         if (SelectedLevel.selectedLevel + 1 >= levelsSO.levels.Count)
             return;
         SelectedLevel.SetSelectedLevel(SelectedLevel.selectedLevel + 1);
         SceneManager.LoadScene(Scenes.GameScene);
     }
     public void BackToMenu() {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(Scenes.MainMenu);
     }
     #endregion
