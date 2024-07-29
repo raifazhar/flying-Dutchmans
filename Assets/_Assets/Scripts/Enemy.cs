@@ -93,8 +93,8 @@ public class Enemy : MonoBehaviour, IHittable {
         Transform highestDamageObstacle = null;
         int highestDamage = 0;
         for (int i = 0; i < activeObstacles.Count; i++) {
-            if (activeObstacles[i].GetComponent<Obstacle>().GetDamage() >= highestDamage) {
-                highestDamage = activeObstacles[i].GetComponent<Obstacle>().GetDamage();
+            if (activeObstacles[i].GetComponent<IFallingObstacle>().GetDamage() >= highestDamage) {
+                highestDamage = activeObstacles[i].GetComponent<IFallingObstacle>().GetDamage();
                 highestDamageObstacle = activeObstacles[i];
             }
         }
@@ -103,7 +103,7 @@ public class Enemy : MonoBehaviour, IHittable {
             //Get the position of the target
             Vector3 currentTargetPosition = highestDamageObstacle.position;
             //Calculate the time it will take for the projectile to reach the current target Position
-            float fallSpeed = highestDamageObstacle.GetComponent<Obstacle>().GetFallSpeed();
+            float fallSpeed = highestDamageObstacle.GetComponent<IFallingObstacle>().GetFallSpeed();
             Vector3 preliminaryLaunchVector = CalculateLaunchVector(launchPoint.position, currentTargetPosition, launchVelocity);
             float timeToTarget = Vector3.Distance(currentTargetPosition, launchPoint.position) / preliminaryLaunchVector.magnitude;
             //Compensate for the fall of the obstacle
@@ -191,4 +191,9 @@ public class Enemy : MonoBehaviour, IHittable {
         shootInterval = newShootInterval;
     }
 
+    public void AddHealth(int amount) {
+        health += amount;
+        if (health > maxHealth)
+            health = maxHealth;
+    }
 }

@@ -17,7 +17,8 @@ MonoBehaviour:
   obstacleSpawnInterval: 2
   spawnChance:
   - 0.2
-  - 0.6
+  - 0.4
+  - 0.2
   - 0.2
   playerHealth: 150
   enemyHealth: 150

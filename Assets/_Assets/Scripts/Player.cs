@@ -227,4 +227,10 @@ public class Player : MonoBehaviour, IHittable {
 
     #endregion
 
+    public void AddHealth(int amount) {
+        health += amount;
+        if (health > maxHealth)
+            health = maxHealth;
+    }
+
 }

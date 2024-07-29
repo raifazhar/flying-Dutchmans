@@ -65,11 +65,9 @@ public class ObstacleSpawner : MonoBehaviour {
                 chosenObstaclePrefab = obstaclePrefabs[i];
                 Transform generatedObstacle = Instantiate(chosenObstaclePrefab, spawnPosition, Quaternion.identity);
                 if (UnityEngine.Random.Range(0f, 1f) <= invertedChance) {
-                    generatedObstacle.GetComponent<Obstacle>().SetInverted(true);
+                    generatedObstacle.GetComponent<IFallingObstacle>().SetInverted(true);
                 }
-                else {
-                    activeObstacles.Add(generatedObstacle);
-                }
+                activeObstacles.Add(generatedObstacle);
                 break;
             }
         }

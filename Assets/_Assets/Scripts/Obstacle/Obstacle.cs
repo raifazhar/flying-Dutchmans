@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Obstacle : MonoBehaviour, IHittable {
+public class Obstacle : MonoBehaviour, IHittable, IFallingObstacle {
     [SerializeField] private float fallingSpeed = 0.1f;
     [SerializeField] private float launchSpeed = 10f;
     [SerializeField] private float upwardsAngle = 10f;
@@ -74,6 +74,9 @@ public class Obstacle : MonoBehaviour, IHittable {
     }
     public void SetInverted(bool i) {
         isInverted = i;
+    }
+    public bool IsInverted() {
+        return isInverted;
     }
     private void DestroyObstacle() {
         ObstacleSpawner.Instance.RemoveObstacleFromList(this.transform);
