@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,10 +29,10 @@ public class ObstacleSpawner : MonoBehaviour {
         bounds = boxCollider.bounds;
         spawnTimer = spawnInterval;
         activeObstacles = new List<Transform>();
-        GameManager.Instance.OnGameEnd += GameManager_OnGameEnd;
+        GameManager.Instance.OnGameOver += GameManager_OnGameOver;
     }
 
-    private void GameManager_OnGameEnd(object sender, GameManager.OnGameEndEventArgs e) {
+    private void GameManager_OnGameOver(object sender, EventArgs e) {
         active = false;
     }
 
@@ -51,19 +52,19 @@ public class ObstacleSpawner : MonoBehaviour {
 
     private void SpawnObstacle() {
         Vector3 spawnPosition = new(
-            Random.Range(bounds.min.x, bounds.max.x),
-            Random.Range(bounds.min.y, bounds.max.y),
-            Random.Range(bounds.min.z, bounds.max.z)
+            UnityEngine.Random.Range(bounds.min.x, bounds.max.x),
+            UnityEngine.Random.Range(bounds.min.y, bounds.max.y),
+            UnityEngine.Random.Range(bounds.min.z, bounds.max.z)
         );
         Transform chosenObstaclePrefab;
-        float randomValue = Random.value;
+        float randomValue = UnityEngine.Random.value;
         float sum = 0;
         for (int i = 0; i < spawnChance.Length; i++) {
             sum += spawnChance[i];
             if (randomValue <= sum) {
                 chosenObstaclePrefab = obstaclePrefabs[i];
                 Transform generatedObstacle = Instantiate(chosenObstaclePrefab, spawnPosition, Quaternion.identity);
-                if (Random.Range(0f, 1f) <= invertedChance) {
+                if (UnityEngine.Random.Range(0f, 1f) <= invertedChance) {
                     generatedObstacle.GetComponent<Obstacle>().SetInverted(true);
                 }
                 else {

@@ -69,10 +69,10 @@ public class Player : MonoBehaviour, IHittable {
     }
 
     private void Start() {
-        GameManager.Instance.OnGameEnd += GameManager_OnGameEnd;
+        GameManager.Instance.OnGameOver += GameManager_OnGameOver;
     }
 
-    private void GameManager_OnGameEnd(object sender, GameManager.OnGameEndEventArgs e) {
+    private void GameManager_OnGameOver(object sender, EventArgs e) {
         playerState = State.GameOver;
     }
 

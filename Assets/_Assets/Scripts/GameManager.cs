@@ -6,17 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
-
-    public static GameManager Instance { get; private set; }
-
-    public event EventHandler<OnGameEndEventArgs> OnGameEnd;
-    public event EventHandler<OnTogglePauseEventArgs> OnTogglePause;
-
-    public class OnTogglePauseEventArgs : EventArgs {
-        public bool isPaused;
-    }
-
-
     public enum GameState {
         Starting,
         Playing,
@@ -26,21 +15,31 @@ public class GameManager : MonoBehaviour {
         Win,
         Lose,
     }
+    public static GameManager Instance { get; private set; }
+
+    public event EventHandler<OnGameEndEventArgs> OnGameEnd;
     public class OnGameEndEventArgs : EventArgs {
         public GameEndState endState;
     }
-    private int score = 0;
+    public event EventHandler OnGameOver;
+    public event EventHandler<OnTogglePauseEventArgs> OnTogglePause;
+
+    public class OnTogglePauseEventArgs : EventArgs {
+        public bool isPaused;
+    }
+
     [SerializeField] private LevelListSO levelsSO;
+    [SerializeField] private float gameEndTime;
     private int levelIndex = 0;
     private readonly int targetFrameRate = 60;
     private bool isPaused = false;
-
+    private int score = 0;
     private GameState gameState;
-
+    private Coroutine gameEndCoroutine;
 
     [SerializeField] private bool isTutorial;
     [SerializeField] private LevelSO tutorialLevel;
-
+    [SerializeField] private Transform scoreEffect;
     private void Awake() {
         Instance = this;
         gameState = GameState.Starting;
@@ -64,7 +63,10 @@ public class GameManager : MonoBehaviour {
         if (e.enemyState == Enemy.State.Dead && gameState == GameState.Playing) {
             //Enemy is dead, end the game
             gameState = GameState.GameOver;
-            OnGameEnd?.Invoke(this, new OnGameEndEventArgs { endState = GameEndState.Win });
+            OnGameOver?.Invoke(this, EventArgs.Empty);
+            if (gameEndCoroutine == null) {
+                gameEndCoroutine = StartCoroutine(GameEndCoroutine(gameEndTime, GameEndState.Win));
+            }
         }
     }
 
@@ -72,10 +74,19 @@ public class GameManager : MonoBehaviour {
         if (e.playerState == Player.State.Dead && gameState == GameState.Playing) {
             //Player is dead, end the game
             gameState = GameState.GameOver;
-            OnGameEnd?.Invoke(this, new OnGameEndEventArgs { endState = GameEndState.Lose });
+            OnGameOver?.Invoke(this, EventArgs.Empty);
+            if (gameEndCoroutine == null) {
+                gameEndCoroutine = StartCoroutine(GameEndCoroutine(gameEndTime, GameEndState.Lose));
+            }
         }
     }
 
+
+    IEnumerator GameEndCoroutine(float duration, GameEndState e) {
+        yield return new WaitForSeconds(duration);
+        OnGameEnd?.Invoke(this, new OnGameEndEventArgs { endState = e });
+
+    }
     private void InitializeLevel(LevelSO level) {
         if (gameState == GameState.Starting) {
             gameState = GameState.Playing;
@@ -121,6 +132,8 @@ public class GameManager : MonoBehaviour {
     }
     public void AddScore(int amount, Vector3 position) {
         AddScore(amount);
+        Transform effect = Instantiate(scoreEffect, position, Quaternion.identity);
+        effect.GetComponent<ScoreEffect>().SetScore(amount);
     }
 
     public void RemoveScore(int amount) {
