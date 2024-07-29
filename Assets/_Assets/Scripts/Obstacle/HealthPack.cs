@@ -13,7 +13,7 @@ public class HealthPack : MonoBehaviour, IHittable, IFallingObstacle {
         return HittableType.Obstacle;
     }
 
-    public void Hit(BaseProjectile projectile) {
+    public void Hit(BaseProjectile projectile, Collision collision) {
         if (projectile.GetHittableType() == HittableType.PlayerProjectile) {
             Player.Instance.AddHealth(healthAmount);
         }

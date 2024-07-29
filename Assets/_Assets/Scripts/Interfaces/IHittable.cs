@@ -11,7 +11,7 @@ public enum HittableType {
     Ocean
 }
 public interface IHittable {
-    void Hit(BaseProjectile projectile);
+    void Hit(BaseProjectile projectile, Collision collision);
 
     HittableType GetHittableType();
 }

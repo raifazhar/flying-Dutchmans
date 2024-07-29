@@ -6,7 +6,6 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour, IHittable, IFallingObstacle {
     [SerializeField] private float fallingSpeed = 0.1f;
     [SerializeField] private float launchSpeed = 10f;
-    [SerializeField] private float upwardsAngle = 10f;
     [SerializeField] private Transform obstacleProjectile;
     [SerializeField] private bool isInverted = false;
     [SerializeField] private Color invertedColor;
@@ -19,7 +18,7 @@ public class Obstacle : MonoBehaviour, IHittable, IFallingObstacle {
         return HittableType.Obstacle;
     }
 
-    public void Hit(BaseProjectile projectile) {
+    public void Hit(BaseProjectile projectile, Collision collision) {
         Vector3 targetPosition = Vector3.zero;
         if (!isInverted) {
             if (projectile.GetHittableType() == HittableType.PlayerProjectile) {

@@ -7,6 +7,6 @@ public class Ocean : MonoBehaviour, IHittable {
         return HittableType.Ocean;
     }
 
-    public void Hit(BaseProjectile projectile) {
+    public void Hit(BaseProjectile projectile, Collision collision) {
     }
 }
