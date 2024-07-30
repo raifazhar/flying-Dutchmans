@@ -13,4 +13,5 @@ public class LevelSO : ScriptableObject {
     [Range(0, 1)] public float enemyMissChance;
     public float enemyShootInterval;
     [Range(0, 1)] public float invertedChance;
+    public int levelSeed;
 }

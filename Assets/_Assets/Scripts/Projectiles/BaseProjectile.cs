@@ -6,10 +6,9 @@ using UnityEngine;
 
 public abstract class BaseProjectile : MonoBehaviour, IHittable {
 
+    [SerializeField] protected EffectHandler.EffectType hitEffectType;
     [SerializeField] protected HittableType[] targets;
     [SerializeField] protected int damage;
-    [SerializeField] protected Transform hitVFX;
-    [SerializeField] protected Transform waterCollisionFX;
     [SerializeField] protected HittableType projectileType;
 
     public virtual int GetDamage() {
@@ -39,10 +38,13 @@ public abstract class BaseProjectile : MonoBehaviour, IHittable {
         if (hittable != null) {
             if (CanHit(hittable.GetHittableType())) {
                 hittable.Hit(this, collision);
-                Instantiate(hitVFX, collision.GetContact(0).point, Quaternion.identity);
+                EffectHandler.Instance.SpawnEffect(hitEffectType, collision.contacts[0].point);
             }
             else if (hittable.GetHittableType() == HittableType.Ocean) {
-                Instantiate(waterCollisionFX, collision.GetContact(0).point, waterCollisionFX.rotation);
+                EffectHandler.Instance.SpawnEffect(EffectHandler.EffectType.WaterSplash, collision.contacts[0].point);
+            }
+            if (hittable.GetHittableType() == HittableType.Obstacle && collision.gameObject.GetComponent<Obstacle>() != null) {
+                EffectHandler.Instance.SpawnEffect(EffectHandler.EffectType.WoodCrack, collision.contacts[0].point);
             }
         }
         Destroy(gameObject);

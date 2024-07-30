@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1535007274930143137}
   - component: {fileID: 8348694170646866155}
   - component: {fileID: 1581757155253241384}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,6 +144,11 @@ PrefabInstance:
     - target: {fileID: 6237573955011112708, guid: 25dfd1dc1ec282547893cb0a6234b7ae,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9082856538146289859, guid: 25dfd1dc1ec282547893cb0a6234b7ae,
+        type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:

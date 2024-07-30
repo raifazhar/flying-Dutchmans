@@ -30,6 +30,7 @@ public class ObstacleSpawner : MonoBehaviour {
         spawnTimer = spawnInterval;
         activeObstacles = new List<Transform>();
         GameManager.Instance.OnGameOver += GameManager_OnGameOver;
+
     }
 
     private void GameManager_OnGameOver(object sender, EventArgs e) {
@@ -64,6 +65,7 @@ public class ObstacleSpawner : MonoBehaviour {
             if (randomValue <= sum) {
                 chosenObstaclePrefab = obstaclePrefabs[i];
                 Transform generatedObstacle = Instantiate(chosenObstaclePrefab, spawnPosition, Quaternion.identity);
+                generatedObstacle.SetParent(transform);
                 if (UnityEngine.Random.Range(0f, 1f) <= invertedChance) {
                     generatedObstacle.GetComponent<IFallingObstacle>().SetInverted(true);
                 }

@@ -471,6 +471,62 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1200283017647153679
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8594434204805252532}
+  - component: {fileID: 658988166028726400}
+  m_Layer: 0
+  m_Name: EffectHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8594434204805252532
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200283017647153679}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4459798363145845277}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &658988166028726400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200283017647153679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5860a358d6b921f4e957aee9032c6c22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bombExplosionEffect: {fileID: 1376617828620465841, guid: 41fd8b39359101a4fbc50f47af80bd71,
+    type: 3}
+  collisionRedEffect: {fileID: 1398378603891710113, guid: 19a39721a76ae594b90fbae3f5bf9d21,
+    type: 3}
+  collisionWhiteEffect: {fileID: 1398378603891710113, guid: 7f9fa8112d0362240a890ea6c1d9ed36,
+    type: 3}
+  forceFieldHitEffect: {fileID: 7995640984379031977, guid: 55ee18a35c74f4741ba9fa644db617c2,
+    type: 3}
+  waterSplashParticles: {fileID: 3991222090404552506, guid: 4ef7044fa1c5b904fbed8e5d1141305c,
+    type: 3}
+  woodCrackEffect: {fileID: 1795557570620625456, guid: b78908a33fc7e014284342c90826bc5f,
+    type: 3}
 --- !u!1 &1348003219795133277
 GameObject:
   m_ObjectHideFlags: 0
@@ -1789,7 +1845,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98cfcba828303d4db2fe03f271493a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitVFX: {fileID: 7995640984379031977, guid: 55ee18a35c74f4741ba9fa644db617c2, type: 3}
   VFX: {fileID: 4808626047913516966}
   vfxCurve:
     serializedVersion: 2
@@ -5708,6 +5763,7 @@ Transform:
   - {fileID: 5485229833123832992}
   - {fileID: 7686282018012099673}
   - {fileID: 6530375463689557874}
+  - {fileID: 8594434204805252532}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9179439499578668274

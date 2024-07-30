@@ -113,6 +113,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1376617828620465841, guid: 41fd8b39359101a4fbc50f47af80bd71,
         type: 3}
+    - target: {fileID: 3026575573820499366, guid: 25dfd1dc1ec282547893cb0a6234b7ae,
+        type: 3}
+      propertyPath: hitEffectType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3159123344242950665, guid: 25dfd1dc1ec282547893cb0a6234b7ae,
         type: 3}
       propertyPath: m_Name

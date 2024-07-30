@@ -10,6 +10,7 @@ public class Obstacle : MonoBehaviour, IHittable, IFallingObstacle {
     [SerializeField] private bool isInverted = false;
     [SerializeField] private Color invertedColor;
     [SerializeField] private MeshRenderer meshRenderer;
+    private bool isTargetingEnemy = false;
 
     private Vector3 launchVector;
 
@@ -23,6 +24,7 @@ public class Obstacle : MonoBehaviour, IHittable, IFallingObstacle {
         if (!isInverted) {
             if (projectile.GetHittableType() == HittableType.PlayerProjectile) {
                 targetPosition = GetClosestEnemyPosition(transform.position);
+                isTargetingEnemy = true;
             }
             else if (projectile.GetHittableType() == HittableType.EnemyProjectile) {
                 targetPosition = Player.Instance.transform.position;
@@ -31,9 +33,11 @@ public class Obstacle : MonoBehaviour, IHittable, IFallingObstacle {
         else {
             if (projectile.GetHittableType() == HittableType.PlayerProjectile) {
                 targetPosition = Player.Instance.transform.position;
+
             }
             else if (projectile.GetHittableType() == HittableType.EnemyProjectile) {
                 targetPosition = GetClosestEnemyPosition(transform.position);
+                isTargetingEnemy = true;
             }
 
         }
@@ -82,10 +86,12 @@ public class Obstacle : MonoBehaviour, IHittable, IFallingObstacle {
         return closestPosition;
     }
 
-
     private void LaunchProjectile() {
         Transform projectile = Instantiate(obstacleProjectile, transform.position, Quaternion.identity);
-        projectile.GetComponent<ObstacleProjectile>().SetProjectileType(HittableType.Obstacle);
+        if (isTargetingEnemy)
+            projectile.GetComponent<ObstacleProjectile>().SetProjectileType(HittableType.PlayerProjectile);
+        else
+            projectile.GetComponent<ObstacleProjectile>().SetProjectileType(HittableType.EnemyProjectile);
         projectile.GetComponent<Rigidbody>().velocity = launchVector;
         projectile.GetComponent<Rigidbody>().angularVelocity = launchVector;
     }

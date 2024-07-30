@@ -136,12 +136,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 581a4ca87a87f4c448e6154a2c0c061d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitEffectType: 1
   targets: 000000000200000004000000
   damage: 10
-  decayTime: 5
-  hitVFX: {fileID: 1398378603891710113, guid: 19a39721a76ae594b90fbae3f5bf9d21, type: 3}
-  waterCollisionFX: {fileID: 3991222090404552506, guid: 4ef7044fa1c5b904fbed8e5d1141305c,
-    type: 3}
   projectileType: 3
 --- !u!1001 &6397691774425660324
 PrefabInstance:

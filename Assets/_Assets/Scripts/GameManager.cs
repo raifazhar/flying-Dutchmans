@@ -89,6 +89,7 @@ public class GameManager : MonoBehaviour {
     }
     private void InitializeLevel(LevelSO level) {
         if (gameState == GameState.Starting) {
+            UnityEngine.Random.InitState(level.levelSeed);
             gameState = GameState.Playing;
             Player.Instance.SetMaxHealth(level.playerHealth);
             Player.Instance.Initialize();
