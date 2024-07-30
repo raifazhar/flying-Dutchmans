@@ -74,6 +74,8 @@ public class Player : MonoBehaviour, IHittable {
 
     private void GameManager_OnGameOver(object sender, EventArgs e) {
         playerState = State.GameOver;
+        Time.timeScale = 1f;
+        OnStateChange?.Invoke(this, new OnStateChangeEventArgs { playerState = playerState });
     }
 
     public void Initialize() {
@@ -186,7 +188,7 @@ public class Player : MonoBehaviour, IHittable {
     }
 
     #region Interface
-    public void Hit(BaseProjectile projectile) {
+    public void Hit(BaseProjectile projectile, Collision collision) {
         if (playerState == State.GameOver)
             return;
         health -= projectile.GetDamage();

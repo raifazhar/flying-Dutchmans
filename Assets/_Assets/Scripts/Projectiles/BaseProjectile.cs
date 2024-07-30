@@ -16,7 +16,7 @@ public abstract class BaseProjectile : MonoBehaviour, IHittable {
         return damage;
     }
 
-    public virtual void Hit(BaseProjectile projectile) {
+    public virtual void Hit(BaseProjectile projectile, Collision collision) {
         Destroy(gameObject);
     }
 
@@ -38,7 +38,7 @@ public abstract class BaseProjectile : MonoBehaviour, IHittable {
         IHittable hittable = collision.gameObject.GetComponent<IHittable>();
         if (hittable != null) {
             if (CanHit(hittable.GetHittableType())) {
-                hittable.Hit(this);
+                hittable.Hit(this, collision);
                 Instantiate(hitVFX, collision.GetContact(0).point, Quaternion.identity);
             }
             else if (hittable.GetHittableType() == HittableType.Ocean) {

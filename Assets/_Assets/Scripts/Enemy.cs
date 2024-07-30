@@ -19,6 +19,11 @@ public class Enemy : MonoBehaviour, IHittable {
     public class OnStateChangeEventArgs : EventArgs {
         public State enemyState;
     }
+
+    public event EventHandler<OnHitArgs> OnHit;
+    public class OnHitArgs : EventArgs {
+        public Collision collision;
+    }
     private int maxHealth = 100;
     private int health;
     [SerializeField] private Transform launchPoint;
@@ -97,7 +102,8 @@ public class Enemy : MonoBehaviour, IHittable {
         Transform highestDamageObstacle = null;
         int highestDamage = 0;
         for (int i = 0; i < activeObstacles.Count; i++) {
-            if (activeObstacles[i].GetComponent<IFallingObstacle>().GetDamage() >= highestDamage) {
+            if (activeObstacles[i].GetComponent<IFallingObstacle>().GetDamage() >= highestDamage
+                && !activeObstacles[i].GetComponent<IFallingObstacle>().IsInverted()) {
                 highestDamage = activeObstacles[i].GetComponent<IFallingObstacle>().GetDamage();
                 highestDamageObstacle = activeObstacles[i];
             }
@@ -171,11 +177,12 @@ public class Enemy : MonoBehaviour, IHittable {
         return HittableType.Enemy;
     }
 
-    public void Hit(BaseProjectile projectile) {
+    public void Hit(BaseProjectile projectile, Collision collision) {
         if (enemyState == State.GameOver)
             return;
         health -= projectile.GetDamage();
         OnHealthChanged?.Invoke(this, EventArgs.Empty);
+        OnHit?.Invoke(this, new OnHitArgs { collision = collision });
         GameManager.Instance.AddScore(projectile.GetDamage(), projectile.gameObject.transform.position);
         if (health <= 0) {
             enemyState = State.Dead;
