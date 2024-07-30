@@ -38,9 +38,11 @@ public class Player : MonoBehaviour, IHittable {
     [SerializeField] private float touchSensitivityVertical = 1f;
     [SerializeField] private float launchVectorMax;
     [SerializeField] private float launchVectorMin;
+    [SerializeField] private Vector2 touchBoundsHorizontal;
+    [SerializeField] private Vector2 touchBoundsVertical;
     [SerializeField] private float launchSpeed;
     [SerializeField, Range(0, 1)] private float slowDownFactor = 0.5f;
-    private readonly float cameraZDistance = 1;
+    private readonly float cameraZDistance = 1f;
     [SerializeField] private Vector3 startingVector;
     private Vector3 touchOrigin;
     private Vector3 touchOriginWorldSpace;
@@ -122,8 +124,6 @@ public class Player : MonoBehaviour, IHittable {
     public void StartAiming(Vector2 pos) {
         //IF player has started touch in idle state then store the initial touchOrigin and get its world space coordinates as well
         touchOrigin = pos;
-        touchOrigin.z = cameraZDistance;
-        touchOriginWorldSpace = Camera.main.ScreenToWorldPoint(touchOrigin);
         SetAimVector(pos);
         playerState = State.Aiming;
         //OnStateChange is invoked everytime state changes, this is for any visual stuff that needs to be done
@@ -138,11 +138,15 @@ public class Player : MonoBehaviour, IHittable {
         //Get the current touchPoint of the finger
         touchPoint = pos;
         touchPoint.z = cameraZDistance;
+        touchOrigin.z = cameraZDistance;
+        touchOriginWorldSpace = Camera.main.ScreenToWorldPoint(touchOrigin);
         touchPointWorldSpace = Camera.main.ScreenToWorldPoint(touchPoint);
         screenVector = touchPointWorldSpace - touchOriginWorldSpace;
         //Touch Sensitivity field is used to change the sensitivity of the launchVector as per user touch
         screenVector.y *= touchSensitivityVertical;
         screenVector.z *= touchSensitivityHorizontal;
+        screenVector.y = Mathf.Clamp(screenVector.y, touchBoundsVertical.x, touchBoundsVertical.y);
+        screenVector.z = Mathf.Clamp(screenVector.z, touchBoundsHorizontal.x, touchBoundsHorizontal.y);
         //Set the launchVector to the startingVector then add the relevant screenVector components to it
         launchVector = startingVector;
         //These decide the actual height and z axis tilt of the launchVector

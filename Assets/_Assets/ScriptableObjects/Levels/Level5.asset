@@ -12,16 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad963ee9b97243140998ee26df6858bc, type: 3}
   m_Name: Level5
   m_EditorClassIdentifier: 
-  LevelID: 5
+  LevelID: 4
   ObstacleList: {fileID: 11400000, guid: ca1a901fdb351494c92e763152f69dd9, type: 2}
   obstacleSpawnInterval: 2
   spawnChance:
-  - 0.15
-  - 0.35
-  - 0.3
   - 0.2
-  playerHealth: 200
-  enemyHealth: 200
-  enemyMissChance: 0.2
-  enemyShootInterval: 1.5
-  invertedChance: 0.3
+  - 0.4
+  - 0.2
+  - 0.2
+  playerHealth: 150
+  enemyHealth: 150
+  enemyMissChance: 0.3
+  enemyShootInterval: 2
+  invertedChance: 0.25
+  levelSeed: 0
+  startingAmmo: 5
