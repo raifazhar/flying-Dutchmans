@@ -588,7 +588,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  arrowSpeed: 10
+  arrowSpeed: 5
 --- !u!114 &498689968
 MonoBehaviour:
   m_ObjectHideFlags: 0

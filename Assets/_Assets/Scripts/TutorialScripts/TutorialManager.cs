@@ -54,7 +54,7 @@ public class TutorialManager : MonoBehaviour {
         canvasScaler = canvas.GetComponent<CanvasScaler>();
         origin = new Vector2(Screen.width / 2f, Screen.height - (Screen.height / 3f));
         end1 = new Vector2(Screen.width / 2f, Screen.height / 3f);
-        end3 = end4 = end2 = new Vector2(Screen.width / 2f, Screen.height / 2f);
+        end3 = end4 = end2 = new Vector2(Screen.width / 2f, (Screen.height / 2.2f));
         Vector2 originPosition = ScreenToCanvasPoint(origin);
         Vector2 endPosition = ScreenToCanvasPoint(end1);
         arrow1.SetPosition(originPosition);
