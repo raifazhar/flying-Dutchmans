@@ -26,6 +26,7 @@ public class SlingshotVisual : MonoBehaviour {
     private Quaternion recoilRotation;
     private Quaternion shootRotation;
 
+    private float lerpPoint = 0f;
     private float recoilLerp = 0f;
     private State state;
     private void Start() {
@@ -89,7 +90,7 @@ public class SlingshotVisual : MonoBehaviour {
             recoilLerp = 1f;
         }
         //lerpPoint is found through an oscillating sine wave with decreasing amplitude over time
-        float lerpPoint = recoilCurve.Evaluate(recoilLerp);
+        lerpPoint = recoilCurve.Evaluate(recoilLerp);
         slingShotHolder.localPosition = Vector3.Lerp(shootPosition, recoilPosition, lerpPoint);
         slingBone.localRotation = Quaternion.Lerp(shootRotation, recoilRotation, lerpPoint);
     }

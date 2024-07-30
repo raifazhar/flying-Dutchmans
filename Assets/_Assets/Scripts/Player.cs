@@ -29,6 +29,7 @@ public class Player : MonoBehaviour, IHittable {
     private int maxHealth = 100;
     private int health;
     [SerializeField] private float cameraShakeOnHit = 0.5f;
+    [SerializeField] private float cameraShakeOnLaunch = 0.5f;
 
     [Header("Player Settings")]
     [SerializeField] private Transform launchOrigin;
@@ -168,6 +169,7 @@ public class Player : MonoBehaviour, IHittable {
         playerState = State.Launching;
         launchTimer = launchCooldown;
         OnStateChange?.Invoke(this, new OnStateChangeEventArgs { playerState = playerState });
+        CameraController.Instance.AddTrauma(cameraShakeOnLaunch);
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
 

@@ -3355,9 +3355,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e339751f57b493040bca7c88eb04b2c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displacementMultiplier: 0.5
+  displacementMultiplier: 2
   maxDisplacement: 0.5
-  displacementSpeed: 5
+  displacementSpeed: 20
   shakeEmpty: {fileID: 4115741580019031808}
   maxYaw: 5
   maxPitch: 5
@@ -4629,6 +4629,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraShakeOnHit: 0.2
+  cameraShakeOnLaunch: 0.1
   launchOrigin: {fileID: 3483657953059809837}
   projectilePrefab: {fileID: 4635234919210959314, guid: 9008717387286c64485a9d1f57e12e13,
     type: 3}
@@ -5944,36 +5945,72 @@ MonoBehaviour:
   tiltMultiplier: 10
   recoilMultiplier: 2
   recoilSpeed: 1
-  rotateToOriginSpeed: 5
+  rotateToOriginSpeed: 4
   recoilCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 34
+      inSlope: 3.491468
+      outSlope: 3.491468
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0.18468155
     - serializedVersion: 3
-      time: 0.5
+      time: 0.18437304
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
+      inSlope: -0.03604768
+      outSlope: -0.03604768
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
+      outWeight: 0.3049208
+    - serializedVersion: 3
+      time: 0.37720975
+      value: 0
+      inSlope: 0.075982615
+      outSlope: 0.075982615
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.28778338
       outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5549318
+      value: 0.5
+      inSlope: -0.026003681
+      outSlope: -0.026003681
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.41337627
+    - serializedVersion: 3
+      time: 0.7455986
+      value: 0
+      inSlope: 0.005835023
+      outSlope: 0.005835023
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.62119913
+    - serializedVersion: 3
+      time: 0.8637189
+      value: 0.13123733
+      inSlope: -0.045366194
+      outSlope: -0.045366194
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.49762094
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: -2
-      outSlope: -2
-      tangentMode: 34
+      inSlope: -1.4036324
+      outSlope: -1.4036324
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.36646464
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -7693,6 +7730,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 389393495335382839}
     m_Modifications:
+    - target: {fileID: 33111925465785310, guid: a34650c6810e10a4e8cdc29778db0757,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5839820891208247194, guid: a34650c6810e10a4e8cdc29778db0757,
         type: 3}
       propertyPath: m_LocalScale.x
