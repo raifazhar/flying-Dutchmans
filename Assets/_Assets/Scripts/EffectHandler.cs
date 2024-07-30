@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EffectHandler : MonoBehaviour {
-
     public enum EffectType {
         BombExplosion,
         CollisionRed,
@@ -19,6 +18,7 @@ public class EffectHandler : MonoBehaviour {
     [SerializeField] private Transform forceFieldHitEffect;
     [SerializeField] private Transform waterSplashParticles;
     [SerializeField] private Transform woodCrackEffect;
+    [SerializeField] private Transform textEffect;
     void Awake() {
         if (Instance == null) {
             Instance = this;
@@ -51,6 +51,14 @@ public class EffectHandler : MonoBehaviour {
             default:
                 break;
         }
+    }
 
+    public void SpawnTextEffect(string text, Vector3 position, TextEffect.TextColor color, float startSize = 1f, float speed = 3f) {
+        Transform textEffectSpawned = Instantiate(textEffect, position, Quaternion.identity);
+        TextEffect textEffectComponent = textEffectSpawned.GetComponent<TextEffect>();
+        textEffectComponent.SetText(text);
+        textEffectComponent.SetScale(startSize);
+        textEffectComponent.SetSpeed(speed);
+        textEffectComponent.SetColor(color);
     }
 }

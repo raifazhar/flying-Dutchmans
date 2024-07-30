@@ -54,7 +54,6 @@ public class Player : MonoBehaviour, IHittable {
     private float launchTimer = 0f;
 
 
-    [SerializeField] private bool isTutorial;
     private State playerState;
 
 
@@ -84,8 +83,7 @@ public class Player : MonoBehaviour, IHittable {
         playerState = State.Idle;
     }
     void FixedUpdate() {
-        if (isTutorial)
-            return;
+
         switch (playerState) {
             case State.None:
                 break;

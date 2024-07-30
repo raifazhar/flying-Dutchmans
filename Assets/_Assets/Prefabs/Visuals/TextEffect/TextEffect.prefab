@@ -146,10 +146,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3115212228718776836}
-  - component: {fileID: -8541946757570476744}
   - component: {fileID: 7738319819920417287}
   m_Layer: 0
-  m_Name: ScoreEffect
+  m_Name: TextEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,19 +170,6 @@ Transform:
   - {fileID: 3750809252618819027}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-8541946757570476744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5604767868166815882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 847a97d12b9255a47b1d4e287ffe24d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeToDestroy: 0.3
 --- !u!114 &7738319819920417287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,10 +263,13 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 1
     m_RotationOrder: 4
-  scaleMagnitude: 1
+  scaleMagnitude: 2.44
   transformMagnitude: 2
   speed: 3
   text: {fileID: 7608174387390191758}
+  textColors:
+  - {r: 0, g: 1, b: 0.015245914, a: 0}
+  - {r: 0, g: 0.6429143, b: 0.9150943, a: 0}
 --- !u!1 &6408014717715891176
 GameObject:
   m_ObjectHideFlags: 0

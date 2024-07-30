@@ -37,9 +37,6 @@ public class GameManager : MonoBehaviour {
     private GameState gameState;
     private Coroutine gameEndCoroutine;
 
-    [SerializeField] private bool isTutorial;
-    [SerializeField] private LevelSO tutorialLevel;
-    [SerializeField] private Transform scoreEffect;
     private void Awake() {
         Instance = this;
         gameState = GameState.Starting;
@@ -48,13 +45,8 @@ public class GameManager : MonoBehaviour {
         Screen.orientation = ScreenOrientation.Portrait;
     }
     private void Start() {
-        if (!isTutorial) {
-            levelIndex = SelectedLevel.selectedLevel;
-            InitializeLevel(levelsSO.levels[levelIndex]);
-        }
-        else {
-            InitializeLevel(tutorialLevel);
-        }
+        levelIndex = SelectedLevel.selectedLevel;
+        InitializeLevel(levelsSO.levels[levelIndex]);
         Player.Instance.OnStateChange += Player_OnStateChange;
         Enemy.Instance.OnStateChange += Enemy_OnStateChange;
     }
@@ -97,12 +89,10 @@ public class GameManager : MonoBehaviour {
             Enemy.Instance.SetMissChance(level.enemyMissChance);
             Enemy.Instance.SetShootInterval(level.enemyShootInterval);
             Enemy.Instance.Initialize();
-            if (!isTutorial) {
-                ObstacleSpawner.Instance.SetInvertedChance(level.invertedChance);
-                ObstacleSpawner.Instance.SetSpawnInterval(level.obstacleSpawnInterval);
-                ObstacleSpawner.Instance.SetObstacles(level.ObstacleList.obstaclePrefabs, level.spawnChance);
-                ObstacleSpawner.Instance.Initialize();
-            }
+            ObstacleSpawner.Instance.SetInvertedChance(level.invertedChance);
+            ObstacleSpawner.Instance.SetSpawnInterval(level.obstacleSpawnInterval);
+            ObstacleSpawner.Instance.SetObstacles(level.ObstacleList.obstaclePrefabs, level.spawnChance);
+            ObstacleSpawner.Instance.Initialize();
         }
     }
 
@@ -136,8 +126,7 @@ public class GameManager : MonoBehaviour {
     }
     public void AddScore(int amount, Vector3 position) {
         AddScore(amount);
-        Transform effect = Instantiate(scoreEffect, position, Quaternion.identity);
-        effect.GetComponent<ScoreEffect>().SetScore(amount);
+        EffectHandler.Instance.SpawnTextEffect(amount.ToString(), position, TextEffect.TextColor.Blue);
     }
 
     public void RemoveScore(int amount) {

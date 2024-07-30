@@ -19,7 +19,7 @@ public class EnemyVisual : MonoBehaviour {
     }
 
     private void Enemy_OnHit(object sender, Enemy.OnHitArgs e) {
-        Instantiate(hitVisual, e.collision.GetContact(0).point, Quaternion.Euler(0, 0, 90));
+        Instantiate(hitVisual, e.collision.GetContact(0).point, Quaternion.FromToRotation(Vector3.up, e.collision.GetContact(0).normal));
     }
 
     private void Enemy_OnHealthChanged(object sender, System.EventArgs e) {

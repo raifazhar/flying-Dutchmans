@@ -16,6 +16,7 @@ public class HealthPack : MonoBehaviour, IHittable, IFallingObstacle {
     public void Hit(BaseProjectile projectile, Collision collision) {
         if (projectile.GetHittableType() == HittableType.PlayerProjectile) {
             Player.Instance.AddHealth(healthAmount);
+            EffectHandler.Instance.SpawnTextEffect("+" + healthAmount, transform.position, TextEffect.TextColor.Green, 0.4f, 1.5f);
         }
         else if (projectile.GetHittableType() == HittableType.EnemyProjectile) {
             Enemy.Instance.AddHealth(healthAmount);

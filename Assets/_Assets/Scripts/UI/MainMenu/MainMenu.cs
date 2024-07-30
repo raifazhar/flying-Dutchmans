@@ -13,13 +13,8 @@ public class MainMenu : MonoBehaviour {
 
 
     public void OnPlayClick() {
-        if (PlayerPrefs.GetInt(PlayerPrefVariables.TutorialDone) == 0) {
-            SceneManager.LoadScene("TutorialScene");
-        }
-        else {
-            menu.gameObject.SetActive(false);
-            levelSelect.gameObject.SetActive(true);
-        }
+        menu.gameObject.SetActive(false);
+        levelSelect.gameObject.SetActive(true);
     }
 
     public void OnOptionsClick() {
