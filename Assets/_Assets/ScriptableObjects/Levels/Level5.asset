@@ -17,13 +17,13 @@ MonoBehaviour:
   obstacleSpawnInterval: 2
   spawnChance:
   - 0.2
-  - 0.4
-  - 0.2
-  - 0.2
+  - 0.45
+  - 0.25
+  - 0.1
   playerHealth: 150
   enemyHealth: 150
   enemyMissChance: 0.3
   enemyShootInterval: 2
-  invertedChance: 0.25
+  invertedChance: 0.05
   levelSeed: 0
-  startingAmmo: 5
+  startingAmmo: 8

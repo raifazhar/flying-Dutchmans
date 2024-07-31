@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour {
         Enemy.Instance.OnStateChange += Enemy_OnStateChange;
     }
 
+
     private void Enemy_OnStateChange(object sender, Enemy.OnStateChangeEventArgs e) {
         if (e.enemyState == Enemy.State.Dead && gameState == GameState.Playing) {
             //Enemy is dead, end the game
@@ -83,6 +84,7 @@ public class GameManager : MonoBehaviour {
         if (gameState == GameState.Starting) {
             UnityEngine.Random.InitState(level.levelSeed);
             gameState = GameState.Playing;
+            Player.Instance.SetMaxAmmo(level.startingAmmo);
             Player.Instance.SetMaxHealth(level.playerHealth);
             Player.Instance.Initialize();
             Enemy.Instance.SetMaxHealth(level.enemyHealth);

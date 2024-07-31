@@ -62,15 +62,15 @@ public class Obstacle : MonoBehaviour, IHittable, IFallingObstacle {
         float discRoot = Mathf.Sqrt(discriminant);
 
         // Highest shot with the given max speed:
-        //float T_max = Mathf.Sqrt((b + discRoot) * 2f / gSquared);
+        float T_max = Mathf.Sqrt((b + discRoot) * 2f / gSquared);
 
         // Most direct shot with the given max speed:
-        float T_min = Mathf.Sqrt((b - discRoot) * 2f / gSquared);
+        //float T_min = Mathf.Sqrt((b - discRoot) * 2f / gSquared);
 
         // Lowest-speed arc available:
         //float T_lowEnergy = Mathf.Sqrt(Mathf.Sqrt(toTarget.sqrMagnitude * 4f / gSquared));
 
-        float T = T_min;
+        float T = T_max;
 
         // Convert from time-to-hit to a launch velocity:
         return (toTarget / T - Physics.gravity * T / 2f);

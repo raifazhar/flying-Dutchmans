@@ -24,6 +24,7 @@ public class Player : MonoBehaviour, IHittable {
         public State playerState;
     }
     public event EventHandler OnHealthChange;
+    public event EventHandler OnAmmoChange;
 
     [Header("Health Settings")]
     private int maxHealth = 100;
@@ -50,6 +51,8 @@ public class Player : MonoBehaviour, IHittable {
     private Vector3 touchPointWorldSpace;
     private Vector3 launchVector;
     private Vector3 screenVector;
+    private int maxAmmo = 0;
+    private int remainingAmmo = 0;
 
 
     [SerializeField] private float launchCooldown = 1f;
@@ -90,7 +93,7 @@ public class Player : MonoBehaviour, IHittable {
             case State.None:
                 break;
             case State.Idle:
-                if (Input.touchCount > 0 && !IsTouchOverUI()) {
+                if (Input.touchCount > 0 && !IsTouchOverUI() && remainingAmmo > 0) {
                     StartAiming(Input.GetTouch(0).position);
                 }
                 break;
@@ -168,6 +171,8 @@ public class Player : MonoBehaviour, IHittable {
     }
     public void StartLaunching() {
         LaunchProjectile();
+        remainingAmmo--;
+        OnAmmoChange?.Invoke(this, EventArgs.Empty);
         playerState = State.Launching;
         launchTimer = launchCooldown;
         OnStateChange?.Invoke(this, new OnStateChangeEventArgs { playerState = playerState });
@@ -241,5 +246,27 @@ public class Player : MonoBehaviour, IHittable {
             health = maxHealth;
         OnHealthChange?.Invoke(this, EventArgs.Empty);
     }
+
+    public void AddAmmo(int amount) {
+        remainingAmmo += amount;
+        if (remainingAmmo > maxAmmo)
+            remainingAmmo = maxAmmo;
+        OnAmmoChange?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void SetMaxAmmo(int m) {
+        maxAmmo = m;
+        remainingAmmo = m;
+        OnAmmoChange?.Invoke(this, EventArgs.Empty);
+    }
+
+    public int GetMaxAmmo() {
+        return maxAmmo;
+    }
+
+    public int GetRemainingAmmo() {
+        return remainingAmmo;
+    }
+
 
 }
