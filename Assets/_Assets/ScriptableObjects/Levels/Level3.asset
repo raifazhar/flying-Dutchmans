@@ -26,3 +26,4 @@ MonoBehaviour:
   invertedChance: 0.02
   levelSeed: 0
   startingAmmo: 6
+  difficulty: 2

@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LevelScrollView : MonoBehaviour
 {
@@ -10,6 +14,8 @@ public class LevelScrollView : MonoBehaviour
 
     [SerializeField] private LevelListSO levelList;
     [SerializeField] private GameObject prefab;
+
+   
 
     private void Start()
     {
@@ -31,6 +37,7 @@ public class LevelScrollView : MonoBehaviour
             InstantiatePrefabAtPosition(i++,offset);
             InstantiatePrefabAtPosition(i++, offset);
             offset += height;
+            
 
         }
     }
@@ -44,7 +51,39 @@ public class LevelScrollView : MonoBehaviour
         RectTransform instantiatedRect = instantiatedPrefab.GetComponent<RectTransform>();
         instantiatedRect.anchoredPosition = anchoredPosition;
         instantiatedRect.anchoredPosition += new Vector2(0,offset);
+        TMP_Text[] textComponents = instantiatedPrefab.GetComponentsInChildren<TMP_Text>();
+        foreach (TMP_Text textComponent in textComponents)
+        {
+            if (textComponent.name == "LevelText")
+            {
+                textComponent.text = "Level " + (index+1);
+            }
+            else if (textComponent.name == "LevelDescription")
+            {
+                textComponent.text = "Difficulty ";
+                for(int i=0; i<levelList.levels[index].difficulty;i++)
+                {
+                    textComponent.text += "<sprite index=0>";
+                }
+            }
+            
+        }
+        Button button=instantiatedRect.GetComponent<Button>();
+        button.onClick.AddListener(() => LoadLevel(index+1));
+        
+
     }
 
- 
+    public void LoadLevel(int levelIndex)
+    {
+        if (levelIndex < 1 || levelIndex > levelList.levels.Count + 1)
+        {
+            Debug.LogWarning("Level does not exist");
+            return;
+        }
+        SelectedLevel.SetSelectedLevel(levelIndex - 1);
+        SceneManager.LoadScene(Scenes.GameScene);
+    }
 }
+
+
