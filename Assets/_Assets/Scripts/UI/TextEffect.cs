@@ -7,7 +7,8 @@ public class TextEffect : MonoBehaviour {
 
     public enum TextColor {
         Green,
-        Blue
+        Blue,
+        Orange
     }
     [SerializeField] private AnimationCurve scaleCurve;
     [SerializeField] private AnimationCurve yTransformCurve;
@@ -57,6 +58,9 @@ public class TextEffect : MonoBehaviour {
                 break;
             case TextColor.Blue:
                 text.color = textColors[1];
+                break;
+            case TextColor.Orange:
+                text.color = textColors[2];
                 break;
             default:
                 break;

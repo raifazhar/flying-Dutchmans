@@ -263,13 +263,13 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 1
     m_RotationOrder: 4
-  scaleMagnitude: 2.44
   transformMagnitude: 2
   speed: 3
   text: {fileID: 7608174387390191758}
   textColors:
   - {r: 0, g: 1, b: 0.015245914, a: 0}
   - {r: 0, g: 0.6429143, b: 0.9150943, a: 0}
+  - {r: 0.9137255, g: 0.45925114, b: 0, a: 0}
 --- !u!1 &6408014717715891176
 GameObject:
   m_ObjectHideFlags: 0
