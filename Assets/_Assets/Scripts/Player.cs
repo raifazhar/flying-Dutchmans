@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static UnityEditor.PlayerSettings;
 
 public class Player : MonoBehaviour, IHittable {
 
@@ -35,6 +36,8 @@ public class Player : MonoBehaviour, IHittable {
     [Header("Player Settings")]
     [SerializeField] private Transform launchOrigin;
     [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private float minimumScreenVectorThreshold = 10f;
+    private bool newScreenVector = true;
     [SerializeField] private float touchSensitivityHorizontal = 1f;
     [SerializeField] private float touchSensitivityVertical = 1f;
     [SerializeField] private float launchVectorMax;
@@ -91,7 +94,8 @@ public class Player : MonoBehaviour, IHittable {
             case State.None:
                 break;
             case State.Idle:
-                if (Input.touchCount > 0 && !IsTouchOverUI()) {
+                SetScreenVector();
+                if (Input.touchCount > 0 && !IsTouchOverUI() && screenVector.sqrMagnitude >= minimumScreenVectorThreshold * minimumScreenVectorThreshold) {
                     StartAiming(Input.GetTouch(0).position);
                 }
                 break;
@@ -117,15 +121,16 @@ public class Player : MonoBehaviour, IHittable {
     private void AimingState() {
         if (Input.touchCount == 0) {
             StartLaunching();
+            newScreenVector = true;
         }
         else {
-            SetAimVector(Input.GetTouch(0).position);
+            SetAimVector();
         }
     }
-    public void StartAiming(Vector2 pos) {
+    private void StartAiming(Vector2 pos) {
         //IF player has started touch in idle state then store the initial touchOrigin and get its world space coordinates as well
-        touchOrigin = pos;
-        SetAimVector(pos);
+        SetScreenVector();
+        SetAimVector();
         playerState = State.Aiming;
         //OnStateChange is invoked everytime state changes, this is for any visual stuff that needs to be done
         //We seperate the logic from the visuals this way
@@ -134,15 +139,27 @@ public class Player : MonoBehaviour, IHittable {
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
     }
 
-    public void SetAimVector(Vector2 pos) {
+    private void SetScreenVector() {
+        if (Input.touchCount > 0) {
+            if (newScreenVector) {
+                touchOrigin = Input.GetTouch(0).position;
+                newScreenVector = false;
+            }
+            touchPoint = Input.GetTouch(0).position;
+            touchPoint.z = cameraZDistance;
+            touchOrigin.z = cameraZDistance;
+            touchOriginWorldSpace = Camera.main.ScreenToWorldPoint(touchOrigin);
+            touchPointWorldSpace = Camera.main.ScreenToWorldPoint(touchPoint);
+            screenVector = touchPointWorldSpace - touchOriginWorldSpace;
+        }
+        else {
+            screenVector = Vector3.zero;
+            newScreenVector = true;
+        }
+    }
+    private void SetAimVector() {
         //The launchVector decides the direction the projectile is launched in when player releases the touch
-        //Get the current touchPoint of the finger
-        touchPoint = pos;
-        touchPoint.z = cameraZDistance;
-        touchOrigin.z = cameraZDistance;
-        touchOriginWorldSpace = Camera.main.ScreenToWorldPoint(touchOrigin);
-        touchPointWorldSpace = Camera.main.ScreenToWorldPoint(touchPoint);
-        screenVector = touchPointWorldSpace - touchOriginWorldSpace;
+        SetScreenVector();
         //Touch Sensitivity field is used to change the sensitivity of the launchVector as per user touch
         screenVector.y *= touchSensitivityVertical;
         screenVector.z *= touchSensitivityHorizontal;

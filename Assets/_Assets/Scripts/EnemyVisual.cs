@@ -19,7 +19,8 @@ public class EnemyVisual : MonoBehaviour {
     }
 
     private void Enemy_OnHit(object sender, Enemy.OnHitArgs e) {
-        Instantiate(hitVisual, e.collision.GetContact(0).point, Quaternion.FromToRotation(Vector3.up, e.collision.GetContact(0).normal));
+        Transform effect = Instantiate(hitVisual, e.collision.GetContact(0).point, Quaternion.FromToRotation(Vector3.up, e.collision.GetContact(0).normal));
+        effect.SetParent(this.transform);
     }
 
     private void Enemy_OnHealthChanged(object sender, System.EventArgs e) {
