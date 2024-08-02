@@ -6,20 +6,12 @@ using UnityEngine;
 public class AmmoPack : MonoBehaviour, IHittable, IFallingObstacle {
     [SerializeField] private float fallingSpeed = 0.1f;
     [SerializeField] private int ammoAmount = 0;
-    [SerializeField] private TextMeshProUGUI[] texts;
 
     private Vector3 launchVector;
 
 
-    private void Start() {
-        SetTexts();
-    }
 
-    private void SetTexts() {
-        foreach (TextMeshProUGUI text in texts) {
-            text.text = "+" + ammoAmount;
-        }
-    }
+
 
     public HittableType GetHittableType() {
         return HittableType.Obstacle;
@@ -60,7 +52,6 @@ public class AmmoPack : MonoBehaviour, IHittable, IFallingObstacle {
 
     public void SetAmmoAmount(int amount) {
         ammoAmount = amount;
-        SetTexts();
     }
     public int GetAmmoAmount() {
         return ammoAmount;

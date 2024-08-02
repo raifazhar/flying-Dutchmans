@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour, IHittable {
     }
     private int maxHealth = 100;
     private int health;
-    [SerializeField] private Transform launchPoint;
+    [SerializeField] private EnemyCannon[] cannons;
     [SerializeField] private GameObject enemyProjectile;
     [Header("AI")]
     [SerializeField] private float shootInterval = 2f;
@@ -82,14 +82,11 @@ public class Enemy : MonoBehaviour, IHittable {
             return;
         }
         shootTimer = shootInterval;
-        MakeShootingDecision();
-        GameObject projectile = Instantiate(enemyProjectile, launchPoint.position, launchPoint.rotation);
-        projectile.GetComponent<Rigidbody>().velocity = launchVector;
-        projectile.GetComponent<Rigidbody>().angularVelocity = launchVector;
+        LaunchProjectileFromRandomCannon();
 
     }
 
-    private void MakeShootingDecision() {
+    private void LaunchProjectileFromRandomCannon() {
         launchVector = Vector3.zero;
         List<Transform> activeObstacles = ObstacleSpawner.Instance.GetActiveObstacles();
         //Remove all obstacles below height threshold
@@ -108,12 +105,15 @@ public class Enemy : MonoBehaviour, IHittable {
                 highestDamageObstacle = activeObstacles[i];
             }
         }
+        //Choose a random cannon to shoot out of 
+        int randomCannonIndex = UnityEngine.Random.Range(0, cannons.Length);
+
         if (highestDamageObstacle != null) {
             //Get the position of the target
             Vector3 currentTargetPosition = highestDamageObstacle.position;
             float fallSpeed = highestDamageObstacle.GetComponent<IFallingObstacle>().GetFallSpeed();
-            Vector3 preliminaryLaunchVector = CalculateLaunchVector(launchPoint.position, currentTargetPosition, launchVelocity);
-            float timeToTarget = Vector3.Distance(currentTargetPosition, launchPoint.position) / preliminaryLaunchVector.magnitude;
+            Vector3 preliminaryLaunchVector = CalculateLaunchVector(cannons[randomCannonIndex].GetLaunchOrigin().position, currentTargetPosition, launchVelocity);
+            float timeToTarget = Vector3.Distance(currentTargetPosition, cannons[randomCannonIndex].GetLaunchOrigin().position) / preliminaryLaunchVector.magnitude;
             //Compensate for the fall of the obstacle
             targetPosition = currentTargetPosition;
             targetPosition.y -= fallSpeed * timeToTarget;
@@ -139,11 +139,9 @@ public class Enemy : MonoBehaviour, IHittable {
                 targetPosition.z -= z;
             }
         }
-        //Calculate the launch vector
-        launchVector = CalculateLaunchVector(launchPoint.position, targetPosition, launchVelocity);
-
+        launchVector = CalculateLaunchVector(cannons[randomCannonIndex].GetLaunchOrigin().position, targetPosition, launchVelocity);
+        cannons[randomCannonIndex].LaunchProjectile(enemyProjectile.transform, launchVector);
     }
-
 
     private Vector3 CalculateLaunchVector(Vector3 startPos, Vector3 targetPos, float launchSpeed) {
         Vector3 toTarget = targetPos - startPos;
@@ -166,6 +164,7 @@ public class Enemy : MonoBehaviour, IHittable {
         // Convert from time-to-hit to a launch velocity:
         return (toTarget / T - Physics.gravity * T / 2f);
     }
+
     public HittableType GetHittableType() {
         return HittableType.Enemy;
     }
