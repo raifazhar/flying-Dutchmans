@@ -107,6 +107,7 @@ public class Enemy : MonoBehaviour, IHittable {
         }
         //Choose a random cannon to shoot out of 
         int randomCannonIndex = UnityEngine.Random.Range(0, cannons.Length);
+        float cannonLaunchDelay = cannons[randomCannonIndex].GetLaunchDelay();
 
         if (highestDamageObstacle != null) {
             //Get the position of the target
@@ -114,6 +115,7 @@ public class Enemy : MonoBehaviour, IHittable {
             float fallSpeed = highestDamageObstacle.GetComponent<IFallingObstacle>().GetFallSpeed();
             Vector3 preliminaryLaunchVector = CalculateLaunchVector(cannons[randomCannonIndex].GetLaunchOrigin().position, currentTargetPosition, launchVelocity);
             float timeToTarget = Vector3.Distance(currentTargetPosition, cannons[randomCannonIndex].GetLaunchOrigin().position) / preliminaryLaunchVector.magnitude;
+            timeToTarget += cannonLaunchDelay;
             //Compensate for the fall of the obstacle
             targetPosition = currentTargetPosition;
             targetPosition.y -= fallSpeed * timeToTarget;

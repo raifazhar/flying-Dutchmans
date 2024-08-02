@@ -2418,7 +2418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cannons:
-  - {fileID: 703684598}
+  - {fileID: 1789581679}
   - {fileID: 703684598}
   enemyProjectile: {fileID: 6784864521282570351, guid: 77d9fc3f3426d4947b5cf94246daceda,
     type: 3}
@@ -4599,7 +4599,7 @@ PrefabInstance:
     - target: {fileID: 35897176084074367, guid: b3d1b5559afd4c149bcfddc91e4d21e7,
         type: 3}
       propertyPath: m_Name
-      value: Cannon
+      value: Cannon1
       objectReference: {fileID: 0}
     - target: {fileID: 7767605012653709651, guid: b3d1b5559afd4c149bcfddc91e4d21e7,
         type: 3}
@@ -4662,6 +4662,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1789581677}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1789581679 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4793355134278979969, guid: b3d1b5559afd4c149bcfddc91e4d21e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1789581677}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c6ad8cb6bcb27e4790cff78923a82bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1853730562
 GameObject:
   m_ObjectHideFlags: 0
@@ -8379,7 +8391,7 @@ PrefabInstance:
     - target: {fileID: 35897176084074367, guid: b3d1b5559afd4c149bcfddc91e4d21e7,
         type: 3}
       propertyPath: m_Name
-      value: Cannon
+      value: Cannon2
       objectReference: {fileID: 0}
     - target: {fileID: 7767605012653709651, guid: b3d1b5559afd4c149bcfddc91e4d21e7,
         type: 3}
