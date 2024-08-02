@@ -13,6 +13,7 @@ public class EnemyCannon : MonoBehaviour {
 
     public void LaunchProjectile(Transform enemyProjectile, Vector3 launchVector) {
         Transform projectile = Instantiate(enemyProjectile, launchOrigin.position, launchOrigin.rotation);
+        OnLaunch?.Invoke(this, new LaunchEventArgs { launchVector = launchVector });
         projectile.GetComponent<Rigidbody>().velocity = launchVector;
         projectile.GetComponent<Rigidbody>().angularVelocity = launchVector;
     }

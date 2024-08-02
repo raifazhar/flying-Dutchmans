@@ -2419,7 +2419,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cannons:
   - {fileID: 703684598}
-  - {fileID: 0}
+  - {fileID: 703684598}
   enemyProjectile: {fileID: 6784864521282570351, guid: 77d9fc3f3426d4947b5cf94246daceda,
     type: 3}
   shootInterval: 2
