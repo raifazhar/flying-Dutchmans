@@ -6,7 +6,6 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static UnityEditor.PlayerSettings;
 
 public class Player : MonoBehaviour, IHittable {
 
