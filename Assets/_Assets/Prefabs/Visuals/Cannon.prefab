@@ -193,6 +193,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyCannon
       objectReference: {fileID: 0}
+    - target: {fileID: 2215008482995278514, guid: 4cdf32eea6fb3be46a443048f88cf8eb,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2b069cf77af0c3c4ea9bed806d97f46b, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -231,7 +236,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cannon: {fileID: 4793355134278979969}
-  launchRotationEmpty: {fileID: 0}
   pivotBone: {fileID: 8867532835303583831}
   angleBone: {fileID: 776667822096798938}
   vfxSpawnPoint: {fileID: 4307730514758227745}

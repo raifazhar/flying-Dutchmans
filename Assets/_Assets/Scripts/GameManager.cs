@@ -84,7 +84,6 @@ public class GameManager : MonoBehaviour {
         if (gameState == GameState.Starting) {
             UnityEngine.Random.InitState(level.levelSeed);
             gameState = GameState.Playing;
-            Player.Instance.SetMaxAmmo(level.startingAmmo);
             Player.Instance.SetMaxHealth(level.playerHealth);
             Player.Instance.Initialize();
             Enemy.Instance.SetMaxHealth(level.enemyHealth);

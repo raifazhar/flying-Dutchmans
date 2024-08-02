@@ -14,7 +14,6 @@ public class LevelSO : ScriptableObject {
     public float enemyShootInterval;
     [Range(0, 1)] public float invertedChance;
     public int levelSeed;
-    public int startingAmmo;
-    [Range(0,5)]
+    [Range(0, 5)]
     public int difficulty;
 }

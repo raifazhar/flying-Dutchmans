@@ -18,8 +18,7 @@ MonoBehaviour:
   spawnChance:
   - 0.1
   - 0.4
-  - 0.3
-  - 0.1
+  - 0.4
   - 0.1
   playerHealth: 200
   enemyHealth: 200
@@ -27,5 +26,4 @@ MonoBehaviour:
   enemyShootInterval: 4
   invertedChance: 0.1
   levelSeed: 0
-  startingAmmo: 10
   difficulty: 4
