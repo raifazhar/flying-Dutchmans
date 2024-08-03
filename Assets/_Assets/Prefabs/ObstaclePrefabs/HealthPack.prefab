@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4712294880250732920}
   - component: {fileID: 6976888373320498259}
   - component: {fileID: 3181118398267064779}
+  - component: {fileID: 4952901968057900452}
   m_Layer: 7
   m_Name: HealthPack
   m_TagString: Untagged
@@ -69,6 +70,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fallingSpeed: 1
   healthAmount: 20
+--- !u!114 &4952901968057900452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6819413239202532531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineWidth: 5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1001 &2763737551141743900
 PrefabInstance:
   m_ObjectHideFlags: 0
