@@ -102,6 +102,7 @@ public class Player : MonoBehaviour, IHittable {
                 AimingState();
                 break;
             case State.Launching:
+                SoundManager.Playsound(SoundManager.Sound.SlingShot);
                 launchTimer -= Time.fixedDeltaTime;
                 if (launchTimer < 0) {
                     playerState = State.Idle;
