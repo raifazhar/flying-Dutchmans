@@ -14,15 +14,17 @@ public class LevelScrollView : MonoBehaviour {
     [SerializeField] private LevelListSO levelList;
     [SerializeField] private GameObject prefab;
 
+    private GameObject previousePrefab;
 
 
     private void Start() {
+
         // Calculate the number of screens needed
         int numberOfScreens = Mathf.CeilToInt(levelList.levels.Count / positions.Length) - 1;
         float height = content.rect.height;
         // Calculate the new height for the content based on the number of screens
         float newHeight = numberOfScreens * height;
-        newHeight += (levelList.levels.Count % positions.Length) * (height / positions.Length);
+        newHeight += (levelList.levels.Count % positions.Length) * (height / positions.Length)+20;
 
         // Set the new height to the content's RectTransform
         content.offsetMax = new Vector2(content.offsetMax.x, newHeight);
@@ -49,32 +51,22 @@ public class LevelScrollView : MonoBehaviour {
         RectTransform instantiatedRect = instantiatedPrefab.GetComponent<RectTransform>();
         instantiatedRect.anchoredPosition = anchoredPosition;
         instantiatedRect.anchoredPosition += new Vector2(0, offset);
-        TMP_Text[] textComponents = instantiatedPrefab.GetComponentsInChildren<TMP_Text>();
-        foreach (TMP_Text textComponent in textComponents) {
-            if (textComponent.name == "LevelText") {
-                textComponent.text = (index + 1).ToString();
-            }
-            else if (textComponent.name == "LevelDescription") {
-                for (int i = 0; i < levelList.levels[index].difficulty; i++) {
-                    textComponent.text += "<sprite index=0>";
-                }
-            }
 
+
+
+        instantiatedPrefab.GetComponent<LevelButton>().CreatButton(index, levelList.levels[index].difficulty);
+
+        if(previousePrefab!=null)
+        {
+            
         }
-        Button button = instantiatedRect.GetComponent<Button>();
-        button.onClick.AddListener(() => LoadLevel(index + 1));
 
-
+        previousePrefab = instantiatedPrefab;
     }
 
-    public void LoadLevel(int levelIndex) {
-        if (levelIndex < 1 || levelIndex > levelList.levels.Count + 1) {
-            Debug.LogWarning("Level does not exist");
-            return;
-        }
-        SelectedLevel.SetSelectedLevel(levelIndex - 1);
-        SceneManager.LoadScene(Scenes.GameScene);
-    }
+   
+
+    
 }
 
 
