@@ -29,13 +29,18 @@ public class GameManager : MonoBehaviour {
     }
 
     [SerializeField] private LevelListSO levelsSO;
-    [SerializeField] private float gameEndTime;
+    [SerializeField] private float gameStartTime = 1f;
+    [SerializeField] private float gameEndTime = 1f;
+    [SerializeField] private Transform levelOutTransition;
+    [SerializeField] private float levelOutTranisitonTime = 1f;
     private int levelIndex = 0;
     private readonly int targetFrameRate = 60;
     private bool isPaused = false;
     private int score = 0;
     private GameState gameState;
     private Coroutine gameEndCoroutine;
+    private Coroutine gameStartCoroutine;
+    private Coroutine levelTransitionCoroutine;
 
     private void Awake() {
         Instance = this;
@@ -46,9 +51,14 @@ public class GameManager : MonoBehaviour {
     }
     private void Start() {
         levelIndex = SelectedLevel.selectedLevel;
-        InitializeLevel(levelsSO.levels[levelIndex]);
         Player.Instance.OnStateChange += Player_OnStateChange;
         Enemy.Instance.OnStateChange += Enemy_OnStateChange;
+        StartCoroutine(StartGameCoroutine(gameStartTime));
+    }
+
+    private IEnumerator StartGameCoroutine(float duration) {
+        yield return new WaitForSeconds(duration);
+        InitializeLevel(levelsSO.levels[levelIndex]);
     }
 
 
@@ -100,8 +110,11 @@ public class GameManager : MonoBehaviour {
     #region LevelNavigation
     public void RetryLevel() {
         Time.timeScale = 1f;
+
         SelectedLevel.SetSelectedLevel(SelectedLevel.selectedLevel);
-        SceneManager.LoadScene(Scenes.GameScene);
+        if (levelTransitionCoroutine == null) {
+            levelTransitionCoroutine = StartCoroutine(LevelTransitionCoroutine(levelOutTranisitonTime));
+        }
     }
 
     public void NextLevel() {
@@ -109,7 +122,9 @@ public class GameManager : MonoBehaviour {
         if (SelectedLevel.selectedLevel + 1 >= levelsSO.levels.Count)
             return;
         SelectedLevel.SetSelectedLevel(SelectedLevel.selectedLevel + 1);
-        SceneManager.LoadScene(Scenes.GameScene);
+        if (levelTransitionCoroutine == null) {
+            levelTransitionCoroutine = StartCoroutine(LevelTransitionCoroutine(levelOutTranisitonTime));
+        }
     }
     public void BackToMenu() {
         Time.timeScale = 1f;
@@ -117,6 +132,13 @@ public class GameManager : MonoBehaviour {
     }
     #endregion
 
+
+    IEnumerator LevelTransitionCoroutine(float duration) {
+        levelOutTransition.gameObject.SetActive(true);
+        yield return new WaitForSeconds(duration);
+        SceneManager.LoadScene(Scenes.GameScene);
+        levelTransitionCoroutine = null;
+    }
     #region Score
     public int GetScore() {
         return score;

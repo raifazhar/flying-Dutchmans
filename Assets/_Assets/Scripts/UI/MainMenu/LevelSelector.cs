@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelSelector : MonoBehaviour {
-    [SerializeField] private float verticalOffset = 0f;
+    public static LevelSelector Instance {
+        get; private set;
+    }
+    [SerializeField]
+    private float verticalOffset = 0f;
     [SerializeField] private float verticalMultiplier = 1f;
-    [SerializeField] private LevelListSO levels;
+    [SerializeField] private LevelListSO levelsSO;
     [SerializeField] private Transform levelIconPrefab;
     [SerializeField] private int poolSize = 20;
     [SerializeField] private float verticalPadding = 2f;
@@ -17,10 +22,19 @@ public class LevelSelector : MonoBehaviour {
     private float upperBound;
     private float lowerBound;
     private Transform[] activeIcons;
+    [SerializeField] private Mesh[] visualMeshes;
+    [SerializeField] private Material meshMaterial;
     private Vector2 prevPos;
     private Vector2 currPos;
 
-
+    private void Awake() {
+        if (Instance == null) {
+            Instance = this;
+        }
+        else {
+            Destroy(gameObject);
+        }
+    }
     private void Start() {
         activeIcons = new Transform[poolSize];
         for (int i = 0; i < poolSize; i++) {
@@ -31,7 +45,7 @@ public class LevelSelector : MonoBehaviour {
         prevPos = Vector2.zero;
         currPos = Vector2.zero;
         verticalBounds.y = 0f;
-        verticalBounds.x = -(levels.levels.Count * verticalPadding) + (verticalPadding * 2f);
+        verticalBounds.x = -(levelsSO.levels.Count * verticalPadding) + (verticalPadding * 2f);
         SetCameraFrustumBounds();
     }
 
@@ -76,12 +90,15 @@ public class LevelSelector : MonoBehaviour {
 
     //This method is used for setting the state, things like the levelindex, x position, model etc of the activeIcon
     private void SetIconState(int arrIndex, int levelIndex) {
-        Debug.Log("Debugging state of icon level: " + levelIndex);
         activeIcons[arrIndex].gameObject.SetActive(true);
         Random.InitState(levelIndex);
         float x = Random.Range(-1.7f, 1.7f);
+        float rotation = Random.Range(0f, 360f);
         activeIcons[arrIndex].position = new Vector3(x, 0, 0);
-        activeIcons[arrIndex].GetComponent<LevelIcon2>().SetLevelIndex(levelIndex);
+        activeIcons[arrIndex].GetComponent<LevelIcon>().SetVisualMesh(visualMeshes[Random.Range(0, visualMeshes.Length)]);
+        activeIcons[arrIndex].GetComponent<LevelIcon>().SetVisualRotation(Quaternion.Euler(0, rotation, 0));
+        activeIcons[arrIndex].GetComponent<LevelIcon>().SetMaterial(meshMaterial);
+        activeIcons[arrIndex].GetComponent<LevelIcon>().SetLevelIndex(levelIndex);
     }
     private void HandleIcons() {
         //Step 1, check which icons should be inside the view frustum based on vertical offset
@@ -94,15 +111,15 @@ public class LevelSelector : MonoBehaviour {
         if (firstVisibleIndex < 0) {
             firstVisibleIndex = 0;
         }
-        if (lastVisibleIndex > levels.levels.Count - 1) {
-            lastVisibleIndex = levels.levels.Count - 1;
+        if (lastVisibleIndex > levelsSO.levels.Count - 1) {
+            lastVisibleIndex = levelsSO.levels.Count - 1;
         }
         //Check if any active icons fall out of this range and disable them
         for (int i = 0; i < poolSize; i++) {
             if (!activeIcons[i].gameObject.activeSelf) {
                 continue;
             }
-            int index = activeIcons[i].GetComponent<LevelIcon2>().GetLevelIndex();
+            int index = activeIcons[i].GetComponent<LevelIcon>().GetLevelIndex();
             if (index < firstVisibleIndex || index > lastVisibleIndex) {
                 activeIcons[i].gameObject.SetActive(false);
             }
@@ -112,7 +129,7 @@ public class LevelSelector : MonoBehaviour {
         for (int i = firstVisibleIndex; i <= lastVisibleIndex; i++) {
             bool found = false;
             for (int j = 0; j < poolSize; j++) {
-                int index = activeIcons[j].GetComponent<LevelIcon2>().GetLevelIndex();
+                int index = activeIcons[j].GetComponent<LevelIcon>().GetLevelIndex();
                 if (index == i) {
                     activeIcons[j].gameObject.SetActive(true);
                     found = true;
@@ -132,7 +149,7 @@ public class LevelSelector : MonoBehaviour {
         //Step 2, update the position of all active icons as per their index
         for (int i = 0; i < poolSize; i++) {
             if (activeIcons[i].gameObject.activeSelf) {
-                int index = activeIcons[i].GetComponent<LevelIcon2>().GetLevelIndex();
+                int index = activeIcons[i].GetComponent<LevelIcon>().GetLevelIndex();
                 activeIcons[i].position = new Vector3(activeIcons[i].position.x, activeIcons[i].position.y, index * verticalPadding + verticalOffset);
             }
         }
@@ -142,5 +159,13 @@ public class LevelSelector : MonoBehaviour {
 
     public float GetVerticalOffset() {
         return verticalOffset;
+    }
+
+    public void LoadLevel(int levelIndex) {
+        if (levelIndex < 0 || levelIndex > levelsSO.levels.Count) {
+            Debug.LogWarning("Level does not exist");
+            return;
+        }
+        MainMenu.Instance.LoadLevel(levelIndex);
     }
 }

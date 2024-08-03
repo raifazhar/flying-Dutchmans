@@ -4,19 +4,37 @@ using TMPro;
 using UnityEngine;
 
 public class LevelIcon : MonoBehaviour {
-
     [SerializeField] private TextMeshProUGUI levelText;
-    private int levelIndex;
+    [SerializeField] private MeshFilter meshFilter;
+    [SerializeField] private MeshRenderer meshRenderer;
+    [SerializeField] private Transform visualMesh;
+    [SerializeField] private Canvas canvas;
+    private int levelIndex = -1;
 
-
-
-    public void SetLevel(int levelIndex) {
-        this.levelIndex = levelIndex;
-        levelText.text = levelIndex.ToString();
+    private void Start() {
+        canvas.worldCamera = Camera.main;
+    }
+    public void SetLevelIndex(int i) {
+        levelIndex = i;
+        levelText.text = (i + 1).ToString();
     }
 
-    public void OnClick() {
-        LevelSelect.Instance.LoadLevel(levelIndex);
+    public int GetLevelIndex() {
+        return levelIndex;
     }
 
+    public void SetVisualMesh(Mesh mesh) {
+        meshFilter.mesh = mesh;
+    }
+
+    public void SetVisualRotation(Quaternion rotation) {
+        visualMesh.transform.rotation = rotation;
+    }
+    public void SetMaterial(Material material) {
+        meshRenderer.material = material;
+    }
+
+    public void LoadLevel() {
+        LevelSelector.Instance.LoadLevel(levelIndex);
+    }
 }
