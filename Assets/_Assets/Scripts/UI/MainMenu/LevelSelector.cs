@@ -7,14 +7,16 @@ public class LevelSelector : MonoBehaviour {
     public static LevelSelector Instance {
         get; private set;
     }
-    [SerializeField]
-    private float verticalOffset = 0f;
+    [SerializeField] private float offsetLerpSpeed = 1f;
+    private float effectiveVerticalOffset = 0f;
+    private float inputVerticalOffset = 0f;
     [SerializeField] private float verticalMultiplier = 1f;
     [SerializeField] private LevelListSO levelsSO;
     [SerializeField] private Transform levelIconPrefab;
     [SerializeField] private int poolSize = 20;
     [SerializeField] private float verticalPadding = 2f;
     private Vector2 verticalBounds;
+    private Vector2 softBounds;
     private float[] activeIconCoords;
 
 
@@ -63,11 +65,12 @@ public class LevelSelector : MonoBehaviour {
             }
             if (touch.phase == TouchPhase.Moved) {
                 currPos = touch.position;
-                verticalOffset += ((currPos.y - prevPos.y) * verticalMultiplier * 0.01f);
+                inputVerticalOffset += ((currPos.y - prevPos.y) * verticalMultiplier * 0.01f);
                 prevPos = currPos;
             }
         }
-        verticalOffset = Mathf.Clamp(verticalOffset, verticalBounds.x, verticalBounds.y);
+        inputVerticalOffset = Mathf.Clamp(inputVerticalOffset, verticalBounds.x, verticalBounds.y);
+        effectiveVerticalOffset = Mathf.Lerp(effectiveVerticalOffset, inputVerticalOffset, Time.deltaTime * offsetLerpSpeed);
 
     }
 
@@ -102,8 +105,8 @@ public class LevelSelector : MonoBehaviour {
     }
     private void HandleIcons() {
         //Step 1, check which icons should be inside the view frustum based on vertical offset
-        float upperBoundWorldSpace = upperBound - verticalOffset;
-        float lowerBoundWorldSpace = lowerBound - verticalOffset;
+        float upperBoundWorldSpace = upperBound - effectiveVerticalOffset;
+        float lowerBoundWorldSpace = lowerBound - effectiveVerticalOffset;
         //we can divide them by the vertical padding to get the index of the first and last icon that should be visible
         int firstVisibleIndex = Mathf.FloorToInt(lowerBoundWorldSpace / verticalPadding);
         int lastVisibleIndex = Mathf.FloorToInt(upperBoundWorldSpace / verticalPadding);
@@ -150,7 +153,7 @@ public class LevelSelector : MonoBehaviour {
         for (int i = 0; i < poolSize; i++) {
             if (activeIcons[i].gameObject.activeSelf) {
                 int index = activeIcons[i].GetComponent<LevelIcon>().GetLevelIndex();
-                activeIcons[i].position = new Vector3(activeIcons[i].position.x, activeIcons[i].position.y, index * verticalPadding + verticalOffset);
+                activeIcons[i].position = new Vector3(activeIcons[i].position.x, activeIcons[i].position.y, index * verticalPadding + effectiveVerticalOffset);
             }
         }
 
@@ -158,7 +161,7 @@ public class LevelSelector : MonoBehaviour {
     }
 
     public float GetVerticalOffset() {
-        return verticalOffset;
+        return effectiveVerticalOffset;
     }
 
     public void LoadLevel(int levelIndex) {
