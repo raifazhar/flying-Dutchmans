@@ -23,18 +23,28 @@ public class GameSoundAssets : MonoBehaviour
 
 
 
-    public SoundAudioClip[] AudioClips;
+    public SoundAudioClip[] AudioClipsArray;
 
     [System.Serializable]
     public class SoundAudioClip
     {
         [HideInInspector] public string name;
-        public AudioClip[] sounds;
+        public sound[] audioClips;
 
         [Header("Settings")]
         public bool hasCoolDown;
         public float CoolDownTime;
-       
+
+        [System.Serializable]
+        public struct sound
+        {
+            public string name;
+            public AudioClip clip;
+            public float pitch;
+            public float startTime;
+        }
+
+
     }
 
 #if UNITY_EDITOR
@@ -43,17 +53,17 @@ public class GameSoundAssets : MonoBehaviour
     {
         string[] names = Enum.GetNames(typeof(SoundManager.Sound));
         SoundManager.soundTimerDictionary = new Dictionary<string,SoundManager.SoundTime>();
-        Array.Resize(ref AudioClips, names.Length);
+        Array.Resize(ref AudioClipsArray, names.Length);
         for(int i = 0; i < names.Length; i++)
         {
-            Debug.Log(names[i]);
-            AudioClips[i].name = names[i];
-            if (AudioClips[i].hasCoolDown)
+            AudioClipsArray[i].name = names[i];
+           
+            if (AudioClipsArray[i].hasCoolDown)
             {
-                SoundManager.soundTimerDictionary[names[i]] = new SoundManager.SoundTime { currentTime = 0, maxTime = AudioClips[i].CoolDownTime };
+                SoundManager.soundTimerDictionary[names[i]] = new SoundManager.SoundTime { currentTime = 0, maxTime = AudioClipsArray[i].CoolDownTime };
             }
         }
-        Debug.Log(SoundManager.soundTimerDictionary);
+       
     }
 #endif
 }

@@ -9,6 +9,7 @@ public static class SoundManager
     private static AudioSource oneShotAudioSource;
 
     public static Dictionary<string, SoundTime> soundTimerDictionary;
+   
 
     public class SoundTime
     {
@@ -30,7 +31,7 @@ public static class SoundManager
     }
 
 
-    public static void Playsound(Sound sound)
+    public static void Playsound(Sound sound, int index = -1)
     {
 
         if (oneShotSound == null)
@@ -43,11 +44,11 @@ public static class SoundManager
             return;
         }
 
-        oneShotAudioSource.PlayOneShot(Getsound(sound,oneShotAudioSource));
+        oneShotAudioSource.PlayOneShot(Getsound(sound,oneShotAudioSource, index));
 
 
     }
-    public static void Playsound(Sound sound, Vector3 position)
+    public static void Playsound(Sound sound, Vector3 position,int index=-1)
     {
         if (!CanPlaySound(sound))
         {
@@ -56,7 +57,7 @@ public static class SoundManager
         GameObject soundGameobject = new GameObject("soundGameObject");
         soundGameobject.transform.position = position;
         AudioSource audioSource = soundGameobject.AddComponent<AudioSource>();
-        audioSource.clip = Getsound(sound,audioSource);
+        audioSource.clip = Getsound(sound,audioSource,index);
         audioSource.Play();
 
         Object.Destroy(soundGameobject, audioSource.clip.length);
@@ -68,11 +69,10 @@ public static class SoundManager
         if (soundTimerDictionary.ContainsKey(soundname))
         {
             SoundTime Timer = soundTimerDictionary[soundname];
-            Debug.Log(Timer);
+
 
             if (Timer.currentTime + Timer.maxTime< Time.time)
             {
-                Debug.Log("Playsound again");
                 soundTimerDictionary[soundname].currentTime = Time.time ;
                 return true;
             }
@@ -82,24 +82,29 @@ public static class SoundManager
 
         return true;
     }
-    private static AudioClip Getsound(Sound sound,AudioSource source)
+    private static AudioClip Getsound(Sound sound,AudioSource source,int index)
     {
-        foreach (GameSoundAssets.SoundAudioClip soundaudioClip in GameSoundAssets.Instance.AudioClips)
+        foreach (GameSoundAssets.SoundAudioClip soundaudioClip in GameSoundAssets.Instance.AudioClipsArray)
         {
             if (soundaudioClip.name == sound.ToString())
             {
-                int index = Random.Range(0, soundaudioClip.sounds.Length);
-                return soundaudioClip.sounds[index];
+                if (index == -1)
+                {
+                    index = Random.Range(0, soundaudioClip.audioClips.Length);
+                }
+                source.pitch = soundaudioClip.audioClips[index].pitch;
+                source.time = soundaudioClip.audioClips[index].startTime;
+                return soundaudioClip.audioClips[index].clip ;
             }
         }
         Debug.Log("sound does not exist");
         return null;
     }
 
-
     public static void AddbuttonSound(this Button buttonUI, Sound sound)
     {
         buttonUI.onClick.AddListener(() => SoundManager.Playsound(sound));
     }
+
 
 }
