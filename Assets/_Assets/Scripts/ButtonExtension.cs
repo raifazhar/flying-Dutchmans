@@ -5,8 +5,9 @@ using UnityEngine;
 public class ButtonExtension : MonoBehaviour
 {
     public SoundManager.Sound soundToPlay;
+    public int index = -1;
     public void AddSound()
     {
-        SoundManager.Playsound(soundToPlay);
+        SoundManager.Playsound(soundToPlay,index);
     }
 }

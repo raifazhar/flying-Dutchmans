@@ -44,7 +44,8 @@ public static class SoundManager
             return;
         }
 
-        oneShotAudioSource.PlayOneShot(Getsound(sound,oneShotAudioSource, index));
+        Getsound(sound, oneShotAudioSource, index);
+        oneShotAudioSource.Play();
 
 
     }
@@ -57,7 +58,7 @@ public static class SoundManager
         GameObject soundGameobject = new GameObject("soundGameObject");
         soundGameobject.transform.position = position;
         AudioSource audioSource = soundGameobject.AddComponent<AudioSource>();
-        audioSource.clip = Getsound(sound,audioSource,index);
+        Getsound(sound,audioSource,index);
         audioSource.Play();
 
         Object.Destroy(soundGameobject, audioSource.clip.length);
@@ -82,7 +83,7 @@ public static class SoundManager
 
         return true;
     }
-    private static AudioClip Getsound(Sound sound,AudioSource source,int index)
+    private static void Getsound(Sound sound,AudioSource source,int index)
     {
         foreach (GameSoundAssets.SoundAudioClip soundaudioClip in GameSoundAssets.Instance.AudioClipsArray)
         {
@@ -92,13 +93,14 @@ public static class SoundManager
                 {
                     index = Random.Range(0, soundaudioClip.audioClips.Length);
                 }
+                source.clip = soundaudioClip.audioClips[index].clip;
                 source.pitch = soundaudioClip.audioClips[index].pitch;
                 source.time = soundaudioClip.audioClips[index].startTime;
-                return soundaudioClip.audioClips[index].clip ;
+                source.volume = soundaudioClip.audioClips[index].volume;
+                
             }
         }
-        Debug.Log("sound does not exist");
-        return null;
+
     }
 
     public static void AddbuttonSound(this Button buttonUI, Sound sound)
