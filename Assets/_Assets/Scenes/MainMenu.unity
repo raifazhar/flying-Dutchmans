@@ -1699,7 +1699,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1865690813
 Transform:
   m_ObjectHideFlags: 0
@@ -1730,7 +1730,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offsetLerpSpeed: 10
-  verticalMultiplier: 1
+  verticalMultiplier: 2
   levelsSO: {fileID: 11400000, guid: 7177d3a6bcf8b8c42b122e7978ed9e96, type: 2}
   levelIconPrefab: {fileID: 2188574152348232771, guid: e401d3e6d6f4bf84db177b2efb9a7afe,
     type: 3}
