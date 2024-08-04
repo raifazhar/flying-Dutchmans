@@ -44,42 +44,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 840bf70c4c7e3d542ab95bedaf365a5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AudioClips:
-  - name: SlingShot
-    sounds:
-    - {fileID: 8300000, guid: 280687611200d0943b70a24bdf1e11bf, type: 3}
-    - {fileID: 8300000, guid: 280687611200d0943b70a24bdf1e11bf, type: 3}
-    hasCoolDown: 1
-    CoolDownTime: 1
-  - name: health
-    sounds: []
+  AudioClipsArray:
+  - name: 
+    audioClips:
+    - name: 
+      clip: {fileID: 8300000, guid: 280687611200d0943b70a24bdf1e11bf, type: 3}
+      pitch: 31
+      startTime: 0
+    - name: 
+      clip: {fileID: 8300000, guid: 280687611200d0943b70a24bdf1e11bf, type: 3}
+      pitch: 1
+      startTime: 0
     hasCoolDown: 0
     CoolDownTime: 0
-  - name: BoxBreaking
-    sounds: []
+  - name: 
+    audioClips: []
     hasCoolDown: 0
     CoolDownTime: 0
-  - name: EnemyHit
-    sounds: []
+  - name: 
+    audioClips: []
     hasCoolDown: 0
     CoolDownTime: 0
-  - name: Victory
-    sounds: []
+  - name: 
+    audioClips: []
     hasCoolDown: 0
     CoolDownTime: 0
-  - name: Loss
-    sounds: []
+  - name: 
+    audioClips: []
     hasCoolDown: 0
     CoolDownTime: 0
-  - name: Explosion
-    sounds: []
+  - name: 
+    audioClips: []
     hasCoolDown: 0
     CoolDownTime: 0
-  - name: Collision
-    sounds: []
+  - name: 
+    audioClips: []
     hasCoolDown: 0
     CoolDownTime: 0
-  - name: ButtonClick
-    sounds: []
+  - name: 
+    audioClips: []
+    hasCoolDown: 0
+    CoolDownTime: 0
+  - name: 
+    audioClips: []
     hasCoolDown: 0
     CoolDownTime: 0
