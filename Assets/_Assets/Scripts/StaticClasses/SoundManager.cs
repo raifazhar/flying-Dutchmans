@@ -9,6 +9,7 @@ public static class SoundManager
     private static AudioSource oneShotAudioSource;
 
     public static Dictionary<string, SoundTime> soundTimerDictionary;
+   
 
     public class SoundTime
     {
@@ -68,11 +69,10 @@ public static class SoundManager
         if (soundTimerDictionary.ContainsKey(soundname))
         {
             SoundTime Timer = soundTimerDictionary[soundname];
-            Debug.Log(Timer);
+
 
             if (Timer.currentTime + Timer.maxTime< Time.time)
             {
-                Debug.Log("Playsound again");
                 soundTimerDictionary[soundname].currentTime = Time.time ;
                 return true;
             }
@@ -84,12 +84,16 @@ public static class SoundManager
     }
     private static AudioClip Getsound(Sound sound,AudioSource source)
     {
-        foreach (GameSoundAssets.SoundAudioClip soundaudioClip in GameSoundAssets.Instance.AudioClips)
+        foreach (GameSoundAssets.SoundAudioClip soundaudioClip in GameSoundAssets.Instance.AudioClipsArray)
         {
             if (soundaudioClip.name == sound.ToString())
             {
-                int index = Random.Range(0, soundaudioClip.sounds.Length);
-                return soundaudioClip.sounds[index];
+                Debug.Log(soundaudioClip.audioClips.Length);
+                int index = Random.Range(0, soundaudioClip.audioClips.Length);
+                Debug.Log(soundaudioClip.audioClips);
+                source.pitch = soundaudioClip.audioClips[index].pitch;
+                source.time = soundaudioClip.audioClips[index].startTime;
+                return soundaudioClip.audioClips[index].clip ;
             }
         }
         Debug.Log("sound does not exist");
@@ -100,6 +104,8 @@ public static class SoundManager
     public static void AddbuttonSound(this Button buttonUI, Sound sound)
     {
         buttonUI.onClick.AddListener(() => SoundManager.Playsound(sound));
+
     }
+   
 
 }
