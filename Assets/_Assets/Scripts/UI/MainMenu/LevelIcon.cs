@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelIcon : MonoBehaviour {
+    [SerializeField] private Button levelButton;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private MeshFilter islandMeshFilter;
     [SerializeField] private MeshFilter rippleMeshFilter;
@@ -32,7 +34,14 @@ public class LevelIcon : MonoBehaviour {
         visualMesh.transform.rotation = rotation;
     }
 
-
+    public void SetLocked(bool locked = false) {
+        if (locked) {
+            levelButton.interactable = false;
+        }
+        else {
+            levelButton.interactable = true;
+        }
+    }
     public void LoadLevel() {
         LevelSelector.Instance.LoadLevel(levelIndex);
     }

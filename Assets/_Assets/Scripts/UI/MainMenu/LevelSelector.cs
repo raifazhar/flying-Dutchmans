@@ -23,6 +23,7 @@ public class LevelSelector : MonoBehaviour {
 
     private float upperBound;
     private float lowerBound;
+    private int maxCompletedLevel = 0;
 
     private void Awake() {
         if (Instance == null) {
@@ -34,6 +35,7 @@ public class LevelSelector : MonoBehaviour {
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = targetFrameRate;
         Screen.orientation = ScreenOrientation.Portrait;
+        maxCompletedLevel = PlayerPrefs.GetInt(PlayerPrefVariables.MaxCompletedLevel, -1);
     }
 
     private void Start() {
@@ -140,9 +142,16 @@ public class LevelSelector : MonoBehaviour {
     private void SetIconState(int arrIndex, int levelIndex) {
         activeIcons[arrIndex].gameObject.SetActive(true);
         Random.InitState(levelIndex);
+
         float x = Random.Range(-1.7f, 1.7f);
         float rotation = Random.Range(0f, 360f);
         LevelIcon icon = activeIcons[arrIndex].GetComponent<LevelIcon>();
+        if (levelIndex > maxCompletedLevel + 1) {
+            icon.SetLocked(true);
+        }
+        else {
+            icon.SetLocked(false);
+        }
         int meshIndex = Random.Range(0, visualMeshes.Length);
         icon.SetVisualMesh(visualMeshes[meshIndex], rippleMeshes[meshIndex]);
         icon.SetVisualRotation(Quaternion.Euler(0, rotation, 0));

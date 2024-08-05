@@ -65,26 +65,28 @@ public class GameManager : MonoBehaviour {
     private void Enemy_OnStateChange(object sender, Enemy.OnStateChangeEventArgs e) {
         if (e.enemyState == Enemy.State.Dead && gameState == GameState.Playing) {
             //Enemy is dead, end the game
-            gameState = GameState.GameOver;
-            OnGameOver?.Invoke(this, EventArgs.Empty);
-            if (gameEndCoroutine == null) {
-                gameEndCoroutine = StartCoroutine(GameEndCoroutine(gameEndTime, GameEndState.Win));
-            }
+            EndGame(GameEndState.Win);
         }
     }
 
     private void Player_OnStateChange(object sender, Player.OnStateChangeEventArgs e) {
         if (e.playerState == Player.State.Dead && gameState == GameState.Playing) {
             //Player is dead, end the game
-            gameState = GameState.GameOver;
-            OnGameOver?.Invoke(this, EventArgs.Empty);
-            if (gameEndCoroutine == null) {
-                gameEndCoroutine = StartCoroutine(GameEndCoroutine(gameEndTime, GameEndState.Lose));
-            }
+            EndGame(GameEndState.Lose);
         }
     }
 
+    private void EndGame(GameEndState state) {
+        gameState = GameState.GameOver;
+        OnGameOver?.Invoke(this, EventArgs.Empty);
+        if (GameEndState.Win == state) {
+            PlayerPrefs.SetInt(PlayerPrefVariables.MaxCompletedLevel, levelIndex);
+        }
+        if (gameEndCoroutine == null) {
+            gameEndCoroutine = StartCoroutine(GameEndCoroutine(gameEndTime, state));
+        }
 
+    }
     IEnumerator GameEndCoroutine(float duration, GameEndState e) {
         yield return new WaitForSeconds(duration);
         OnGameEnd?.Invoke(this, new OnGameEndEventArgs { endState = e });

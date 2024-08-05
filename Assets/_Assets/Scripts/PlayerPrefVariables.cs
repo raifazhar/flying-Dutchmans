@@ -4,14 +4,5 @@ using UnityEngine;
 
 public static class PlayerPrefVariables {
 
-    public static readonly string TutorialDone = "TutorialDone";
-
-
-
-
-
-
-
-
-
+    public static readonly string MaxCompletedLevel = "MaxCompletedLevel";
 }
