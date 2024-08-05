@@ -71,10 +71,10 @@ public class LineVisual : MonoBehaviour {
         //Do a series of raycasts approximating projectile motion
         //If we hit anything then render the landing point at the hit point
         float gravity = Physics.gravity.y;
+        Vector3 olderOrigin = launchOrigin;
         Vector3 oldOrigin = launchOrigin;
         Vector3 origin = Vector3.zero;
         for (int i = 0; i < rayCount; i++) {
-
             float t = i * rayTimeStep;
             origin.x = launchOrigin.x + launchVector.x * t;
             origin.y = launchOrigin.y + launchVector.y * t + 0.5f * gravity * t * t;
@@ -82,12 +82,14 @@ public class LineVisual : MonoBehaviour {
             Vector3 direction = origin - oldOrigin;
             direction.Normalize();
             RaycastHit hit;
-            if (Physics.SphereCast(oldOrigin, 1f, direction, out hit, rayDistance, landingPointCollisionLayers)) {
+            Vector3 startPos = Vector3.Lerp(olderOrigin, oldOrigin, 0.5f);
+            if (Physics.SphereCast(startPos, 0.5f, direction, out hit, rayDistance, landingPointCollisionLayers)) {
                 if (!landingPointObject.gameObject.activeSelf)
                     landingPointObject.gameObject.SetActive(true);
                 landingPointObject.position = hit.point;
                 break;
             }
+            olderOrigin = oldOrigin;
             oldOrigin = origin;
         }
     }

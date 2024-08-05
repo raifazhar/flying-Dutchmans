@@ -15,7 +15,6 @@ public class EnemyCannon : MonoBehaviour {
     Coroutine launchCoroutine;
     public void LaunchProjectile(Transform enemyProjectile, Vector3 launchVector) {
         if (launchCoroutine == null) {
-            Debug.DrawRay(launchOrigin.position, launchVector, Color.red, 2f);
             OnLaunchStart?.Invoke(this, new LaunchEventArgs { launchVector = launchVector });
             launchCoroutine = StartCoroutine(LaunchCoroutine(enemyProjectile, launchVector));
         }
