@@ -11,7 +11,7 @@ public class LevelSelector : MonoBehaviour {
     [SerializeField] private int poolSize = 20;
     [SerializeField] private float verticalPadding = 2f;
     [SerializeField] private Mesh[] visualMeshes;
-    [SerializeField] private Material meshMaterial;
+    [SerializeField] private Mesh[] rippleMeshes;
 
     private float effectiveVerticalOffset = 0f;
     private float inputVerticalOffset = 0f;
@@ -42,7 +42,6 @@ public class LevelSelector : MonoBehaviour {
             Transform icon = Instantiate(levelIconPrefab, transform);
             icon.gameObject.SetActive(false);
             activeIcons[i] = icon;
-            icon.GetComponent<LevelIcon>().SetMaterial(meshMaterial);
         }
         prevPos = Vector2.zero;
         currPos = Vector2.zero;
@@ -144,7 +143,8 @@ public class LevelSelector : MonoBehaviour {
         float x = Random.Range(-1.7f, 1.7f);
         float rotation = Random.Range(0f, 360f);
         LevelIcon icon = activeIcons[arrIndex].GetComponent<LevelIcon>();
-        icon.SetVisualMesh(visualMeshes[Random.Range(0, visualMeshes.Length)]);
+        int meshIndex = Random.Range(0, visualMeshes.Length);
+        icon.SetVisualMesh(visualMeshes[meshIndex], rippleMeshes[meshIndex]);
         icon.SetVisualRotation(Quaternion.Euler(0, rotation, 0));
         icon.SetLevelIndex(levelIndex);
         activeIcons[arrIndex].position = new Vector3(x, 0, 0);

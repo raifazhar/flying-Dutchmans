@@ -1981,7 +1981,10 @@ MonoBehaviour:
   - {fileID: -870077520638187916, guid: d63d1066e16d48a4a9cb493a5116ebf1, type: 3}
   - {fileID: 3951720283882819620, guid: 5d3319b2aea0bd241a2c850d06b5f7b5, type: 3}
   - {fileID: 8517845974106457609, guid: ee3a8dbd8eaa42b48bb93711fbfbfc53, type: 3}
-  meshMaterial: {fileID: 2100000, guid: c401e8b3db9b40049b58789cc45dda62, type: 2}
+  rippleMeshes:
+  - {fileID: 5247422254830745497, guid: d67038c2692c54747a4f718761fd403c, type: 3}
+  - {fileID: 8463358623684763104, guid: eb29c81079b56e444b5a5fc08d460c45, type: 3}
+  - {fileID: -5791460375886273966, guid: 94754580bf2fc37499bb39981af3eaae, type: 3}
 --- !u!1 &1975730414
 GameObject:
   m_ObjectHideFlags: 0

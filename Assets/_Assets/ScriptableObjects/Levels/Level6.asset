@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad963ee9b97243140998ee26df6858bc, type: 3}
   m_Name: Level6
   m_EditorClassIdentifier: 
-  LevelID: 5
+  LevelID: 6
   ObstacleList: {fileID: 11400000, guid: ca1a901fdb351494c92e763152f69dd9, type: 2}
   obstacleSpawnInterval: 2
   spawnChance:

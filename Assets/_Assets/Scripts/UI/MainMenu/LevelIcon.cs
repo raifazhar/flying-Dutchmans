@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class LevelIcon : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI levelText;
-    [SerializeField] private MeshFilter meshFilter;
-    [SerializeField] private MeshRenderer meshRenderer;
+    [SerializeField] private MeshFilter islandMeshFilter;
+    [SerializeField] private MeshFilter rippleMeshFilter;
     [SerializeField] private Transform visualMesh;
     [SerializeField] private Canvas canvas;
     private int levelIndex = -1;
@@ -23,16 +23,15 @@ public class LevelIcon : MonoBehaviour {
         return levelIndex;
     }
 
-    public void SetVisualMesh(Mesh mesh) {
-        meshFilter.mesh = mesh;
+    public void SetVisualMesh(Mesh mesh1, Mesh mesh2) {
+        islandMeshFilter.mesh = mesh1;
+        rippleMeshFilter.mesh = mesh2;
     }
 
     public void SetVisualRotation(Quaternion rotation) {
         visualMesh.transform.rotation = rotation;
     }
-    public void SetMaterial(Material material) {
-        meshRenderer.material = material;
-    }
+
 
     public void LoadLevel() {
         LevelSelector.Instance.LoadLevel(levelIndex);
