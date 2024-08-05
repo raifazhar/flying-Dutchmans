@@ -131,7 +131,7 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _VerticalOffset: -0.10105279
+    - _VerticalOffset: -0.00000021378489
     - _VoronoiScale: 10
     - _VoronoiTime: 1
     - _WorkflowMode: 1
@@ -140,7 +140,7 @@ Material:
     - _BaseColor: {r: 0.23113209, g: 0.6485549, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color1: {r: 0.0047169924, g: 0.9897271, b: 1, a: 1}
-    - _Color2: {r: 0, g: 0.9703376, b: 0.990566, a: 0}
+    - _Color2: {r: 0.48584908, g: 1, b: 0.9555672, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

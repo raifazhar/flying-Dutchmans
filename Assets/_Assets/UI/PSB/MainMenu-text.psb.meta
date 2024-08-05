@@ -94,27 +94,6 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
-  - name: Harbour havoc
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 4
-      width: 972
-      height: 477
-    spriteID: aa5c8b17b6c8c684a8e29ba6c1d242f0
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 4, y: 4}
-    spritePosition: {x: 98, y: 1381}
   - name: EXIT
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -122,11 +101,11 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 637
-      y: 489
-      width: 381
-      height: 184
-    spriteID: 68f72faee75d29048b2cd32db2e7384b
+      x: 499
+      y: 681
+      width: 422
+      height: 176
+    spriteID: 4dd1b125df5c17543b9cb9ed51e6b098
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -134,8 +113,29 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 637, y: 489}
-    spritePosition: {x: 379, y: 425}
+    uvTransform: {x: 499, y: 681}
+    spritePosition: {x: 375, y: 404}
+  - name: PLAY
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 681
+      width: 487
+      height: 176
+    spriteID: 761b452e01b6ad64796f141ef27a0a9e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 681}
+    spritePosition: {x: 343, y: 1064}
   - name: OPTION
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -157,18 +157,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 4, y: 489}
     spritePosition: {x: 257, y: 764}
-  - name: PLAY
+  - name: Harbour havoc
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 0
-      y: 686
-      width: 428
-      height: 168
-    spriteID: 23f19933b1c232e4389289caadb3004b
+      x: 4
+      y: 4
+      width: 972
+      height: 477
+    spriteID: aa5c8b17b6c8c684a8e29ba6c1d242f0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -176,8 +176,8 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 681}
-    spritePosition: {x: 354, y: 1103}
+    uvTransform: {x: 4, y: 4}
+    spritePosition: {x: 98, y: 1381}
   characterData:
     bones: []
     parts: []
@@ -224,23 +224,23 @@ ScriptedImporter:
     flatten: 0
     isImported: 0
     isVisible: 1
-  - name: Harbour havoc
-    spriteName: Harbour havoc
-    isGroup: 0
-    parentIndex: 0
-    spriteID: aa5c8b17b6c8c684a8e29ba6c1d242f0
-    layerID: 27
-    mosaicPosition: {x: 4, y: 4}
-    flatten: 0
-    isImported: 1
-    isVisible: 1
   - name: EXIT
     spriteName: EXIT
     isGroup: 0
     parentIndex: 0
-    spriteID: 68f72faee75d29048b2cd32db2e7384b
-    layerID: 25
-    mosaicPosition: {x: 637, y: 489}
+    spriteID: 4dd1b125df5c17543b9cb9ed51e6b098
+    layerID: 35
+    mosaicPosition: {x: 499, y: 681}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: PLAY
+    spriteName: PLAY
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 761b452e01b6ad64796f141ef27a0a9e
+    layerID: 34
+    mosaicPosition: {x: 4, y: 681}
     flatten: 0
     isImported: 1
     isVisible: 1
@@ -254,16 +254,26 @@ ScriptedImporter:
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: PLAY
-    spriteName: PLAY
+  - name: Harbour havoc
+    spriteName: Harbour havoc
     isGroup: 0
     parentIndex: 0
-    spriteID: 23f19933b1c232e4389289caadb3004b
-    layerID: 23
-    mosaicPosition: {x: 4, y: 681}
+    spriteID: aa5c8b17b6c8c684a8e29ba6c1d242f0
+    layerID: 27
+    mosaicPosition: {x: 4, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1
+  - name: PLAY copy
+    spriteName: 
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 61f6697aa753ed947abd807925ff2a2f
+    layerID: 36
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 0
   sharedRigPSDLayers: []
   pSDLayerImportSetting: []
   importFileNodeState: 1
