@@ -17,6 +17,10 @@ public class GameSoundAssets : MonoBehaviour {
 
     }
 
+    private void Start() {
+        PopulateSoundDictionary();
+    }
+
 
 
     public SoundAudioClip[] AudioClipsArray;
@@ -44,20 +48,16 @@ public class GameSoundAssets : MonoBehaviour {
 
     }
 
-#if UNITY_EDITOR
-
-    private void OnEnable() {
+    private void PopulateSoundDictionary() {
         string[] names = Enum.GetNames(typeof(SoundManager.Sound));
         SoundManager.soundTimerDictionary = new Dictionary<string, SoundManager.SoundTime>();
         Array.Resize(ref AudioClipsArray, names.Length);
         for (int i = 0; i < names.Length; i++) {
             AudioClipsArray[i].name = names[i];
-
             if (AudioClipsArray[i].hasCoolDown) {
                 SoundManager.soundTimerDictionary[names[i]] = new SoundManager.SoundTime { currentTime = 0, maxTime = AudioClipsArray[i].CoolDownTime };
             }
         }
 
     }
-#endif
 }

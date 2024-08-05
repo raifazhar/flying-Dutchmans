@@ -594,51 +594,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameSoundAssets
       objectReference: {fileID: 0}
-    - target: {fileID: 3738549761607630149, guid: 3720e24c70fba9a4b88da737dbcd4f98,
-        type: 3}
-      propertyPath: AudioClipsArray.Array.data[0].name
-      value: SlingShot
-      objectReference: {fileID: 0}
-    - target: {fileID: 3738549761607630149, guid: 3720e24c70fba9a4b88da737dbcd4f98,
-        type: 3}
-      propertyPath: AudioClipsArray.Array.data[1].name
-      value: health
-      objectReference: {fileID: 0}
-    - target: {fileID: 3738549761607630149, guid: 3720e24c70fba9a4b88da737dbcd4f98,
-        type: 3}
-      propertyPath: AudioClipsArray.Array.data[2].name
-      value: BoxBreaking
-      objectReference: {fileID: 0}
-    - target: {fileID: 3738549761607630149, guid: 3720e24c70fba9a4b88da737dbcd4f98,
-        type: 3}
-      propertyPath: AudioClipsArray.Array.data[3].name
-      value: EnemyHit
-      objectReference: {fileID: 0}
-    - target: {fileID: 3738549761607630149, guid: 3720e24c70fba9a4b88da737dbcd4f98,
-        type: 3}
-      propertyPath: AudioClipsArray.Array.data[4].name
-      value: Victory
-      objectReference: {fileID: 0}
-    - target: {fileID: 3738549761607630149, guid: 3720e24c70fba9a4b88da737dbcd4f98,
-        type: 3}
-      propertyPath: AudioClipsArray.Array.data[5].name
-      value: Loss
-      objectReference: {fileID: 0}
-    - target: {fileID: 3738549761607630149, guid: 3720e24c70fba9a4b88da737dbcd4f98,
-        type: 3}
-      propertyPath: AudioClipsArray.Array.data[6].name
-      value: Explosion
-      objectReference: {fileID: 0}
-    - target: {fileID: 3738549761607630149, guid: 3720e24c70fba9a4b88da737dbcd4f98,
-        type: 3}
-      propertyPath: AudioClipsArray.Array.data[7].name
-      value: Collision
-      objectReference: {fileID: 0}
-    - target: {fileID: 3738549761607630149, guid: 3720e24c70fba9a4b88da737dbcd4f98,
-        type: 3}
-      propertyPath: AudioClipsArray.Array.data[8].name
-      value: ButtonClick
-      objectReference: {fileID: 0}
     - target: {fileID: 5984441239705579749, guid: 3720e24c70fba9a4b88da737dbcd4f98,
         type: 3}
       propertyPath: m_LocalPosition.x
