@@ -49,12 +49,9 @@ MonoBehaviour:
     audioClips:
     - name: 
       clip: {fileID: 8300000, guid: 280687611200d0943b70a24bdf1e11bf, type: 3}
-      pitch: 2
+      pitch: 0.88
       startTime: 0
-    - name: 
-      clip: {fileID: 8300000, guid: 280687611200d0943b70a24bdf1e11bf, type: 3}
-      pitch: 1
-      startTime: 0
+      volume: 0.3
     hasCoolDown: 1
     CoolDownTime: 1
   - name: health
@@ -67,10 +64,12 @@ MonoBehaviour:
       clip: {fileID: 8300000, guid: 981763e662d116643831dba3ee947dc7, type: 3}
       pitch: 1
       startTime: 0
+      volume: 0
     - name: woodBreaking2
       clip: {fileID: 8300000, guid: 9c777beba33c0d545a3dfb36cec036a2, type: 3}
       pitch: 1
       startTime: 0.4
+      volume: 0
     hasCoolDown: 0
     CoolDownTime: 0
   - name: EnemyHit
@@ -99,9 +98,11 @@ MonoBehaviour:
       clip: {fileID: 8300000, guid: cbb961805a6abe94a9bb48c15bfd4564, type: 3}
       pitch: 2
       startTime: 0
+      volume: 0
     - name: Button Click2
       clip: {fileID: 8300000, guid: f868fb23985b5184995546b257fefbd6, type: 3}
       pitch: 1
       startTime: 0.35
+      volume: 0
     hasCoolDown: 0
     CoolDownTime: 0

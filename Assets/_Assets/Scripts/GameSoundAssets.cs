@@ -5,20 +5,16 @@ using UnityEngine;
 using UnityEngine.Playables;
 
 [ExecuteInEditMode]
-public class GameSoundAssets : MonoBehaviour
-{
+public class GameSoundAssets : MonoBehaviour {
     public static GameSoundAssets Instance { get; private set; }
-    private void Awake()
-    {
-        if (Instance == null)
-        {
+    private void Awake() {
+        if (Instance == null) {
             Instance = this;
         }
-        else
-        {
+        else {
             Destroy(gameObject);
         }
-        
+
     }
 
 
@@ -26,8 +22,7 @@ public class GameSoundAssets : MonoBehaviour
     public SoundAudioClip[] AudioClipsArray;
 
     [System.Serializable]
-    public class SoundAudioClip
-    {
+    public class SoundAudioClip {
         [HideInInspector] public string name;
         public sound[] audioClips;
 
@@ -36,14 +31,13 @@ public class GameSoundAssets : MonoBehaviour
         public float CoolDownTime;
 
         [System.Serializable]
-        public struct sound
-        {
+        public struct sound {
             public string name;
             public AudioClip clip;
-            [Range(-3,3)]
+            [Range(-3, 3)]
             public float pitch;
             public float startTime;
-            [Range(0,1)]
+            [Range(0, 1)]
             public float volume;
         }
 
@@ -52,21 +46,18 @@ public class GameSoundAssets : MonoBehaviour
 
 #if UNITY_EDITOR
 
-    private void OnEnable()
-    {
+    private void OnEnable() {
         string[] names = Enum.GetNames(typeof(SoundManager.Sound));
-        SoundManager.soundTimerDictionary = new Dictionary<string,SoundManager.SoundTime>();
+        SoundManager.soundTimerDictionary = new Dictionary<string, SoundManager.SoundTime>();
         Array.Resize(ref AudioClipsArray, names.Length);
-        for(int i = 0; i < names.Length; i++)
-        {
+        for (int i = 0; i < names.Length; i++) {
             AudioClipsArray[i].name = names[i];
-           
-            if (AudioClipsArray[i].hasCoolDown)
-            {
+
+            if (AudioClipsArray[i].hasCoolDown) {
                 SoundManager.soundTimerDictionary[names[i]] = new SoundManager.SoundTime { currentTime = 0, maxTime = AudioClipsArray[i].CoolDownTime };
             }
         }
-       
+
     }
 #endif
 }

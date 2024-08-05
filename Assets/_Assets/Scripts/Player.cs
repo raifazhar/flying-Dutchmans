@@ -102,7 +102,6 @@ public class Player : MonoBehaviour, IHittable {
                 AimingState();
                 break;
             case State.Launching:
-                SoundManager.Playsound(SoundManager.Sound.SlingShot);
                 launchTimer -= Time.fixedDeltaTime;
                 if (launchTimer < 0) {
                     playerState = State.Idle;
@@ -191,6 +190,7 @@ public class Player : MonoBehaviour, IHittable {
         launchTimer = launchCooldown;
         OnStateChange?.Invoke(this, new OnStateChangeEventArgs { playerState = playerState });
         CameraController.Instance.AddTrauma(cameraShakeOnLaunch);
+        SoundManager.Playsound(SoundManager.Sound.SlingShot);
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
 

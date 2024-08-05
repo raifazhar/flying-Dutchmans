@@ -454,11 +454,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameSoundAssets
       objectReference: {fileID: 0}
-    - target: {fileID: 3738549761607630149, guid: 3720e24c70fba9a4b88da737dbcd4f98,
-        type: 3}
-      propertyPath: AudioClipsArray.Array.data[2].audioClips.Array.data[0].volume
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 5984441239705579749, guid: 3720e24c70fba9a4b88da737dbcd4f98,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -512,11 +507,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 653202823443784481, guid: 3720e24c70fba9a4b88da737dbcd4f98,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 923930370}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3720e24c70fba9a4b88da737dbcd4f98, type: 3}
 --- !u!1001 &147126036
 PrefabInstance:
@@ -2019,8 +2010,8 @@ Transform:
   m_GameObject: {fileID: 860140221}
   serializedVersion: 2
   m_LocalRotation: {x: 0.49999937, y: -0.5000008, z: 0.4999992, w: 0.5000007}
-  m_LocalPosition: {x: 160.75005, y: 48.099846, z: 35.9}
-  m_LocalScale: {x: 17.821419, y: 11, z: 11}
+  m_LocalPosition: {x: 160.75005, y: 50.9, z: 35.9}
+  m_LocalScale: {x: 18.765953, y: 11.583, z: 12.4714155}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4459798362314790540}
@@ -2204,108 +2195,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 913367518}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &923930367 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 653202823443784481, guid: 3720e24c70fba9a4b88da737dbcd4f98,
-    type: 3}
-  m_PrefabInstance: {fileID: 138468715}
-  m_PrefabAsset: {fileID: 0}
---- !u!82 &923930370
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 923930367}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1001 &926125009
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5392,7 +5281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelsSO: {fileID: 11400000, guid: 7177d3a6bcf8b8c42b122e7978ed9e96, type: 2}
-  gameStartTime: 2
+  gameStartTime: 1
   gameEndTime: 3
   levelOutTransition: {fileID: 436401477}
   levelOutTranisitonTime: 2
