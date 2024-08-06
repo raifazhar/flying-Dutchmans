@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviour {
             gameState = GameState.Playing;
             Player.Instance.SetMaxHealth(level.playerHealth);
             Player.Instance.Initialize();
-            Enemy.Instance.SetMaxHealth(level.enemyHealth);
+            Enemy.Instance.SetMaxCannonHealth(level.enemyHealth);
             Enemy.Instance.SetMissChance(level.enemyMissChance);
             Enemy.Instance.SetShootInterval(level.enemyShootInterval);
             Enemy.Instance.Initialize();

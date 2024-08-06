@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyCannonVisual : MonoBehaviour {
 
@@ -8,6 +9,7 @@ public class EnemyCannonVisual : MonoBehaviour {
     [SerializeField] private Transform pivotBone;
     [SerializeField] private Transform angleBone;
     [SerializeField] private Transform vfxSpawnPoint;
+    [SerializeField] private Image healthBar;
     private Vector3 launchVector;
     private Vector3 angleOrigin;
     private Vector3 pivotOrigin;
@@ -19,10 +21,15 @@ public class EnemyCannonVisual : MonoBehaviour {
         launchVector = Vector3.zero;
         cannon.OnLaunchStart += Cannon_OnLaunch;
         cannon.OnLaunchEnd += Cannon_OnLaunchEnd;
+        cannon.OnHealthChange += Cannon_OnHealthChange;
         angleTarget = Quaternion.identity;
         pivotTarget = Quaternion.identity;
         angleOrigin = angleBone.eulerAngles;
         pivotOrigin = pivotBone.eulerAngles;
+    }
+
+    private void Cannon_OnHealthChange(object sender, EnemyCannon.HealthEventArgs e) {
+        healthBar.fillAmount = e.healthNormalized;
     }
 
     private void Cannon_OnLaunchEnd(object sender, System.EventArgs e) {

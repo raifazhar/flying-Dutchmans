@@ -13,8 +13,7 @@ public class Enemy : MonoBehaviour, IHittable {
         GameOver,
     }
     public static Enemy Instance { get; private set; }
-    public event EventHandler OnHealthChanged;
-    public Action<State> onstatechangehad;
+
     public event EventHandler<OnStateChangeEventArgs> OnStateChange;
     public class OnStateChangeEventArgs : EventArgs {
         public State enemyState;
@@ -24,8 +23,8 @@ public class Enemy : MonoBehaviour, IHittable {
     public class OnHitArgs : EventArgs {
         public Collision collision;
     }
-    private int maxHealth = 100;
-    private int health;
+    public event EventHandler OnCannonHealthChanged;
+    private int cannonHealth = 10;
     [SerializeField] private Transform enemyCannonSpawnPoint;
     private int numCannons = 1;
     [SerializeField] private float enemyCannonSpawnExtent = 5f;
@@ -53,7 +52,7 @@ public class Enemy : MonoBehaviour, IHittable {
         else {
             Destroy(gameObject);
         }
-        health = maxHealth;
+
         enemyState = State.None;
         targetColliderBounds = targetCollider.bounds;
         targetCollider.enabled = false;
@@ -65,11 +64,16 @@ public class Enemy : MonoBehaviour, IHittable {
 
     private void GameManager_OnGameOver(object sender, EventArgs e) {
         enemyState = State.GameOver;
+        OnStateChange?.Invoke(this, new OnStateChangeEventArgs { enemyState = enemyState });
     }
 
     public void Initialize() {
-        health = maxHealth;
+        for (int i = 0; i < numCannons; i++) {
+            cannons[i].SetHealth(cannonHealth);
+        }
+        OnCannonHealthChanged?.Invoke(this, EventArgs.Empty);
         enemyState = State.Shooting;
+        OnStateChange?.Invoke(this, new OnStateChangeEventArgs { enemyState = enemyState });
     }
 
     public void Update() {
@@ -100,7 +104,9 @@ public class Enemy : MonoBehaviour, IHittable {
             Transform cannon = Instantiate(enemyCannonPrefab, spawnPosition, Quaternion.identity);
             cannons[i] = cannon.GetComponent<EnemyCannon>();
             cannon.SetParent(transform);
+            cannons[i].SetDomainExtent(enemyCannonSpawnExtent / numCannons);
         }
+
     }
 
     private void Shoot() {
@@ -138,8 +144,11 @@ public class Enemy : MonoBehaviour, IHittable {
         //        highestDamageObstacle = activeObstacles[i];
         //    }
         //}
-        //Choose a random cannon to shoot out of 
-        int randomCannonIndex = UnityEngine.Random.Range(0, cannons.Length);
+        //Choose a random cannon to shoot out of, make sure the cannon is alive
+        int randomCannonIndex = UnityEngine.Random.Range(0, numCannons);
+        while (!cannons[randomCannonIndex].IsAlive()) {
+            randomCannonIndex = UnityEngine.Random.Range(0, numCannons);
+        }
         float cannonLaunchDelay = cannons[randomCannonIndex].GetLaunchDelay();
 
         //if (highestDamageObstacle != null) {
@@ -204,29 +213,38 @@ public class Enemy : MonoBehaviour, IHittable {
     public HittableType GetHittableType() {
         return HittableType.Enemy;
     }
-
-    private void DamageCannon(int damage, Vector3 hitPos) {
-    }
     public void Hit(BaseProjectile projectile, Collision collision) {
         if (enemyState == State.GameOver)
             return;
-        health -= projectile.GetDamage();
-        OnHealthChanged?.Invoke(this, EventArgs.Empty);
-        GameManager.Instance.AddScore(projectile.GetDamage(), projectile.gameObject.transform.position);
-        OnHit?.Invoke(this, new OnHitArgs { collision = collision });
-        SoundManager.Playsound(SoundManager.Sound.EnemyHit);
-        if (health <= 0) {
+        //Check which cannons domain was hit (cannon domain extends in z axis so each cannon has equivalent domain)
+        float collisionZ = collision.GetContact(0).point.z;
+        for (int i = 0; i < numCannons; i++) {
+            if (cannons[i].IsZCoordinateInDomain(collisionZ)) {
+                cannons[i].DoDamage(projectile.GetDamage());
+                GameManager.Instance.AddScore(projectile.GetDamage(), projectile.gameObject.transform.position);
+                OnHit?.Invoke(this, new OnHitArgs { collision = collision });
+                SoundManager.Playsound(SoundManager.Sound.EnemyHit);
+                OnCannonHealthChanged?.Invoke(this, EventArgs.Empty);
+                break;
+            }
+        }
+
+        if (GetCannonHealthCumulativeNormalized() <= 0) {
             enemyState = State.Dead;
             OnStateChange?.Invoke(this, new OnStateChangeEventArgs { enemyState = enemyState });
         }
+
     }
 
-    public float GetHealthNormalized() {
-        return (float)health / maxHealth;
+    public float GetCannonHealthCumulativeNormalized() {
+        float health = 0;
+        for (int i = 0; i < numCannons; i++) {
+            health += cannons[i].GetHealthNormalized();
+        }
+        return health / numCannons;
     }
-
-    public void SetMaxHealth(int newMaxHealth) {
-        maxHealth = newMaxHealth;
+    public void SetMaxCannonHealth(int newMaxHealth) {
+        cannonHealth = newMaxHealth;
     }
     public void SetMissChance(float newMissChance) {
         missChance = newMissChance;
@@ -237,12 +255,6 @@ public class Enemy : MonoBehaviour, IHittable {
 
     public void SetNumCannons(int i) {
         numCannons = i;
-    }
-    public void AddHealth(int amount) {
-        health += amount;
-        if (health > maxHealth)
-            health = maxHealth;
-        OnHealthChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public Bounds GetBounds() {

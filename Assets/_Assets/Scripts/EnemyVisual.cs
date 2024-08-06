@@ -14,17 +14,19 @@ public class EnemyVisual : MonoBehaviour {
         fullHealth.gameObject.SetActive(true);
         destroyed.gameObject.SetActive(false);
         Enemy.Instance.OnStateChange += Enemy_OnStateChange;
-        Enemy.Instance.OnHealthChanged += Enemy_OnHealthChanged;
         Enemy.Instance.OnHit += Enemy_OnHit;
+        Enemy.Instance.OnCannonHealthChanged += Enemy_OnCannonHealthChanged;
     }
+
+
 
     private void Enemy_OnHit(object sender, Enemy.OnHitArgs e) {
         Transform effect = Instantiate(hitVisual, e.collision.GetContact(0).point, Quaternion.FromToRotation(Vector3.up, e.collision.GetContact(0).normal));
         effect.SetParent(this.transform);
     }
 
-    private void Enemy_OnHealthChanged(object sender, System.EventArgs e) {
-        float damage = (1f - Enemy.Instance.GetHealthNormalized()) * damageMax;
+    private void Enemy_OnCannonHealthChanged(object sender, System.EventArgs e) {
+        float damage = (1f - Enemy.Instance.GetCannonHealthCumulativeNormalized()) * damageMax;
         foreach (MeshRenderer renderer in renderers) {
             renderer.material.SetFloat(DAMAGE_ATTRIBUTE, damage);
         }
