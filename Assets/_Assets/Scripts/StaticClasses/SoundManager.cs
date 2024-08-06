@@ -30,18 +30,7 @@ public static class SoundManager {
 
     public static void Playsound(Sound sound, int index = -1) {
 
-        if (oneShotSound == null) {
-            oneShotSound = new GameObject("One Shot Audio");
-            oneShotAudioSource = oneShotSound.AddComponent<AudioSource>();
-        }
-        if (!CanPlaySound(sound)) {
-            return;
-        }
-
-        Getsound(sound, oneShotAudioSource, index);
-        oneShotAudioSource.Play();
-
-
+        Playsound(sound,Vector3.zero,index);
     }
     public static void Playsound(Sound sound, Vector3 position, int index = -1) {
         if (!CanPlaySound(sound)) {

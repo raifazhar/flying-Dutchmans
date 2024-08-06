@@ -81,6 +81,7 @@ public class GameManager : MonoBehaviour {
         OnGameOver?.Invoke(this, EventArgs.Empty);
         if (GameEndState.Win == state) {
             PlayerPrefs.SetInt(PlayerPrefVariables.MaxCompletedLevel, levelIndex);
+            SoundManager.Playsound(SoundManager.Sound.Victory, 0);
         }
         if (gameEndCoroutine == null) {
             gameEndCoroutine = StartCoroutine(GameEndCoroutine(gameEndTime, state));

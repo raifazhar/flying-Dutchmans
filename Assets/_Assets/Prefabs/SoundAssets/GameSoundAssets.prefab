@@ -62,9 +62,9 @@ MonoBehaviour:
     audioClips:
     - name: woodBreaking1
       clip: {fileID: 8300000, guid: 981763e662d116643831dba3ee947dc7, type: 3}
-      pitch: 1
+      pitch: 2
       startTime: 0
-      volume: 0
+      volume: 0.3
     - name: woodBreaking2
       clip: {fileID: 8300000, guid: 9c777beba33c0d545a3dfb36cec036a2, type: 3}
       pitch: 1
@@ -77,7 +77,12 @@ MonoBehaviour:
     hasCoolDown: 0
     CoolDownTime: 0
   - name: Victory
-    audioClips: []
+    audioClips:
+    - name: levelwin
+      clip: {fileID: 8300000, guid: c6fbee306842fa144a972fd1b88a94c4, type: 3}
+      pitch: 1
+      startTime: 0
+      volume: 0.025
     hasCoolDown: 0
     CoolDownTime: 0
   - name: Loss
