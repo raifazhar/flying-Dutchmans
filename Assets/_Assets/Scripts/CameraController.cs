@@ -5,6 +5,10 @@ using UnityEngine;
 public class CameraController : MonoBehaviour {
 
     public static CameraController Instance { get; private set; }
+    [SerializeField]
+    private AudioSource mainMusic;
+    [SerializeField] private float audioFadeOutTime = 1f;
+    private Coroutine audioStopCoroutine;
     [SerializeField] private float displacementMultiplier;
     [SerializeField] private float maxDisplacement;
     [SerializeField] private float displacementSpeed;
@@ -14,6 +18,11 @@ public class CameraController : MonoBehaviour {
     [SerializeField] private float maxRoll;
     [SerializeField] private float maxOffsetX;
     [SerializeField] private float maxOffsetY;
+    [SerializeField] private float maxHardYaw;
+    [SerializeField] private float maxHardPitch;
+    [SerializeField] private float maxHardRoll;
+    [SerializeField] private float maxHardOffsetX;
+    [SerializeField] private float maxHardOffsetY;
     [SerializeField] private int noiseSeed;
     [SerializeField] private float traumaDecreaseFactor;
     [SerializeField] private float noiseFrequency;
@@ -73,8 +82,10 @@ public class CameraController : MonoBehaviour {
         roll = maxRoll * shake * Mathf.Lerp(-1, 1, Mathf.PerlinNoise(noiseSeed + 2, Time.time * noiseFrequency));
         Vector3 shakeRotationVector = new Vector3(pitch, yaw, roll);
         shakeRotationVector *= shakeMagnitude;
+        shakeRotationVector.x = Mathf.Clamp(shakeRotationVector.x, -maxHardPitch, maxHardPitch);
+        shakeRotationVector.y = Mathf.Clamp(shakeRotationVector.y, -maxHardYaw, maxHardYaw);
+        shakeRotationVector.z = Mathf.Clamp(shakeRotationVector.z, -maxHardRoll, maxHardRoll);
         Quaternion shakeRotation = Quaternion.Euler(shakeRotationVector);
-
         shakeEmpty.localRotation = Quaternion.Lerp(shakeEmpty.localRotation, shakeRotation, Time.fixedDeltaTime * shakeSnapSpeed);
     }
     private void CameraShakeLocation() {
@@ -86,11 +97,38 @@ public class CameraController : MonoBehaviour {
         offsetVector.x *= maxOffsetX;
         offsetVector.y *= maxOffsetY;
         offsetVector *= shakeMagnitude;
+        offsetVector.x = Mathf.Clamp(offsetVector.x, -maxHardOffsetX, maxHardOffsetX);
+        offsetVector.y = Mathf.Clamp(offsetVector.y, -maxHardOffsetY, maxHardOffsetY);
         shakeEmpty.localPosition = Vector3.Lerp(shakeEmpty.localPosition, offsetVector, Time.deltaTime * shakeSnapSpeed);
     }
 
     public void AddTrauma(float t) {
         trauma += t;
     }
+
+
+    public void EnableAudio() {
+        mainMusic.Play();
+    }
+
+    public void DisableAudio() {
+        if (audioStopCoroutine == null) {
+            audioStopCoroutine = StartCoroutine(AudioFadeOut(audioFadeOutTime));
+        }
+    }
+    IEnumerator AudioFadeOut(float time) {
+        float startVolume = mainMusic.volume;
+
+        while (mainMusic.volume > 0) {
+            mainMusic.volume -= startVolume * Time.deltaTime / time;
+
+            yield return null;
+        }
+
+        mainMusic.Stop();
+        mainMusic.volume = startVolume;
+        audioStopCoroutine = null;
+    }
+
 
 }

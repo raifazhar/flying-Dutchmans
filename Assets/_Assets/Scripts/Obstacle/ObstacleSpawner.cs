@@ -9,6 +9,7 @@ public class ObstacleSpawner : MonoBehaviour {
     private Transform[] obstaclePrefabs;
     private float[] spawnChance;
     private float spawnTimer = 0f;
+    private float obstacleFallSpeed = 1f;
     private float invertedChance = 0f;
     [SerializeField] private BoxCollider boxCollider;
     private Bounds bounds;
@@ -66,10 +67,12 @@ public class ObstacleSpawner : MonoBehaviour {
                 chosenObstaclePrefab = obstaclePrefabs[i];
                 Transform generatedObstacle = Instantiate(chosenObstaclePrefab, spawnPosition, Quaternion.identity);
                 generatedObstacle.SetParent(transform);
+                generatedObstacle.GetComponent<IFallingObstacle>().SetFallSpeed(obstacleFallSpeed);
                 if (UnityEngine.Random.Range(0f, 1f) <= invertedChance) {
                     generatedObstacle.GetComponent<IFallingObstacle>().SetInverted(true);
                 }
                 activeObstacles.Add(generatedObstacle);
+
                 break;
             }
         }
@@ -92,6 +95,9 @@ public class ObstacleSpawner : MonoBehaviour {
 
     public void SetInvertedChance(float newInvertedChance) {
         invertedChance = newInvertedChance;
+    }
+    public void SetObstacleFallSpeed(float newFallSpeed) {
+        obstacleFallSpeed = newFallSpeed;
     }
     public void Initialize() {
         active = true;

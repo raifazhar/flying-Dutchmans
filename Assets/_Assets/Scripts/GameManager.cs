@@ -81,9 +81,9 @@ public class GameManager : MonoBehaviour {
     private void EndGame(GameEndState state) {
         gameState = GameState.GameOver;
         OnGameOver?.Invoke(this, EventArgs.Empty);
+        CameraController.Instance.DisableAudio();
         if (GameEndState.Win == state) {
             PlayerPrefs.SetInt(PlayerPrefVariables.MaxCompletedLevel, levelIndex);
-            SoundManager.Playsound(SoundManager.Sound.Victory, 0);
         }
         if (gameEndCoroutine == null) {
             gameEndCoroutine = StartCoroutine(GameEndCoroutine(gameEndTime, state));
@@ -106,9 +106,11 @@ public class GameManager : MonoBehaviour {
             Enemy.Instance.SetShootInterval(level.enemyShootInterval);
             Enemy.Instance.Initialize();
             ObstacleSpawner.Instance.SetInvertedChance(level.invertedChance);
+            ObstacleSpawner.Instance.SetObstacleFallSpeed(level.obstacleFallSpeed);
             ObstacleSpawner.Instance.SetSpawnInterval(level.obstacleSpawnInterval);
             ObstacleSpawner.Instance.SetObstacles(level.ObstacleList.obstaclePrefabs, level.spawnChance);
             ObstacleSpawner.Instance.Initialize();
+            CameraController.Instance.EnableAudio();
         }
     }
 

@@ -47,49 +47,137 @@ MonoBehaviour:
   AudioClipsArray:
   - name: SlingShot
     audioClips:
-    - name: 
-      clip: {fileID: 8300000, guid: 280687611200d0943b70a24bdf1e11bf, type: 3}
+    - name: Slingshot
+      clip: {fileID: 8300000, guid: ae251d7937144654792fcb92379c9cbd, type: 3}
       pitch: 0.88
       startTime: 0
       volume: 0.3
+    masterVolume: 1
     hasCoolDown: 1
     CoolDownTime: 1
-  - name: health
-    audioClips: []
+  - name: Health
+    audioClips:
+    - name: health
+      clip: {fileID: 8300000, guid: 5ac19581b2f83534a9e7fc5e22f54768, type: 3}
+      pitch: 1
+      startTime: 0
+      volume: 1
+    masterVolume: 1
     hasCoolDown: 0
     CoolDownTime: 0
   - name: BoxBreaking
     audioClips:
     - name: woodBreaking1
-      clip: {fileID: 8300000, guid: 981763e662d116643831dba3ee947dc7, type: 3}
+      clip: {fileID: 8300000, guid: 24cd446656e59ba4a8b6bd22bcf462ae, type: 3}
       pitch: 1
       startTime: 0
       volume: 0.5
     - name: woodBreaking2
-      clip: {fileID: 8300000, guid: 9c777beba33c0d545a3dfb36cec036a2, type: 3}
+      clip: {fileID: 8300000, guid: 2a95f2e4ada6f3345b8d6afacf4fff31, type: 3}
       pitch: 1
       startTime: 0.4
       volume: 0.5
+    masterVolume: 0.2
     hasCoolDown: 0
     CoolDownTime: 0
   - name: EnemyHit
-    audioClips: []
+    audioClips:
+    - name: EnemyHit
+      clip: {fileID: 8300000, guid: cfbf257775876dd40aa8db33e55bae36, type: 3}
+      pitch: 1
+      startTime: 0
+      volume: 1
+    masterVolume: 0.2
     hasCoolDown: 0
     CoolDownTime: 0
   - name: Victory
-    audioClips: []
+    audioClips:
+    - name: Victory
+      clip: {fileID: 8300000, guid: c6fbee306842fa144a972fd1b88a94c4, type: 3}
+      pitch: 1
+      startTime: 0
+      volume: 1
+    masterVolume: 1
     hasCoolDown: 0
     CoolDownTime: 0
   - name: Loss
-    audioClips: []
+    audioClips:
+    - name: Loss
+      clip: {fileID: 8300000, guid: 5adc9bbeab2cbb544bb39b292f6cdb9b, type: 3}
+      pitch: 1
+      startTime: 0
+      volume: 1
+    masterVolume: 1
     hasCoolDown: 0
     CoolDownTime: 0
   - name: Explosion
-    audioClips: []
+    audioClips:
+    - name: Explosion
+      clip: {fileID: 8300000, guid: b5c2f041bb470b84896adacae97b39d1, type: 3}
+      pitch: 1
+      startTime: 0
+      volume: 0.1
+    masterVolume: 1
     hasCoolDown: 0
     CoolDownTime: 0
   - name: Collision
-    audioClips: []
+    audioClips:
+    - name: 
+      clip: {fileID: 8300000, guid: 330ee36a13e98fb468709b2779752272, type: 3}
+      pitch: 1
+      startTime: 0
+      volume: 1
+    - name: 
+      clip: {fileID: 8300000, guid: fdbf675429d926f429c56bdddb1a05ed, type: 3}
+      pitch: 1
+      startTime: 0
+      volume: 1
+    - name: 
+      clip: {fileID: 8300000, guid: 1a9a87f8cebe437498abce2f130702ae, type: 3}
+      pitch: 1
+      startTime: 0
+      volume: 1
+    - name: 
+      clip: {fileID: 8300000, guid: 6fc8da2c6e7d6ac4b843e88eb51be691, type: 3}
+      pitch: 1
+      startTime: 0
+      volume: 1
+    - name: 
+      clip: {fileID: 8300000, guid: 3a3047fd851ffac4a98e17f7cf172262, type: 3}
+      pitch: 1
+      startTime: 0
+      volume: 1
+    - name: 
+      clip: {fileID: 8300000, guid: fb2ea20151a920a499aeddeeefbd1127, type: 3}
+      pitch: 1
+      startTime: 0
+      volume: 1
+    - name: 
+      clip: {fileID: 8300000, guid: 8b8140e763e18b54c9c17abc22c56e22, type: 3}
+      pitch: 1
+      startTime: 0
+      volume: 1
+    - name: 
+      clip: {fileID: 8300000, guid: b02f16cda67da214fb0e8b0b63fe98c2, type: 3}
+      pitch: 1
+      startTime: 0
+      volume: 1
+    - name: 
+      clip: {fileID: 8300000, guid: 38e551e5e361563409862eaf9c6adce5, type: 3}
+      pitch: 1
+      startTime: 0
+      volume: 1
+    - name: 
+      clip: {fileID: 8300000, guid: d20ab092b432e3c4cb55d501a9bcc45f, type: 3}
+      pitch: 1
+      startTime: 0
+      volume: 1
+    - name: 
+      clip: {fileID: 8300000, guid: 1267fe94379044e4aa922ab4d3db1958, type: 3}
+      pitch: 1
+      startTime: 0
+      volume: 1
+    masterVolume: 0.2
     hasCoolDown: 0
     CoolDownTime: 0
   - name: ButtonClick
@@ -104,5 +192,6 @@ MonoBehaviour:
       pitch: 1
       startTime: 0.35
       volume: 0.5
+    masterVolume: 1
     hasCoolDown: 0
     CoolDownTime: 0

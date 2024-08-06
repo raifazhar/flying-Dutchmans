@@ -31,6 +31,7 @@ public class GameSoundAssets : MonoBehaviour {
         public sound[] audioClips;
 
         [Header("Settings")]
+        public float masterVolume = 1f;
         public bool hasCoolDown;
         public float CoolDownTime;
 
@@ -43,6 +44,8 @@ public class GameSoundAssets : MonoBehaviour {
             public float startTime;
             [Range(0, 1)]
             public float volume;
+
+
         }
 
 

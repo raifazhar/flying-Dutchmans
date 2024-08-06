@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   launchOrigin: {fileID: 518930597326884430}
-  launchDelay: 1
+  launchDelay: 0.25
 --- !u!1 &4760716280466925778
 GameObject:
   m_ObjectHideFlags: 0

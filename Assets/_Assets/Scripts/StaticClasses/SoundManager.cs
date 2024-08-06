@@ -17,7 +17,7 @@ public static class SoundManager {
 
     public enum Sound {
         SlingShot,
-        health,
+        Health,
         BoxBreaking,
         EnemyHit,
         Victory,
@@ -30,9 +30,10 @@ public static class SoundManager {
 
     public static void Playsound(Sound sound, int index = -1) {
 
-        Playsound(sound,Vector3.zero,index);
+        Playsound(sound, Camera.main.transform.position, index);
     }
     public static void Playsound(Sound sound, Vector3 position, int index = -1) {
+
         if (!CanPlaySound(sound)) {
             return;
         }
@@ -70,7 +71,7 @@ public static class SoundManager {
                 source.clip = soundaudioClip.audioClips[index].clip;
                 source.pitch = soundaudioClip.audioClips[index].pitch;
                 source.time = soundaudioClip.audioClips[index].startTime;
-                source.volume = soundaudioClip.audioClips[index].volume;
+                source.volume = soundaudioClip.audioClips[index].volume * soundaudioClip.masterVolume;
 
             }
         }

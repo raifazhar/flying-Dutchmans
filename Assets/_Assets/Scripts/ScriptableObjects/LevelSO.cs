@@ -7,6 +7,7 @@ public class LevelSO : ScriptableObject {
     public int LevelID;
     public ObstacleListSO ObstacleList;
     public float obstacleSpawnInterval;
+    public float obstacleFallSpeed = 1f;
     public float[] spawnChance;
     public int playerHealth;
     public int enemyHealth;
