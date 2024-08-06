@@ -26,7 +26,11 @@ public class Enemy : MonoBehaviour, IHittable {
     }
     private int maxHealth = 100;
     private int health;
-    [SerializeField] private EnemyCannon[] cannons;
+    [SerializeField] private Transform enemyCannonSpawnPoint;
+    private int numCannons = 1;
+    [SerializeField] private float enemyCannonSpawnExtent = 5f;
+    [SerializeField] private Transform enemyCannonPrefab;
+    private EnemyCannon[] cannons;
     [SerializeField] private GameObject enemyProjectile;
     [Header("AI")]
     [SerializeField] private float shootInterval = 2f;
@@ -38,7 +42,7 @@ public class Enemy : MonoBehaviour, IHittable {
     private Vector3 launchVector;
     private Vector3 targetPosition;
     private float shootTimer;
-
+    private bool cannonsSpawned = false;
     private State enemyState;
 
 
@@ -76,6 +80,29 @@ public class Enemy : MonoBehaviour, IHittable {
         }
     }
 
+    public void SpawnCannons() {
+        if (cannonsSpawned)
+            return;
+        cannonsSpawned = true;
+        float maxZCoordinate = enemyCannonSpawnExtent;
+        float minZCoordinate = -enemyCannonSpawnExtent;
+        float xCoordinate = enemyCannonSpawnPoint.position.x;
+        float yCoordinate = enemyCannonSpawnPoint.position.y;
+        cannons = new EnemyCannon[numCannons];
+        //Instantiate the amount of cannons specified by numCannons evenly distributed between the max and min z coordinates
+        float dt = Mathf.Abs((maxZCoordinate - minZCoordinate)) / (numCannons);
+
+        for (int i = 0; i < numCannons; i++) {
+            float t = (0.5f * dt) + (i * dt);
+            t /= Mathf.Abs(maxZCoordinate - minZCoordinate);
+            float zPos = Mathf.Lerp(minZCoordinate, maxZCoordinate, t);
+            Vector3 spawnPosition = new Vector3(xCoordinate, yCoordinate, zPos);
+            Transform cannon = Instantiate(enemyCannonPrefab, spawnPosition, Quaternion.identity);
+            cannons[i] = cannon.GetComponent<EnemyCannon>();
+            cannon.SetParent(transform);
+        }
+    }
+
     private void Shoot() {
         if (shootTimer > 0) {
             shootTimer -= Time.deltaTime;
@@ -88,47 +115,48 @@ public class Enemy : MonoBehaviour, IHittable {
 
     private void LaunchProjectileFromRandomCannon() {
         launchVector = Vector3.zero;
-        List<Transform> activeObstacles = ObstacleSpawner.Instance.GetActiveObstacles();
-        //Remove all obstacles that will be below height threshold by the time we hit them
-        for (int i = 0; i < activeObstacles.Count; i++) {
-            Vector3 currentObstaclePosition = activeObstacles[i].position;
-            float fallSpeed = activeObstacles[i].GetComponent<IFallingObstacle>().GetFallSpeed();
-            Vector3 launchVector = CalculateLaunchVector(cannons[0].GetLaunchOrigin().position, currentObstaclePosition, launchVelocity);
-            float timeToTarget = Vector3.Distance(currentObstaclePosition, cannons[0].GetLaunchOrigin().position) / launchVector.magnitude;
-            if (currentObstaclePosition.y - fallSpeed * timeToTarget < heightThreshold) {
-                activeObstacles.RemoveAt(i);
-                i--;
-            }
+        //List<Transform> activeObstacles = ObstacleSpawner.Instance.GetActiveObstacles();
+        ////Remove all obstacles that will be below height threshold by the time we hit them
+        //for (int i = 0; i < activeObstacles.Count; i++) {
+        //    Vector3 currentObstaclePosition = activeObstacles[i].position;
+        //    float fallSpeed = activeObstacles[i].GetComponent<IFallingObstacle>().GetFallSpeed();
+        //    Vector3 launchVector = CalculateLaunchVector(cannons[0].GetLaunchOrigin().position, currentObstaclePosition, launchVelocity);
+        //    float timeToTarget = Vector3.Distance(currentObstaclePosition, cannons[0].GetLaunchOrigin().position) / launchVector.magnitude;
+        //    if (currentObstaclePosition.y - fallSpeed * timeToTarget < heightThreshold) {
+        //        activeObstacles.RemoveAt(i);
+        //        i--;
+        //    }
 
-        }
-        //Find highest damage obstacle
-        Transform highestDamageObstacle = null;
-        int highestDamage = 0;
-        for (int i = 0; i < activeObstacles.Count; i++) {
-            if (activeObstacles[i].GetComponent<IFallingObstacle>().GetDamage() >= highestDamage
-                && !activeObstacles[i].GetComponent<IFallingObstacle>().IsInverted()) {
-                highestDamage = activeObstacles[i].GetComponent<IFallingObstacle>().GetDamage();
-                highestDamageObstacle = activeObstacles[i];
-            }
-        }
+        //}
+        ////Find highest damage obstacle
+        //Transform highestDamageObstacle = null;
+        //int highestDamage = 0;
+        //for (int i = 0; i < activeObstacles.Count; i++) {
+        //    if (activeObstacles[i].GetComponent<IFallingObstacle>().GetDamage() >= highestDamage
+        //        && !activeObstacles[i].GetComponent<IFallingObstacle>().IsInverted()) {
+        //        highestDamage = activeObstacles[i].GetComponent<IFallingObstacle>().GetDamage();
+        //        highestDamageObstacle = activeObstacles[i];
+        //    }
+        //}
         //Choose a random cannon to shoot out of 
         int randomCannonIndex = UnityEngine.Random.Range(0, cannons.Length);
         float cannonLaunchDelay = cannons[randomCannonIndex].GetLaunchDelay();
 
-        if (highestDamageObstacle != null) {
-            //Get the position of the target
-            Vector3 currentTargetPosition = highestDamageObstacle.position;
-            float fallSpeed = highestDamageObstacle.GetComponent<IFallingObstacle>().GetFallSpeed();
-            Vector3 preliminaryLaunchVector = CalculateLaunchVector(cannons[randomCannonIndex].GetLaunchOrigin().position, currentTargetPosition, launchVelocity);
-            float timeToTarget = Vector3.Distance(currentTargetPosition, cannons[randomCannonIndex].GetLaunchOrigin().position) / preliminaryLaunchVector.magnitude;
-            timeToTarget += cannonLaunchDelay;
-            //Compensate for the fall of the obstacle
-            targetPosition = currentTargetPosition;
-            targetPosition.y -= fallSpeed * timeToTarget;
-        }
-        else {
-            targetPosition = Player.Instance.transform.position;
-        }
+        //if (highestDamageObstacle != null) {
+        //    //Get the position of the target
+        //    Vector3 currentTargetPosition = highestDamageObstacle.position;
+        //    float fallSpeed = highestDamageObstacle.GetComponent<IFallingObstacle>().GetFallSpeed();
+        //    Vector3 preliminaryLaunchVector = CalculateLaunchVector(cannons[randomCannonIndex].GetLaunchOrigin().position, currentTargetPosition, launchVelocity);
+        //    float timeToTarget = Vector3.Distance(currentTargetPosition, cannons[randomCannonIndex].GetLaunchOrigin().position) / preliminaryLaunchVector.magnitude;
+        //    timeToTarget += cannonLaunchDelay;
+        //    //Compensate for the fall of the obstacle
+        //    targetPosition = currentTargetPosition;
+        //    targetPosition.y -= fallSpeed * timeToTarget;
+        //}
+        //else {
+        //    targetPosition = Player.Instance.transform.position;
+        //}
+        targetPosition = Player.Instance.transform.position;
         //Calculate the time it will take for the projectile to reach the current target Position
         //Randomly make enemy miss target by offseting the target position on the x/z by a random amount (minimum 3)
         if (UnityEngine.Random.Range(0f, 1f) <= missChance) {
@@ -177,13 +205,15 @@ public class Enemy : MonoBehaviour, IHittable {
         return HittableType.Enemy;
     }
 
+    private void DamageCannon(int damage, Vector3 hitPos) {
+    }
     public void Hit(BaseProjectile projectile, Collision collision) {
         if (enemyState == State.GameOver)
             return;
         health -= projectile.GetDamage();
         OnHealthChanged?.Invoke(this, EventArgs.Empty);
-        OnHit?.Invoke(this, new OnHitArgs { collision = collision });
         GameManager.Instance.AddScore(projectile.GetDamage(), projectile.gameObject.transform.position);
+        OnHit?.Invoke(this, new OnHitArgs { collision = collision });
         SoundManager.Playsound(SoundManager.Sound.EnemyHit);
         if (health <= 0) {
             enemyState = State.Dead;
@@ -205,6 +235,9 @@ public class Enemy : MonoBehaviour, IHittable {
         shootInterval = newShootInterval;
     }
 
+    public void SetNumCannons(int i) {
+        numCannons = i;
+    }
     public void AddHealth(int amount) {
         health += amount;
         if (health > maxHealth)

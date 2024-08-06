@@ -11,6 +11,7 @@ public class LevelSO : ScriptableObject {
     public float[] spawnChance;
     public int playerHealth;
     public int enemyHealth;
+    public int enemyCannons = 1;
     [Range(0, 1)] public float enemyMissChance;
     public float enemyShootInterval;
     [Range(0, 1)] public float invertedChance;

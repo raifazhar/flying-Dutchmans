@@ -23,8 +23,8 @@ MonoBehaviour:
   - 0.1
   playerHealth: 60
   enemyHealth: 150
+  enemyCannons: 3
   enemyMissChance: 0
   enemyShootInterval: 2
   invertedChance: 0.05
   levelSeed: 0
-  difficulty: 3

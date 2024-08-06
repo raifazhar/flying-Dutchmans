@@ -15,14 +15,15 @@ MonoBehaviour:
   LevelID: 3
   ObstacleList: {fileID: 11400000, guid: 0ced5c8f0af2b4c43a0ffd51888fa831, type: 2}
   obstacleSpawnInterval: 2
+  obstacleFallSpeed: 1
   spawnChance:
   - 0.45
   - 0.45
   - 0.1
   playerHealth: 40
   enemyHealth: 80
-  enemyMissChance: 0.4
+  enemyCannons: 2
+  enemyMissChance: 0
   enemyShootInterval: 4
   invertedChance: 0.02
   levelSeed: 0
-  difficulty: 2

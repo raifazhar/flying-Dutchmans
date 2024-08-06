@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static Cinemachine.DocumentationSortingAttribute;
 
 public class GameManager : MonoBehaviour {
 
@@ -53,6 +54,8 @@ public class GameManager : MonoBehaviour {
         levelIndex = SelectedLevel.selectedLevel;
         Player.Instance.OnStateChange += Player_OnStateChange;
         Enemy.Instance.OnStateChange += Enemy_OnStateChange;
+        Enemy.Instance.SetNumCannons(levelsSO.levels[levelIndex].enemyCannons);
+        Enemy.Instance.SpawnCannons();
         StartCoroutine(StartGameCoroutine(gameStartTime));
     }
 
