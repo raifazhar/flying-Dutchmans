@@ -138,7 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitEffectType: 1
   targets: 000000000200000004000000
-  damage: 5
+  damage: 10
   projectileType: 3
 --- !u!1001 &6397691774425660324
 PrefabInstance:

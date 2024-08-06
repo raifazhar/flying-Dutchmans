@@ -21,7 +21,7 @@ public class Obstacle : MonoBehaviour, IHittable, IFallingObstacle {
 
     public void Hit(BaseProjectile projectile, Collision collision) {
         Vector3 targetPosition = Vector3.zero;
-        SoundManager.Playsound(SoundManager.Sound.BoxBreaking,transform.position,0);
+        SoundManager.Playsound(SoundManager.Sound.BoxBreaking, transform.position, 0);
         if (!isInverted) {
             if (projectile.GetHittableType() == HittableType.PlayerProjectile) {
                 targetPosition = GetClosestEnemyPosition(transform.position);

@@ -219,7 +219,7 @@ public class Enemy : MonoBehaviour, IHittable {
         //Check which cannons domain was hit (cannon domain extends in z axis so each cannon has equivalent domain)
         float collisionZ = collision.GetContact(0).point.z;
         for (int i = 0; i < numCannons; i++) {
-            if (cannons[i].IsZCoordinateInDomain(collisionZ)) {
+            if (cannons[i].IsZCoordinateInDomain(collisionZ) && cannons[i].IsAlive()) {
                 cannons[i].DoDamage(projectile.GetDamage());
                 GameManager.Instance.AddScore(projectile.GetDamage(), projectile.gameObject.transform.position);
                 OnHit?.Invoke(this, new OnHitArgs { collision = collision });
