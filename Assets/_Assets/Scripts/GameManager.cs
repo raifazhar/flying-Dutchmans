@@ -156,7 +156,7 @@ public class GameManager : MonoBehaviour {
     }
     public void AddScore(int amount, Vector3 position) {
         AddScore(amount);
-        EffectHandler.Instance.SpawnTextEffect(amount.ToString(), position, TextEffect.TextColor.Blue);
+        EffectHandler.Instance.SpawnTextEffect(amount.ToString(), position, TextEffect.TextColor.Blue, 1f, 1.5f);
     }
 
     public void RemoveScore(int amount) {

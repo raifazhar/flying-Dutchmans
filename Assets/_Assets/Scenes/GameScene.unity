@@ -1805,11 +1805,11 @@ MonoBehaviour:
   maxRoll: 10
   maxOffsetX: 0.1
   maxOffsetY: 0.1
-  maxHardYaw: 0
-  maxHardPitch: 0
-  maxHardRoll: 0
-  maxHardOffsetX: 0
-  maxHardOffsetY: 0
+  maxHardYaw: 5
+  maxHardPitch: 5
+  maxHardRoll: 10
+  maxHardOffsetX: 0.1
+  maxHardOffsetY: 0.1
   noiseSeed: 10
   traumaDecreaseFactor: 0.4
   noiseFrequency: 10
@@ -1930,8 +1930,8 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 77a4bd6dc6354ce4c9c1becc9a190a5f, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
-  m_Pitch: 1
+  m_Volume: 0.3
+  m_Pitch: 1.6
   Loop: 1
   Mute: 0
   Spatialize: 0

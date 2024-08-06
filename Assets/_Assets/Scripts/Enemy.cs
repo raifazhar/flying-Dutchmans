@@ -89,11 +89,17 @@ public class Enemy : MonoBehaviour, IHittable {
     private void LaunchProjectileFromRandomCannon() {
         launchVector = Vector3.zero;
         List<Transform> activeObstacles = ObstacleSpawner.Instance.GetActiveObstacles();
-        //Remove all obstacles below height threshold
+        //Remove all obstacles that will be below height threshold by the time we hit them
         for (int i = 0; i < activeObstacles.Count; i++) {
-            if (activeObstacles[i].position.y < heightThreshold) {
+            Vector3 currentObstaclePosition = activeObstacles[i].position;
+            float fallSpeed = activeObstacles[i].GetComponent<IFallingObstacle>().GetFallSpeed();
+            Vector3 launchVector = CalculateLaunchVector(cannons[0].GetLaunchOrigin().position, currentObstaclePosition, launchVelocity);
+            float timeToTarget = Vector3.Distance(currentObstaclePosition, cannons[0].GetLaunchOrigin().position) / launchVector.magnitude;
+            if (currentObstaclePosition.y - fallSpeed * timeToTarget < heightThreshold) {
                 activeObstacles.RemoveAt(i);
+                i--;
             }
+
         }
         //Find highest damage obstacle
         Transform highestDamageObstacle = null;

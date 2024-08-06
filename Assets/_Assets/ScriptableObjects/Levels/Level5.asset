@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelID: 5
   ObstacleList: {fileID: 11400000, guid: ca1a901fdb351494c92e763152f69dd9, type: 2}
-  obstacleSpawnInterval: 0.75
-  obstacleFallSpeed: 1.5
+  obstacleSpawnInterval: 1.25
+  obstacleFallSpeed: 1.25
   spawnChance:
-  - 0.2
-  - 0.45
-  - 0.25
+  - 0.1
+  - 0.5
+  - 0.3
   - 0.1
   playerHealth: 60
   enemyHealth: 150
