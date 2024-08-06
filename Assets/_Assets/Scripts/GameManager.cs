@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour {
         if (e.enemyState == Enemy.State.Dead && gameState == GameState.Playing) {
             //Enemy is dead, end the game
             EndGame(GameEndState.Win);
+            SoundManager.Playsound(SoundManager.Sound.Victory);
         }
     }
 
@@ -73,6 +74,7 @@ public class GameManager : MonoBehaviour {
         if (e.playerState == Player.State.Dead && gameState == GameState.Playing) {
             //Player is dead, end the game
             EndGame(GameEndState.Lose);
+            SoundManager.Playsound(SoundManager.Sound.Loss);
         }
     }
 

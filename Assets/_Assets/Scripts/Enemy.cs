@@ -178,6 +178,7 @@ public class Enemy : MonoBehaviour, IHittable {
         OnHealthChanged?.Invoke(this, EventArgs.Empty);
         OnHit?.Invoke(this, new OnHitArgs { collision = collision });
         GameManager.Instance.AddScore(projectile.GetDamage(), projectile.gameObject.transform.position);
+        SoundManager.Playsound(SoundManager.Sound.EnemyHit);
         if (health <= 0) {
             enemyState = State.Dead;
             OnStateChange?.Invoke(this, new OnStateChangeEventArgs { enemyState = enemyState });

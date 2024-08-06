@@ -17,6 +17,7 @@ public class HealthPack : MonoBehaviour, IHittable, IFallingObstacle {
         if (projectile.GetHittableType() == HittableType.PlayerProjectile) {
             Player.Instance.AddHealth(healthAmount);
             EffectHandler.Instance.SpawnTextEffect("+" + healthAmount, transform.position, TextEffect.TextColor.Green, 0.4f, 1.5f);
+            SoundManager.Playsound(SoundManager.Sound.health);
         }
         else if (projectile.GetHittableType() == HittableType.EnemyProjectile) {
             Enemy.Instance.AddHealth(healthAmount);
