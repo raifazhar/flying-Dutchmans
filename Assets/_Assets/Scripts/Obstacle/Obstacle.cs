@@ -10,6 +10,7 @@ public class Obstacle : MonoBehaviour, IHittable, IFallingObstacle {
     [SerializeField] private bool isInverted = false;
     [SerializeField] private Color invertedColor;
     [SerializeField] private MeshRenderer meshRenderer;
+    private Plane enemyPlane;
     private bool isTargetingEnemy = false;
 
     private Vector3 launchVector;
@@ -24,7 +25,17 @@ public class Obstacle : MonoBehaviour, IHittable, IFallingObstacle {
         SoundManager.Playsound(SoundManager.Sound.BoxBreaking, transform.position, 0);
         if (!isInverted) {
             if (projectile.GetHittableType() == HittableType.PlayerProjectile) {
-                targetPosition = GetClosestEnemyPosition(transform.position);
+                //We need the direction that the projectile was moving in
+
+                Vector3 direction = Vector3.zero;
+                direction = collision.relativeVelocity.normalized;
+                direction *= -1;
+                Ray ray = new Ray(transform.position, direction);
+                targetPosition = transform.position;
+                if (enemyPlane.Raycast(ray, out float distance)) {
+                    targetPosition = ray.GetPoint(distance);
+                }
+                targetPosition = GetClosestEnemyPosition(targetPosition);
                 isTargetingEnemy = true;
             }
             else if (projectile.GetHittableType() == HittableType.EnemyProjectile) {
@@ -36,10 +47,7 @@ public class Obstacle : MonoBehaviour, IHittable, IFallingObstacle {
                 targetPosition = Player.Instance.transform.position;
 
             }
-            else if (projectile.GetHittableType() == HittableType.EnemyProjectile) {
-                targetPosition = GetClosestEnemyPosition(transform.position);
-                isTargetingEnemy = true;
-            }
+
 
         }
         launchVector = CalculateLaunchVector(transform.position, targetPosition, launchSpeed);
@@ -98,6 +106,7 @@ public class Obstacle : MonoBehaviour, IHittable, IFallingObstacle {
     }
     private void Start() {
         launchVector = Vector3.zero;
+        enemyPlane = new Plane(Vector3.right, Enemy.Instance.GetCannonTargetAimPoint().position);
         if (isInverted) {
             meshRenderer.material.color = invertedColor;
         }

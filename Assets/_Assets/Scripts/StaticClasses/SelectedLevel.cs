@@ -6,7 +6,7 @@ public static class SelectedLevel {
     public static int selectedLevel { get; private set; }
 
     static SelectedLevel() {
-        selectedLevel = 4;
+        selectedLevel = 0;
     }
     public static void SetSelectedLevel(int level) {
         selectedLevel = level;

@@ -2342,6 +2342,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 926125009}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &986925295
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 986925296}
+  m_Layer: 3
+  m_Name: CannonTargetPlanePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &986925296
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986925295}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.25, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1118407474}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1043249981
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2569,6 +2600,7 @@ MonoBehaviour:
   heightThreshold: 2
   launchVelocity: 2
   targetCollider: {fileID: 1118407470}
+  enemyColliderAimPoint: {fileID: 986925296}
 --- !u!65 &1118407470
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2668,6 +2700,7 @@ Transform:
   m_Children:
   - {fileID: 1281973395}
   - {fileID: 691942513}
+  - {fileID: 986925296}
   m_Father: {fileID: 4459798362314790540}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1122657509

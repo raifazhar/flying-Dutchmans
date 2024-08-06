@@ -29,6 +29,7 @@ public class Enemy : MonoBehaviour, IHittable {
     private int numCannons = 1;
     [SerializeField] private float enemyCannonSpawnExtent = 5f;
     [SerializeField] private Transform enemyCannonPrefab;
+
     private EnemyCannon[] cannons;
     [SerializeField] private GameObject enemyProjectile;
     [Header("AI")]
@@ -36,6 +37,7 @@ public class Enemy : MonoBehaviour, IHittable {
     [SerializeField] private float heightThreshold = 2f;
     [SerializeField] private float launchVelocity = 2f;
     [SerializeField] private BoxCollider targetCollider;
+    [SerializeField] private Transform enemyColliderAimPoint;
     private Bounds targetColliderBounds;
     private float missChance = 0f;
     private Vector3 launchVector;
@@ -242,6 +244,9 @@ public class Enemy : MonoBehaviour, IHittable {
             health += cannons[i].GetHealthNormalized();
         }
         return health / numCannons;
+    }
+    public Transform GetCannonTargetAimPoint() {
+        return enemyColliderAimPoint;
     }
     public void SetMaxCannonHealth(int newMaxHealth) {
         cannonHealth = newMaxHealth;
