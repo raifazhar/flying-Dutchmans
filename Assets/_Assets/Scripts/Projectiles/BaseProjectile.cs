@@ -36,25 +36,30 @@ public abstract class BaseProjectile : MonoBehaviour, IHittable {
     protected virtual void OnCollisionEnter(Collision collision) {
         IHittable hittable = collision.gameObject.GetComponent<IHittable>();
         if (hittable != null) {
-            if (CanHit(hittable.GetHittableType())) {
-                hittable.Hit(this, collision);
-                EffectHandler.Instance.SpawnEffect(hitEffectType, collision.contacts[0].point);
-
-            }
-            else if (hittable.GetHittableType() == HittableType.Ocean) {
-                EffectHandler.Instance.SpawnEffect(EffectHandler.EffectType.WaterSplash, collision.contacts[0].point);
-            }
-            if (hittable.GetHittableType() == HittableType.Obstacle && collision.gameObject.GetComponent<Obstacle>() != null) {
-                EffectHandler.Instance.SpawnEffect(EffectHandler.EffectType.WoodCrack, collision.contacts[0].point);
-            }
-            if (hitEffectType == EffectHandler.EffectType.BombExplosion) {
-                SoundManager.Playsound(SoundManager.Sound.Explosion, transform.position);
-            }
-            else {
-                SoundManager.Playsound(SoundManager.Sound.Collision, transform.position);
-            }
+            HandleHitEffect(hittable, collision);
         }
         Destroy(gameObject);
+    }
+
+    protected virtual void HandleHitEffect(IHittable hittable, Collision collision) {
+        //Handle hitting and effect spawing
+        if (CanHit(hittable.GetHittableType())) {
+            hittable.Hit(this, collision);
+            EffectHandler.Instance.SpawnEffect(hitEffectType, collision.contacts[0].point);
+        }
+        else if (hittable.GetHittableType() == HittableType.Ocean) {
+            EffectHandler.Instance.SpawnEffect(EffectHandler.EffectType.WaterSplash, collision.contacts[0].point);
+        }
+        if (hittable.GetHittableType() == HittableType.Obstacle && collision.gameObject.GetComponent<Obstacle>() != null) {
+            EffectHandler.Instance.SpawnEffect(EffectHandler.EffectType.WoodCrack, collision.contacts[0].point);
+        }
+        //Handle sound
+        if (hitEffectType == EffectHandler.EffectType.BombExplosion) {
+            SoundManager.Playsound(SoundManager.Sound.Explosion, transform.position);
+        }
+        else {
+            SoundManager.Playsound(SoundManager.Sound.Collision, transform.position);
+        }
     }
 
 
