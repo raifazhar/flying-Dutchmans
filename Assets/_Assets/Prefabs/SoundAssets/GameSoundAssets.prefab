@@ -54,7 +54,7 @@ MonoBehaviour:
       volume: 0.3
     masterVolume: 1
     hasCoolDown: 1
-    CoolDownTime: 1
+    CoolDownTime: 0.5
   - name: Health
     audioClips:
     - name: health

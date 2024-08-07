@@ -22,7 +22,7 @@ MonoBehaviour:
   playerHealth: 20
   enemyHealth: 15
   enemyCannons: 1
-  enemyMissChance: 0
+  enemyMissChance: 0.665
   enemyShootInterval: 4
   invertedChance: 0
   levelSeed: 0

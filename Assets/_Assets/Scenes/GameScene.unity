@@ -1079,7 +1079,7 @@ MonoBehaviour:
   launchSpeed: 12
   slowDownFactor: 0.2
   startingVector: {x: 0.3, y: 0.3, z: 0}
-  launchCooldown: 1
+  launchCooldown: 0.5
 --- !u!65 &440513533
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2620,8 +2620,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5.33, y: 3.44, z: 69.84}
-  m_Center: {x: 5.96, y: -1.25, z: 0}
+  m_Size: {x: 5.33, y: 2.73, z: 69.84}
+  m_Center: {x: 5.96, y: -0.74, z: 0}
 --- !u!65 &1118407471
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5110,7 +5110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelsSO: {fileID: 11400000, guid: 7177d3a6bcf8b8c42b122e7978ed9e96, type: 2}
   gameStartTime: 1
-  gameEndTime: 0.1
+  gameEndTime: 2.5
   levelOutTransition: {fileID: 436401477}
   levelOutTranisitonTime: 2
 --- !u!4 &2081372507

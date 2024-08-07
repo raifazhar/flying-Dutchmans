@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelID: 3
   ObstacleList: {fileID: 11400000, guid: 0ced5c8f0af2b4c43a0ffd51888fa831, type: 2}
-  obstacleSpawnInterval: 3
+  obstacleSpawnInterval: 3.75
   obstacleFallSpeed: 1
   spawnChance:
   - 0.45
@@ -23,7 +23,7 @@ MonoBehaviour:
   playerHealth: 40
   enemyHealth: 50
   enemyCannons: 2
-  enemyMissChance: 0
+  enemyMissChance: 0.098
   enemyShootInterval: 4
   invertedChance: 0.02
   levelSeed: 0

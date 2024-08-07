@@ -9,6 +9,8 @@ public class EnemyCannonVisual : MonoBehaviour {
     [SerializeField] private Transform pivotBone;
     [SerializeField] private Transform angleBone;
     [SerializeField] private Transform vfxSpawnPoint;
+    [SerializeField] private Transform healthyVisual;
+    [SerializeField] private Transform destroyedVisual;
     [SerializeField] private Image healthBar;
     private Vector3 launchVector;
     private Vector3 angleOrigin;
@@ -26,10 +28,17 @@ public class EnemyCannonVisual : MonoBehaviour {
         pivotTarget = Quaternion.identity;
         angleOrigin = angleBone.eulerAngles;
         pivotOrigin = pivotBone.eulerAngles;
+        healthyVisual.gameObject.SetActive(true);
+        destroyedVisual.gameObject.SetActive(false);
     }
 
     private void Cannon_OnHealthChange(object sender, EnemyCannon.HealthEventArgs e) {
         healthBar.fillAmount = e.healthNormalized;
+        if (e.healthNormalized <= 0) {
+            healthyVisual.gameObject.SetActive(false);
+            destroyedVisual.gameObject.SetActive(true);
+        }
+
     }
 
     private void Cannon_OnLaunchEnd(object sender, System.EventArgs e) {
