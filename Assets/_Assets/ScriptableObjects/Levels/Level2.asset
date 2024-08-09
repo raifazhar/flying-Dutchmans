@@ -24,5 +24,6 @@ MonoBehaviour:
   enemyCannons: 1
   enemyMissChance: 0.215
   enemyShootInterval: 3
+  enemyCannonOffset: -7.5
   invertedChance: 0
   levelSeed: 0

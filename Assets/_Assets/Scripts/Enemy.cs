@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -90,8 +91,8 @@ public class Enemy : MonoBehaviour, IHittable {
         if (cannonsSpawned)
             return;
         cannonsSpawned = true;
-        float maxZCoordinate = enemyCannonSpawnExtent;
-        float minZCoordinate = -enemyCannonSpawnExtent;
+        float maxZCoordinate = enemyCannonSpawnPoint.localPosition.z + enemyCannonSpawnExtent;
+        float minZCoordinate = enemyCannonSpawnPoint.localPosition.z - enemyCannonSpawnExtent;
         float xCoordinate = enemyCannonSpawnPoint.position.x;
         float yCoordinate = enemyCannonSpawnPoint.position.y;
         cannons = new EnemyCannon[numCannons];
@@ -261,7 +262,9 @@ public class Enemy : MonoBehaviour, IHittable {
     public void SetNumCannons(int i) {
         numCannons = i;
     }
-
+    public void AddCannonOffset(float offset) {
+        enemyCannonSpawnPoint.localPosition = new Vector3(enemyCannonSpawnPoint.localPosition.x, enemyCannonSpawnPoint.localPosition.y, enemyCannonSpawnPoint.localPosition.z + offset);
+    }
     public Bounds GetBounds() {
         return targetColliderBounds;
     }

@@ -379,6 +379,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameSoundAssets
       objectReference: {fileID: 0}
+    - target: {fileID: 3738549761607630149, guid: 3720e24c70fba9a4b88da737dbcd4f98,
+        type: 3}
+      propertyPath: AudioClipsArray.Array.data[8].audioClips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5984441239705579749, guid: 3720e24c70fba9a4b88da737dbcd4f98,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1065,7 +1070,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraShakeOnHit: 0.2
-  cameraShakeOnLaunch: 0.2
+  cameraShakeOnLaunch: 0.1
   launchOrigin: {fileID: 1350358498}
   projectilePrefab: {fileID: 4635234919210959314, guid: 9008717387286c64485a9d1f57e12e13,
     type: 3}
@@ -5334,6 +5339,7 @@ GameObject:
   m_Component:
   - component: {fileID: 596803883950116469}
   - component: {fileID: 596803883950116470}
+  - component: {fileID: 596803883950116471}
   m_Layer: 5
   m_Name: Lose
   m_TagString: Untagged
@@ -5389,6 +5395,23 @@ MonoBehaviour:
   delay: 0
   duration: 1
   offset: {x: 0, y: 1000, z: 0}
+  ease: 27
+  setUpdate: 0
+--- !u!114 &596803883950116471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230034150844972006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba39c7a1a8f3173418b51dca9eeb0d45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0
+  duration: 1
+  offset: {x: 0, y: 0, z: 0}
   ease: 27
   setUpdate: 0
 --- !u!222 &647964218336438039
@@ -9580,6 +9603,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7313120630655355769}
   - component: {fileID: 8803221115829164449}
+  - component: {fileID: 8803221115829164450}
   m_Layer: 5
   m_Name: Win
   m_TagString: Untagged
@@ -9602,6 +9626,23 @@ MonoBehaviour:
   delay: 0
   duration: 1
   offset: {x: 0, y: 1000, z: 0}
+  ease: 27
+  setUpdate: 0
+--- !u!114 &8803221115829164450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8803221115829164448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba39c7a1a8f3173418b51dca9eeb0d45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0
+  duration: 1
+  offset: {x: 0, y: 0, z: 0}
   ease: 27
   setUpdate: 0
 --- !u!1 &8831411420112382852

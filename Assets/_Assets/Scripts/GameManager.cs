@@ -54,8 +54,11 @@ public class GameManager : MonoBehaviour {
         levelIndex = SelectedLevel.selectedLevel;
         Player.Instance.OnStateChange += Player_OnStateChange;
         Enemy.Instance.OnStateChange += Enemy_OnStateChange;
+
+        Enemy.Instance.AddCannonOffset(levelsSO.levels[levelIndex].enemyCannonOffset);
         Enemy.Instance.SetNumCannons(levelsSO.levels[levelIndex].enemyCannons);
         Enemy.Instance.SpawnCannons();
+        CameraController.Instance.EnableAudio();
         StartCoroutine(StartGameCoroutine(gameStartTime));
     }
 
@@ -113,7 +116,7 @@ public class GameManager : MonoBehaviour {
             ObstacleSpawner.Instance.SetSpawnInterval(level.obstacleSpawnInterval);
             ObstacleSpawner.Instance.SetObstacles(level.ObstacleList.obstaclePrefabs, level.spawnChance);
             ObstacleSpawner.Instance.Initialize();
-            CameraController.Instance.EnableAudio();
+
         }
     }
 

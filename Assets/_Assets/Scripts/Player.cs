@@ -217,6 +217,7 @@ public class Player : MonoBehaviour, IHittable {
         health -= projectile.GetDamage();
         OnHealthChange?.Invoke(this, EventArgs.Empty);
         CameraController.Instance.AddTrauma(cameraShakeOnHit);
+        EffectHandler.Instance.SpawnEffect(EffectHandler.EffectType.ForceFieldHit, collision.contacts[0].point);
         GameManager.Instance.RemoveScore(projectile.GetDamage() / 2);
         if (health <= 0) {
             playerState = State.Dead;
